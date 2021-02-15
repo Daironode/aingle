@@ -16,7 +16,7 @@ import (
 	" github.com/Daironode/aingle/errors"
 )
 
-var Version = "v2.0.0" //Set value when build project
+var Version = "v0.0.2" //Set value when build project
 
 type VerifyMethod int
 
