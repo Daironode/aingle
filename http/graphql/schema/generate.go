@@ -1,0 +1,3 @@
+
+//go:generate go-bindata -ignore=\.go -pkg=schema -o=bindata.go ./...
+package schema

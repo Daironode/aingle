@@ -1,0 +1,442 @@
+
+package subnet
+
+import (
+	"encoding/json"
+	"strings"
+	"sync"
+	"sync/atomic"
+	"time"
+
+	" github.com/Daironode/aingle/account"
+	common2 " github.com/Daironode/aingle/common"
+	vconfig " github.com/Daironode/aingle/consensus/vbft/config"
+	" github.com/Daironode/aingle/p2pserver/common"
+	" github.com/Daironode/aingle/p2pserver/message/types"
+	p2p " github.com/Daironode/aingle/p2pserver/net/protocol"
+	" github.com/Daironode/aingle/p2pserver/peer"
+	" github.com/Daironode/aingle/p2pserver/protocols/utils"
+)
+
+const MaxMemberRequests = 3
+const MaxInactiveTime = 10 * time.Minute
+
+var RefreshDuration = 1 * time.Minute
+
+type WitnessStatus = byte
+
+const NewStatus WitnessStatus = 0
+const UpdatedStatus WitnessStatus = 1
+const UnchangedStatus WitnessStatus = 2
+
+type Offline struct {
+	Status WitnessStatus
+	Msg    *types.OfflineWitnessMsg
+}
+
+type SubNet struct {
+	acct     *account.Account // nil if conenesus is not enabled
+	seeds    *utils.HostsResolver
+	gov      utils.GovNodeResolver
+	unparker *utils.Parker
+
+	lock     sync.RWMutex
+	selfAddr string
+	seedNode uint32 // bool acturally
+	closed   bool
+
+	connected      map[string]*peer.PeerInfo    // connected seed/gov node, listenAddr --> PeerInfo
+	members        map[string]*MemberStatus     // gov node info, listenAddr --> pubkey hex string
+	offlineWitness map[common2.Uint256]*Offline // hash -> msg
+	logger         common.Logger
+}
+
+func NewSubNet(acc *account.Account, seeds *utils.HostsResolver,
+	gov utils.GovNodeResolver, logger common.Logger) *SubNet {
+	return &SubNet{
+		acct:     acc,
+		seeds:    seeds,
+		gov:      gov,
+		unparker: utils.NewParker(),
+		logger:   logger,
+
+		connected:      make(map[string]*peer.PeerInfo),
+		members:        make(map[string]*MemberStatus),
+		offlineWitness: make(map[common2.Uint256]*Offline),
+	}
+}
+
+type MemberStatus struct {
+	PubKey string
+	Alive  time.Time
+}
+
+func (self *SubNet) Start(net p2p.P2P) {
+	go self.maintainLoop(net)
+}
+
+func (self *SubNet) Stop() {
+	self.closed = true
+	self.unparker.Unpark()
+}
+
+func (self *SubNet) OnAddPeer(net p2p.P2P, info *peer.PeerInfo) {
+	self.lock.Lock()
+	defer self.lock.Unlock()
+	listenAddr := info.RemoteListenAddress()
+	member := self.members[listenAddr]
+	if self.isSeedAddr(listenAddr) || member != nil {
+		self.connected[listenAddr] = info
+		if supportSubnet(info.SoftVersion) {
+			self.sendMembersRequest(net, info.Id)
+		}
+	}
+	if member != nil {
+		member.Alive = time.Now()
+	}
+}
+
+func (self *SubNet) OnDelPeer(info *peer.PeerInfo) {
+	self.lock.Lock()
+	defer self.lock.Unlock()
+	listenAddr := info.RemoteListenAddress()
+	member := self.members[listenAddr]
+	if self.isSeedAddr(listenAddr) || member != nil {
+		delete(self.connected, listenAddr)
+	}
+	if member != nil {
+		member.Alive = time.Now()
+	}
+}
+func (self *SubNet) IpInMembers(ip string) bool {
+	self.lock.RLock()
+	defer self.lock.RUnlock()
+	for addr := range self.members {
+		if strings.HasPrefix(addr, ip+":") {
+			return true
+		}
+	}
+
+	return false
+}
+
+func (self *SubNet) isSeedIp(ip string) bool {
+	hosts := self.seeds.GetHostAddrs()
+	for _, host := range hosts {
+		if strings.HasPrefix(host, ip+":") {
+			return true
+		}
+	}
+
+	return false
+}
+
+func (self *SubNet) isSeedAddr(addr string) bool {
+	hosts := self.seeds.GetHostAddrs()
+	for _, host := range hosts {
+		if host == addr {
+			return true
+		}
+	}
+
+	return false
+}
+
+func (self *SubNet) IsSeedNode() bool {
+	return atomic.LoadUint32(&self.seedNode) == 1
+}
+
+func (self *SubNet) OnHostAddrDetected(listenAddr string) {
+	seed := self.isSeedAddr(listenAddr)
+	self.lock.Lock()
+	defer self.lock.Unlock()
+	// host address detection may be fooled by remote peer
+	// so add this check to make sure seed node will detected itself finally.
+	// and will not be replaced by no seed address.
+	if seed || self.selfAddr == "" {
+		self.selfAddr = listenAddr
+		if seed {
+			atomic.StoreUint32(&self.seedNode, 1)
+		} else {
+			atomic.StoreUint32(&self.seedNode, 0)
+		}
+	}
+}
+
+func (self *SubNet) checkAuthority(listenAddr string, msg *types.SubnetMembersRequest) bool {
+	if msg.FromSeed() {
+		return self.isSeedAddr(listenAddr)
+	}
+
+	return self.gov.IsGovNodePubKey(msg.PubKey)
+}
+
+func (self *SubNet) OnMembersRequest(ctx *p2p.Context, msg *types.SubnetMembersRequest) {
+	sender := ctx.Sender()
+	if msg.From != sender.GetID() || msg.To != ctx.Network().GetID() {
+		return
+	}
+
+	peerAddr := sender.Info.RemoteListenAddress()
+	if !self.checkAuthority(peerAddr, msg) {
+		self.logger.Info("[subnet] check authority for members request failed, peer: %s", peerAddr)
+		return
+	}
+
+	self.lock.Lock()
+	memberInfos := self.cleanAndGetMembersInfoLocked()
+	members := make([]types.MemberInfo, 0, len(memberInfos))
+
+	for _, info := range memberInfos {
+		members = append(members, types.MemberInfo{PubKey: info.PubKey, Addr: info.ListenAddr})
+	}
+
+	//update self.members
+	if !msg.FromSeed() && self.gov.IsGovNodePubKey(msg.PubKey) && self.members[peerAddr] == nil {
+		self.members[peerAddr] = &MemberStatus{
+			PubKey: vconfig.PubkeyID(msg.PubKey),
+			Alive:  time.Now(),
+		}
+	}
+	self.lock.Unlock()
+
+	reply := &types.SubnetMembers{Members: members}
+	self.logger.Debugf("[subnet] send members to peer %s, value: %s", sender.Info.Id.ToHexString(), reply)
+	ctx.Network().SendTo(sender.GetID(), reply)
+}
+
+func (self *SubNet) OnMembersResponse(ctx *p2p.Context, msg *types.SubnetMembers) {
+	sender := ctx.Sender()
+	self.lock.Lock()
+	defer self.lock.Unlock()
+	self.logger.Debugf("[subnet] receive members from peer %s, value: %s ", sender.Info.Id.ToHexString(), msg.String())
+
+	listen := sender.Info.RemoteListenAddress()
+	if self.connected[listen] == nil {
+		self.logger.Info("[subnet] receive members response from unkown node: %s", listen)
+		return
+	}
+
+	updated := false
+	for _, info := range msg.Members {
+		if self.members[info.Addr] == nil {
+			updated = true
+			self.members[info.Addr] = &MemberStatus{
+				PubKey: info.PubKey,
+				Alive:  time.Now(),
+			}
+		}
+	}
+
+	if updated {
+		self.unparker.Unpark()
+	}
+}
+
+func (self *SubNet) getUnconnectedGovNode() []string {
+	self.lock.Lock()
+	defer self.lock.Unlock()
+
+	var addrs []string
+	for addr := range self.members {
+		if self.connected[addr] == nil {
+			addrs = append(addrs, addr)
+		}
+	}
+
+	return addrs
+}
+
+func (self *SubNet) newMembersRequest(from, to common.PeerId) *types.SubnetMembersRequest {
+	var request *types.SubnetMembersRequest
+	// need first check is gov node, since gov node may also be seed node
+	// so the remote peer can known this node is gov node.
+	if self.acct != nil && self.gov.IsGovNodePubKey(self.acct.PublicKey) {
+		var err error
+		request, err = types.NewMembersRequest(from, to, self.acct)
+		if err != nil {
+			return nil
+		}
+	} else if self.IsSeedNode() {
+		request = types.NewMembersRequestFromSeed()
+	}
+
+	return request
+}
+
+func (self *SubNet) sendMembersRequestToRandNodes(net p2p.P2P) {
+	count := 0
+	peerIds := make([]common.PeerId, 0, MaxMemberRequests)
+	self.lock.RLock()
+	// note map iteration is randomized
+	for _, p := range self.connected {
+		if !supportSubnet(p.SoftVersion) {
+			continue
+		}
+		count += 1
+		peerIds = append(peerIds, p.Id)
+		if count == MaxMemberRequests {
+			break
+		}
+	}
+	self.lock.RUnlock()
+
+	for _, peerId := range peerIds {
+		self.sendMembersRequest(net, peerId)
+	}
+}
+
+func (self *SubNet) sendMembersRequest(net p2p.P2P, peer common.PeerId) {
+	request := self.newMembersRequest(net.GetID(), peer)
+	if request == nil {
+		return
+	}
+
+	self.logger.Infof("[subnet] send member request from %s to %s as role %s",
+		request.From.ToHexString(), request.To.ToHexString(), request.Role())
+	net.SendTo(peer, request)
+}
+
+func (self *SubNet) cleanInactiveGovNode() {
+	now := time.Now()
+	self.lock.Lock()
+	defer self.lock.Unlock()
+
+	for addr, member := range self.members {
+		if member.Alive.Add(MaxInactiveTime).Before(now) {
+			delete(self.members, addr)
+		}
+	}
+}
+
+func (self *SubNet) cleanRetiredGovNode(net p2p.P2P) {
+	self.lock.Lock()
+	defer self.lock.Unlock()
+	for addr, status := range self.members {
+		if !self.gov.IsGovNode(status.PubKey) {
+			delete(self.members, addr)
+			if info := self.connected[addr]; info != nil {
+				if p := net.GetPeer(info.Id); p != nil {
+					p.Close()
+				}
+			}
+		}
+	}
+}
+
+func (self *SubNet) maintainLoop(net p2p.P2P) {
+	parker := self.unparker
+	for {
+		self.lock.Lock()
+		for _, p := range net.GetNeighbors() {
+			listen := p.Info.RemoteListenAddress()
+			if self.members[listen] != nil {
+				self.members[listen].Alive = time.Now()
+				// some gov node may connected before we known it's identity.
+				// so check and add it to connected list here
+				if self.connected[listen] == nil {
+					self.connected[listen] = p.Info
+				}
+			}
+		}
+		seedOrGov := self.IsSeedNode() || (self.acct != nil && self.gov.IsGovNodePubKey(self.acct.PublicKey))
+		selfAddr := self.selfAddr
+		self.lock.Unlock()
+
+		self.cleanRetiredGovNode(net)
+		for _, addr := range self.getUnconnectedGovNode() {
+			if addr != selfAddr {
+				self.logger.Infof("[subnet] try connect gov node: %s", addr)
+				go net.Connect(addr)
+			}
+		}
+
+		self.cleanInactiveGovNode()
+
+		if seedOrGov {
+			self.sendOfflineWitness(net)
+
+			self.sendMembersRequestToRandNodes(net)
+			members := self.GetMembersInfo()
+			buf, _ := json.Marshal(members)
+			self.logger.Infof("[subnet] current members: %s", string(buf))
+			votes := self.GetOfflineVotes()
+			if len(votes) != 0 {
+				buf, _ = json.Marshal(votes)
+				self.logger.Infof("[subnet] current offline votes: %s", string(buf))
+			}
+		}
+
+		parker.ParkTimeout(RefreshDuration)
+		if self.closed {
+			return
+		}
+	}
+}
+
+func (self *SubNet) GetReservedAddrFilter(staticFilterEnabled bool) p2p.AddressFilter {
+	return &SubNetReservedAddrFilter{
+		subnet:              self,
+		staticFilterEnabled: staticFilterEnabled,
+	}
+}
+
+func (self *SubNet) GetMaskAddrFilter() p2p.AddressFilter {
+	return &SubNetMaskAddrFilter{
+		subnet: self,
+	}
+}
+
+// some gov node may change its listen ip address,
+// this function will try to remove old address
+func (self *SubNet) cleanAndGetMembersInfoLocked() map[string]common.SubnetMemberInfo {
+	members := make(map[string]common.SubnetMemberInfo)
+	for addr, mem := range self.members {
+		connected := self.selfAddr == addr
+		height := uint64(0)
+		version := ""
+		if p := self.connected[addr]; p != nil {
+			connected = true
+			height = p.Height()
+			version = p.SoftVersion
+		}
+
+		curr := common.SubnetMemberInfo{
+			PubKey:     mem.PubKey,
+			ListenAddr: addr,
+			Connected:  connected,
+			Height:     height,
+			Version:    version,
+		}
+
+		prev, ok := members[mem.PubKey]
+		if !ok {
+			members[mem.PubKey] = curr
+		} else { // already has one item
+			if connected && !prev.Connected { // delete prev if curr is connected, but prev is not
+				delete(self.members, prev.ListenAddr)
+				members[mem.PubKey] = curr
+			} else if prev.Connected && !connected { // delete curr if prev is connected, but curr is not
+				delete(self.members, addr)
+			}
+
+			// keep both if both not connected, (both connected is not possible because of p2p handshake)
+		}
+	}
+
+	return members
+}
+
+//restful api
+func (self *SubNet) GetMembersInfo() []common.SubnetMemberInfo {
+	self.lock.Lock()
+	members := self.cleanAndGetMembersInfoLocked()
+	self.lock.Unlock()
+
+	result := make([]common.SubnetMemberInfo, 0, len(members))
+	for _, info := range members {
+		result = append(result, info)
+	}
+
+	return result
+}
