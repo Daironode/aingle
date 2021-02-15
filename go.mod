@@ -3,6 +3,9 @@ module github.com/Daironode/aingle
 go 1.12
 
 require (
+	github.com/Daironode/aingle-crypto v0.0.0-20210214165650-a1d258eaec56
+	github.com/Daironode/aingle-event v0.0.0-20210214171555-5b4b2d5f7dee
+	github.com/Daironode/aingle-wagon v0.0.0-20210214181709-b3b7ae6e6b7a
 	github.com/JohnCGriffin/overflow v0.0.0-20170615021017-4d914c927216
 	github.com/Workiva/go-datastructures v1.0.50 // indirect
 	github.com/blang/semver v3.5.1+incompatible
@@ -17,9 +20,6 @@ require (
 	github.com/itchyny/base58-go v0.1.0
 	github.com/json-iterator/go v1.1.10
 	github.com/mattn/go-isatty v0.0.10 // indirect
-	github.com/Daironode/aingle-crypto v0.0.1-Alpha
-	github.com/Daironode/aingle-event v0.0.1-Alpha
-	github.com/Daironode/aingle-wagon v0.0.1-Alpha
 	github.com/orcaman/concurrent-map v0.0.0-20190826125027-8c72a8bb44f6 // indirect
 	github.com/pborman/uuid v1.2.0
 	github.com/prometheus/client_golang v0.9.1
