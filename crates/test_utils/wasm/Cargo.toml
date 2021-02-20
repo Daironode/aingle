@@ -1,0 +1,30 @@
+[package]
+name = "aingle_wasm_test_utils"
+version = "0.0.1"
+authors = [ "Carlos Tovar", "carlos.tovar@blockinnovation.center" ]
+edition = "2018"
+
+[lib]
+name = "aingle_wasm_test_utils"
+crate-type = [ "cdylib", "rlib" ]
+path = "./src/lib.rs"
+
+[features]
+default = []
+build = []
+only_check = []
+
+
+[dependencies]
+fixt = { path = "../../fixt" }
+aingle_hash = { path = "../../aingle_hash" }
+aingle_types = { path = "../../aingle_types" }
+aingle_zome_types = { path = "../../aingle_zome_types" }
+rand = "0.7"
+strum = "0.18.0"
+strum_macros = "0.18.0"
+tokio_safe_block_on = "0.1.2"
+
+[build-dependencies]
+toml = "0.5"
+walkdir = "2.3.1"

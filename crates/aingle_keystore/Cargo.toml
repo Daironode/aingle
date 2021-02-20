@@ -1,0 +1,24 @@
+[package]
+name = "aingle_keystore"
+version = "0.0.1"
+description = "keystore for libsodium keypairs"
+license = "Apache-2.0"
+homepage = "https://github.com/Daironode/aingle"
+documentation = "https://github.com/Daironode/aingle"
+authors = [ "AIngle Core Dev Team <devcore@aingle.ai>" ]
+keywords = [ "aingle", "semantic", "nacl", "libsodium", "cryptography" ]
+categories = [ "cryptography" ]
+edition = "2018"
+
+[dependencies]
+ghost_actor = "0.3.0-alpha.1"
+aingle_hash = { version = "0.0.1", path = "../aingle_hash", features = ["full"] }
+aingle_serialized_bytes = "=0.0.48"
+aingle_zome_types = { path = "../aingle_zome_types" }
+lair_keystore_api = "=0.0.1-alpha.10"
+lair_keystore_client = "=0.0.1-alpha.10"
+serde = { version = "1.0.104", features = [ "derive" ] }
+serde_bytes = "0.11"
+thiserror = "1.0.22"
+tokio = { version = "0.2", features = [ "full" ] }
+tracing = "0.1"

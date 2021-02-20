@@ -1,0 +1,14 @@
+[package]
+name = "test_wasm_hash_path"
+version = "0.0.1"
+authors = [ "Carlos Tovar", "carlos.tovar@blockinnovation.center" ]
+edition = "2018"
+
+[lib]
+name = "test_wasm_hash_path"
+crate-type = [ "cdylib", "rlib" ]
+
+[dependencies]
+hdk = { path = "../../../../hdk" }
+serde = "1.0.104"
+aingle_test_wasm_common = { version = "0.0.1", path = "../../../wasm_common" }
