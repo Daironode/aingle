@@ -2,8 +2,13 @@
 use std::convert::TryFrom;
 
 use derivative::Derivative;
+<<<<<<< HEAD
 use aingle_hash::DgdOpHash;
 use aingle_types::dgd_op::DgdOp;
+=======
+use aingle_hash::DhtOpHash;
+use aingle_types::dht_op::DhtOp;
+>>>>>>> master
 
 use super::workflow::error::WorkflowResult;
 use super::SourceChainError;
@@ -29,12 +34,20 @@ macro_rules! from_sub_error {
     };
 }
 
+<<<<<<< HEAD
 /// Type for deriving ordering of DgdOps
+=======
+/// Type for deriving ordering of DhtOps
+>>>>>>> master
 /// Don't change the order of this enum unless
 /// you mean to change the order we process ops
 #[allow(missing_docs)]
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd)]
+<<<<<<< HEAD
 pub enum DgdOpOrder {
+=======
+pub enum DhtOpOrder {
+>>>>>>> master
     RegisterAgentActivity(aingle_zome_types::timestamp::Timestamp),
     StoreEntry(aingle_zome_types::timestamp::Timestamp),
     StoreElement(aingle_zome_types::timestamp::Timestamp),
@@ -46,6 +59,7 @@ pub enum DgdOpOrder {
     RegisterRemoveLink(aingle_zome_types::timestamp::Timestamp),
 }
 
+<<<<<<< HEAD
 /// Op data that will be ordered by [DgdOpOrder]
 #[derive(Derivative, Debug, Clone)]
 #[derivative(Eq, PartialEq, Ord, PartialOrd)]
@@ -55,10 +69,22 @@ pub struct OrderedOp<V> {
     pub hash: DgdOpHash,
     #[derivative(PartialEq = "ignore", PartialOrd = "ignore", Ord = "ignore")]
     pub op: DgdOp,
+=======
+/// Op data that will be ordered by [DhtOpOrder]
+#[derive(Derivative, Debug, Clone)]
+#[derivative(Eq, PartialEq, Ord, PartialOrd)]
+pub struct OrderedOp<V> {
+    pub order: DhtOpOrder,
+    #[derivative(PartialEq = "ignore", PartialOrd = "ignore", Ord = "ignore")]
+    pub hash: DhtOpHash,
+    #[derivative(PartialEq = "ignore", PartialOrd = "ignore", Ord = "ignore")]
+    pub op: DhtOp,
+>>>>>>> master
     #[derivative(PartialEq = "ignore", PartialOrd = "ignore", Ord = "ignore")]
     pub value: V,
 }
 
+<<<<<<< HEAD
 impl From<&DgdOp> for DgdOpOrder {
     fn from(op: &DgdOp) -> Self {
         use DgdOpOrder::*;
@@ -72,6 +98,21 @@ impl From<&DgdOp> for DgdOpOrder {
             DgdOp::RegisterDeletedEntryHeader(_, h) => RegisterDeletedEntryHeader(h.timestamp),
             DgdOp::RegisterAddLink(_, h) => RegisterAddLink(h.timestamp),
             DgdOp::RegisterRemoveLink(_, h) => RegisterRemoveLink(h.timestamp),
+=======
+impl From<&DhtOp> for DhtOpOrder {
+    fn from(op: &DhtOp) -> Self {
+        use DhtOpOrder::*;
+        match op {
+            DhtOp::StoreElement(_, h, _) => StoreElement(h.timestamp()),
+            DhtOp::StoreEntry(_, h, _) => StoreEntry(*h.timestamp()),
+            DhtOp::RegisterAgentActivity(_, h) => RegisterAgentActivity(h.timestamp()),
+            DhtOp::RegisterUpdatedContent(_, h, _) => RegisterUpdatedContent(h.timestamp),
+            DhtOp::RegisterUpdatedElement(_, h, _) => RegisterUpdatedElement(h.timestamp),
+            DhtOp::RegisterDeletedBy(_, h) => RegisterDeletedBy(h.timestamp),
+            DhtOp::RegisterDeletedEntryHeader(_, h) => RegisterDeletedEntryHeader(h.timestamp),
+            DhtOp::RegisterAddLink(_, h) => RegisterAddLink(h.timestamp),
+            DhtOp::RegisterRemoveLink(_, h) => RegisterRemoveLink(h.timestamp),
+>>>>>>> master
         }
     }
 }

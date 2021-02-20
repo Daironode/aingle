@@ -1,6 +1,10 @@
 use super::EntryError;
 use super::ENTRY_SIZE_LIMIT;
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 
 /// Newtype for the bytes comprising an App entry
 #[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]

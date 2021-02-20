@@ -51,8 +51,13 @@ pub async fn dump_cell_state(
     kv!("metadata cache - status", CACHE_STATUS_META);
 
     kv!("integration queue", INTEGRATION_LIMBO);
+<<<<<<< HEAD
     kv!("integrated dgd ops", INTEGRATED_DGD_OPS);
     kv!("authored dgd ops", AUTHORED_DGD_OPS);
+=======
+    kv!("integrated dht ops", INTEGRATED_DHT_OPS);
+    kv!("authored dht ops", AUTHORED_DHT_OPS);
+>>>>>>> master
 
     Ok(())
 }

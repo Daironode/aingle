@@ -71,7 +71,11 @@ pub enum ConductorError {
     GenesisFailed { errors: Vec<CellError> },
 
     #[error(transparent)]
+<<<<<<< HEAD
     SerializedBytesError(#[from] aingle_middleware_bytes::SerializedBytesError),
+=======
+    SerializedBytesError(#[from] aingle_serialized_bytes::SerializedBytesError),
+>>>>>>> master
 
     #[error("Wasm code was not found in the wasm store")]
     WasmMissing,

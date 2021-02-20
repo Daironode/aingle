@@ -17,7 +17,11 @@ path = "src/lib.rs"
 [dependencies]
 hdk_derive = { version = "0.0.1", path = "../hdk_derive" }
 aingle_hash = { path = "../aingle_hash" }
+<<<<<<< HEAD
 aingle_wasmer_guest = "=0.0.1"
+=======
+aingle_wasmer_guest = "=0.0.66"
+>>>>>>> master
 aingle_zome_types = { path = "../aingle_zome_types" }
 paste = "=1.0.3"
 serde = "1.0.104"

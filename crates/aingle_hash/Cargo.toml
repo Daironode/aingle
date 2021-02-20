@@ -5,7 +5,11 @@ authors = [ "AIngle Core Dev Team <devcore@aingle.ai>" ]
 keywords = [ "aingle", "semantic", "hash", "blake", "blake2b" ]
 categories = [ "cryptography" ]
 edition = "2018"
+<<<<<<< HEAD
 description = "hashing helpers supporting dgd sharding"
+=======
+description = "hashing helpers supporting dht sharding"
+>>>>>>> master
 license = "CAL-1.0"
 homepage = "https://github.com/Daironode/aingle"
 documentation = "https://github.com/Daironode/aingle"
@@ -17,7 +21,11 @@ serde_bytes = "0.11"
 base64 = {version = "0.13", optional = true}
 blake2b_simd = {version = "0.5.10", optional = true}
 fixt = { version = "0.0.1", path = "../fixt", optional = true }
+<<<<<<< HEAD
 aingle_middleware_bytes = {version = "=0.0.3", optional = true }
+=======
+aingle_serialized_bytes = {version = "=0.0.48", optional = true }
+>>>>>>> master
 rand = {version = "0.7", optional = true}
 tracing = { version = "0.1", optional = true}
 thiserror = "1.0.22"
@@ -31,7 +39,11 @@ default = ["serialized-bytes"]
 full = ["fixturators", "hashing", "string-encoding"]
 
 fixturators = ["fixt", "rand", "serialized-bytes", "string-encoding"]
+<<<<<<< HEAD
 serialized-bytes = ["aingle_middleware_bytes"]
+=======
+serialized-bytes = ["aingle_serialized_bytes"]
+>>>>>>> master
 string-encoding = ["base64", "blake2b_simd"]
 hashing = ["blake2b_simd", "serialized-bytes"]
 

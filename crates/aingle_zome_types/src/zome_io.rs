@@ -3,7 +3,11 @@ use crate::prelude as zt;
 use crate::zome::FunctionName;
 use crate::zome::ZomeName;
 use aingle_hash::AgentPubKey;
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 
 /// All wasm shared I/O types need to share the same basic behaviours to cross the host/guest
 /// boundary in a predictable way.
@@ -40,13 +44,21 @@ impl ExternIO {
     where
         I: serde::Serialize + std::fmt::Debug,
     {
+<<<<<<< HEAD
         Ok(Self(aingle_middleware_bytes::encode(&input)?))
+=======
+        Ok(Self(aingle_serialized_bytes::encode(&input)?))
+>>>>>>> master
     }
     pub fn decode<O>(&self) -> Result<O, SerializedBytesError>
     where
         O: serde::de::DeserializeOwned + std::fmt::Debug,
     {
+<<<<<<< HEAD
         Ok(aingle_middleware_bytes::decode(&self.0)?)
+=======
+        Ok(aingle_serialized_bytes::decode(&self.0)?)
+>>>>>>> master
     }
 
     pub fn into_vec(self) -> Vec<u8> {

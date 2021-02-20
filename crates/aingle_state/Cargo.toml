@@ -19,7 +19,11 @@ serde = { version = "1.0.104", features = [ "derive" ] }
 tracing = "=0.1.21"
 tracing-futures = "0.2.4"
 aingle_keystore = { version = "0.0.1", path = "../aingle_keystore" }
+<<<<<<< HEAD
 aingle_middleware_bytes = "=0.0.3"
+=======
+aingle_serialized_bytes = "=0.0.48"
+>>>>>>> master
 aingle_p2p = { version = "0.0.1", path = "../aingle_p2p" }
 aingle_types = { version = "0.0.1", path = "../aingle_types" }
 aingle_wasm_test_utils = { path = "../test_utils/wasm", optional = true }

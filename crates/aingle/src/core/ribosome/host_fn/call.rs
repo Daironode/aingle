@@ -51,7 +51,11 @@ pub mod wasm_test {
     use hdk::prelude::AgentInfo;
     use hdk::prelude::CellId;
     use aingle_hash::HeaderHash;
+<<<<<<< HEAD
     use aingle_middleware_bytes::SerializedBytes;
+=======
+    use aingle_serialized_bytes::SerializedBytes;
+>>>>>>> master
     use aingle_types::app::InstalledCell;
     use aingle_types::dna::DnaDef;
     use aingle_types::dna::DnaFile;

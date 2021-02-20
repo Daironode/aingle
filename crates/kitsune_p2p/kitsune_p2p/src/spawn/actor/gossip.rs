@@ -7,7 +7,11 @@ use crate::*;
 use ghost_actor::dependencies::tracing;
 use ghost_actor::dependencies::tracing_futures;
 use ghost_actor::GhostError;
+<<<<<<< HEAD
 use kitsune_p2p_types::dgd_arc::DgdArc;
+=======
+use kitsune_p2p_types::dht_arc::DhtArc;
+>>>>>>> master
 use std::collections::HashMap;
 use std::collections::HashSet;
 use std::iter::FromIterator;
@@ -135,7 +139,11 @@ impl GossipData {
             .req_op_hashes(ReqOpHashesEvt::new(
                 from_agent.clone(), // from not to because we're initiating
                 from_agent.clone(),
+<<<<<<< HEAD
                 DgdArc::new(0, u32::MAX),
+=======
+                DhtArc::new(0, u32::MAX),
+>>>>>>> master
                 i64::MIN,
                 i64::MAX,
                 Default::default(), // This is ignored because requesting from self
@@ -173,7 +181,11 @@ impl GossipData {
             .req_op_hashes(ReqOpHashesEvt::new(
                 from_agent.clone(),
                 to_agent.clone(),
+<<<<<<< HEAD
                 DgdArc::new(0, u32::MAX),
+=======
+                DhtArc::new(0, u32::MAX),
+>>>>>>> master
                 i64::MIN,
                 i64::MAX,
                 op_count,

@@ -21,7 +21,11 @@ pub use sweet_network::*;
 pub use sweet_zome::*;
 
 use hdk::prelude::Element;
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 
 /// Necessary for parsing the output of a simple "get entry"
 // TODO: remove once host fns remove SerializedBytes constraint

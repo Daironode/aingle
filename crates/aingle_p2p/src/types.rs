@@ -20,7 +20,11 @@ pub enum AIngleP2pError {
 
     /// SerializedBytesError
     #[error(transparent)]
+<<<<<<< HEAD
     SerializedBytesError(#[from] aingle_middleware_bytes::SerializedBytesError),
+=======
+    SerializedBytesError(#[from] aingle_serialized_bytes::SerializedBytesError),
+>>>>>>> master
 
     /// Invalid P2p Message
     #[error("InvalidP2pMessage: {0}")]
@@ -140,7 +144,11 @@ to_and_from_kitsune! {
     AgentPubKeyExt<
         aingle_hash::AgentPubKey
     > -> kitsune_p2p::KitsuneAgent,
+<<<<<<< HEAD
     DgdOpHashExt<aingle_hash::DgdOpHash> -> kitsune_p2p::KitsuneOpHash,
+=======
+    DhtOpHashExt<aingle_hash::DhtOpHash> -> kitsune_p2p::KitsuneOpHash,
+>>>>>>> master
 }
 
 macro_rules! to_kitsune {
@@ -168,7 +176,12 @@ macro_rules! to_kitsune {
 }
 
 to_kitsune! {
+<<<<<<< HEAD
     AnyDgdHashExt<
         aingle_hash::AnyDgdHash
+=======
+    AnyDhtHashExt<
+        aingle_hash::AnyDhtHash
+>>>>>>> master
     > -> kitsune_p2p::KitsuneBasis,
 }

@@ -1,5 +1,9 @@
 use crate::HashType;
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 
 /// Any implementor of HashableContent may be used in a AIngleHashed to pair
 /// data with its AIngleHash representation. It also has an associated HashType.

@@ -80,7 +80,11 @@ where
 fn hash_from_content<T: HashType, C: HashableContent<HashType = T>>(content: &C) -> AIngleHash<T> {
     match content.hashable_content() {
         HashableContentBytes::Content(sb) => {
+<<<<<<< HEAD
             let bytes: Vec<u8> = aingle_middleware_bytes::UnsafeBytes::from(sb).into();
+=======
+            let bytes: Vec<u8> = aingle_serialized_bytes::UnsafeBytes::from(sb).into();
+>>>>>>> master
             let hash = encode::blake2b_256(&bytes);
             assert_length!(AINGLE_HASH_CORE_LEN, &hash);
             AIngleHash::<T>::from_raw_32_and_type(hash, content.hash_type())

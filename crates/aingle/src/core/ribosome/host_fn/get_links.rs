@@ -27,14 +27,22 @@ pub fn get_links<'a>(
             None => LinkMetaKey::BaseZome(&base_address, zome_id),
         };
 
+<<<<<<< HEAD
         // Get the links from the dgd
+=======
+        // Get the links from the dht
+>>>>>>> master
         let links = call_context
             .host_access
             .workspace()
             .write()
             .await
             .cascade(network)
+<<<<<<< HEAD
             .dgd_get_links(&key, GetLinksOptions::default())
+=======
+            .dht_get_links(&key, GetLinksOptions::default())
+>>>>>>> master
             .await
             .map_err(|cascade_error| WasmError::Host(cascade_error.to_string()))?;
 

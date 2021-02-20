@@ -26,14 +26,22 @@ fn validation_package(
                 )))
                 .include_entries(true);
             let songs = hdk::prelude::query(query)?;
+<<<<<<< HEAD
             // Need to post at least 30 songs to be an artist on this dgd
+=======
+            // Need to post at least 30 songs to be an artist on this dht
+>>>>>>> master
             if songs.len() >= NUM_SONGS {
                 Ok(ValidationPackageCallbackResult::Success(
                     ValidationPackage::new(songs),
                 ))
             } else {
                 Ok(ValidationPackageCallbackResult::Fail(
+<<<<<<< HEAD
                     "Need at least 30 songs to be an artist on this dgd".to_string(),
+=======
+                    "Need at least 30 songs to be an artist on this dht".to_string(),
+>>>>>>> master
                 ))
             }
         }

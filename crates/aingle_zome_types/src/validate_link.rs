@@ -3,8 +3,13 @@ use crate::header::CreateLink;
 use crate::header::DeleteLink;
 use crate::zome_io::ExternIO;
 use crate::CallbackResult;
+<<<<<<< HEAD
 use aingle_hash::AnyDgdHash;
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_hash::AnyDhtHash;
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 
 #[derive(Serialize, Deserialize, SerializedBytes, Debug)]
 pub struct ValidateCreateLinkData {
@@ -22,7 +27,11 @@ pub struct ValidateDeleteLinkData {
 pub enum ValidateLinkCallbackResult {
     Valid,
     Invalid(String),
+<<<<<<< HEAD
     UnresolvedDependencies(Vec<AnyDgdHash>),
+=======
+    UnresolvedDependencies(Vec<AnyDhtHash>),
+>>>>>>> master
 }
 
 impl CallbackResult for ValidateLinkCallbackResult {

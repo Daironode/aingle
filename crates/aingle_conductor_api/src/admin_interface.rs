@@ -153,7 +153,11 @@ pub enum AdminRequest {
         cell_id: Box<CellId>,
     },
     /// Add a list [AgentInfoSigned] to this conductor's peer store.
+<<<<<<< HEAD
     /// This is another way of finding peers on a dgd.
+=======
+    /// This is another way of finding peers on a dht.
+>>>>>>> master
     ///
     /// This can be useful for testing.
     ///

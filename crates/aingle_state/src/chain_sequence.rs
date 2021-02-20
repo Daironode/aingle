@@ -3,7 +3,11 @@
 /// - enables fast forward iteration over the entire source chain
 /// - knows what the chain head is, by accessing the last item's header address
 /// - stores information about which headers were committed in the same transactional bundle
+<<<<<<< HEAD
 /// - stores info about whether each entry has undergone DGD op generation and publishing
+=======
+/// - stores info about whether each entry has undergone DHT op generation and publishing
+>>>>>>> master
 ///
 /// When committing the ChainSequence db, a special step is taken to ensure source chain consistency.
 /// If the chain head has moved since the db was created, committing the transaction fails with a special error type.
@@ -28,7 +32,11 @@ use tracing::*;
 pub struct ChainSequenceItem {
     header_address: HeaderHash,
     tx_seq: u32,
+<<<<<<< HEAD
     dgd_transforms_complete: bool,
+=======
+    dht_transforms_complete: bool,
+>>>>>>> master
 }
 
 type Store = KvIntBufFresh<ChainSequenceItem>;
@@ -111,7 +119,11 @@ impl ChainSequenceBuf {
             ChainSequenceItem {
                 header_address: header_address.clone(),
                 tx_seq: self.tx_seq,
+<<<<<<< HEAD
                 dgd_transforms_complete: false,
+=======
+                dht_transforms_complete: false,
+>>>>>>> master
             },
         )?;
         trace!(self.next_index);
@@ -120,7 +132,11 @@ impl ChainSequenceBuf {
         Ok(())
     }
 
+<<<<<<< HEAD
     pub fn get_items_with_incomplete_dgd_ops<'txn, R: Readable>(
+=======
+    pub fn get_items_with_incomplete_dht_ops<'txn, R: Readable>(
+>>>>>>> master
         &self,
         r: &'txn R,
     ) -> SourceChainResult<
@@ -132,7 +148,11 @@ impl ChainSequenceBuf {
         // TODO: PERF: Currently this checks every header but we could keep
         // a list of indices for only the headers which have been transformed.
         Ok(Box::new(self.buf.store().iter(r)?.filter_map(|(i, c)| {
+<<<<<<< HEAD
             Ok(if !c.dgd_transforms_complete {
+=======
+            Ok(if !c.dht_transforms_complete {
+>>>>>>> master
                 Some((
                     IntKey::from_key_bytes_or_friendly_panic(i).into(),
                     c.header_address,
@@ -143,9 +163,15 @@ impl ChainSequenceBuf {
         })))
     }
 
+<<<<<<< HEAD
     pub fn complete_dgd_op(&mut self, i: u32) -> SourceChainResult<()> {
         if let Some(mut c) = self.buf.get(&i.into())? {
             c.dgd_transforms_complete = true;
+=======
+    pub fn complete_dht_op(&mut self, i: u32) -> SourceChainResult<()> {
+        if let Some(mut c) = self.buf.get(&i.into())? {
+            c.dht_transforms_complete = true;
+>>>>>>> master
             self.buf.put(i.into(), c)?;
         }
         Ok(())
@@ -155,8 +181,13 @@ impl ChainSequenceBuf {
     /// we don't need to check for as at on write.
     /// This helps avoid failed writes when nothing
     /// is actually being written by a workflow
+<<<<<<< HEAD
     /// or when produce_dgd_ops updates the
     /// dgd_transforms_complete.
+=======
+    /// or when produce_dht_ops updates the
+    /// dht_transforms_complete.
+>>>>>>> master
     pub fn chain_moved_in_this_transaction(&self) -> bool {
         self.current_head != self.persisted_head
     }
@@ -516,7 +547,11 @@ pub mod tests {
         // Modify the chain without adding a header -- this succeeds
         let task1 = tokio::spawn(async move {
             let mut buf = ChainSequenceBuf::new(arc1.clone().into())?;
+<<<<<<< HEAD
             buf.complete_dgd_op(0)?;
+=======
+            buf.complete_dht_op(0)?;
+>>>>>>> master
 
             // let the other task run and make a commit to the chain head,
             // to demonstrate the chain moving underneath us

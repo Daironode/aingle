@@ -99,12 +99,20 @@ impl SourceChainBuf {
         self.elements.get_entry(k)
     }
 
+<<<<<<< HEAD
     pub async fn get_incomplete_dgd_ops(&self) -> SourceChainResult<Vec<(u32, Vec<DgdOp>)>> {
+=======
+    pub async fn get_incomplete_dht_ops(&self) -> SourceChainResult<Vec<(u32, Vec<DhtOp>)>> {
+>>>>>>> master
         let mut ops = Vec::new();
         let ops_headers = fresh_reader!(self.env(), |r| {
             SourceChainResult::Ok(
                 self.sequence
+<<<<<<< HEAD
                     .get_items_with_incomplete_dgd_ops(&r)?
+=======
+                    .get_items_with_incomplete_dht_ops(&r)?
+>>>>>>> master
                     .collect::<Vec<_>>()?,
             )
         })?;
@@ -119,8 +127,13 @@ impl SourceChainBuf {
         Ok(ops)
     }
 
+<<<<<<< HEAD
     pub fn complete_dgd_op(&mut self, i: u32) -> SourceChainResult<()> {
         self.sequence.complete_dgd_op(i)
+=======
+    pub fn complete_dht_op(&mut self, i: u32) -> SourceChainResult<()> {
+        self.sequence.complete_dht_op(i)
+>>>>>>> master
     }
 
     pub fn elements(&self) -> &ElementBuf<AuthoredPrefix> {
@@ -212,7 +225,11 @@ impl SourceChainBuf {
                         ops.len()
                     } else {
                         ops.into_iter()
+<<<<<<< HEAD
                             .filter(|op| !matches!(&op, DgdOpLight::StoreEntry(_, _, _)))
+=======
+                            .filter(|op| !matches!(&op, DhtOpLight::StoreEntry(_, _, _)))
+>>>>>>> master
                             .count()
                     };
                     let (signed, entry) = element.into_inner();

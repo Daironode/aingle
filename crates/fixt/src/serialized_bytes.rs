@@ -1,6 +1,10 @@
 //! @todo move all this out to the serialized bytes crate
 use crate::prelude::*;
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 use rand::seq::SliceRandom;
 
 #[derive(Clone, Copy)]

@@ -1,20 +1,34 @@
 use crate::conductor::ConductorHandle;
 use crate::core::ribosome::ZomeCallInvocation;
+<<<<<<< HEAD
 use crate::core::workflow::incoming_dgd_ops_workflow::IncomingDgdOpsWorkspace;
+=======
+use crate::core::workflow::incoming_dht_ops_workflow::IncomingDhtOpsWorkspace;
+>>>>>>> master
 use crate::test_utils::host_fn_caller::*;
 use crate::test_utils::new_invocation;
 use crate::test_utils::new_zome_call;
 use crate::test_utils::setup_app;
 use crate::test_utils::wait_for_integration;
 use fallible_iterator::FallibleIterator;
+<<<<<<< HEAD
 use aingle_hash::AnyDgdHash;
 use aingle_hash::DgdOpHash;
+=======
+use aingle_hash::AnyDhtHash;
+use aingle_hash::DhtOpHash;
+>>>>>>> master
 use aingle_hash::EntryHash;
 use aingle_hash::HeaderHash;
 use aingle_lmdb::env::EnvironmentWrite;
 use aingle_lmdb::fresh_reader_test;
+<<<<<<< HEAD
 use aingle_middleware_bytes::SerializedBytes;
 use aingle_state::dgd_op_integration::IntegratedDgdOpsValue;
+=======
+use aingle_serialized_bytes::SerializedBytes;
+use aingle_state::dht_op_integration::IntegratedDhtOpsValue;
+>>>>>>> master
 use aingle_state::element_buf::ElementBuf;
 use aingle_state::validation_db::ValidationLimboValue;
 use aingle_types::prelude::*;
@@ -92,21 +106,36 @@ async fn app_validation_workflow_test() {
 
 // These are the expected invalid ops
 fn expected_invalid_entry(
+<<<<<<< HEAD
     (hash, i, el): &(DgdOpHash, IntegratedDgdOpsValue, Element),
     line: u32,
     invalid_header_hash: &HeaderHash,
     invalid_entry_hash: &AnyDgdHash,
+=======
+    (hash, i, el): &(DhtOpHash, IntegratedDhtOpsValue, Element),
+    line: u32,
+    invalid_header_hash: &HeaderHash,
+    invalid_entry_hash: &AnyDhtHash,
+>>>>>>> master
 ) -> bool {
     let s = format!("\nline:{}\n{:?}\n{:?}\n{:?}", line, hash, i, el);
     match &i.op {
         // A Store entry that matches these hashes
+<<<<<<< HEAD
         DgdOpLight::StoreEntry(hh, _, eh)
+=======
+        DhtOpLight::StoreEntry(hh, _, eh)
+>>>>>>> master
             if eh == invalid_entry_hash && hh == invalid_header_hash =>
         {
             assert_eq!(i.validation_status, ValidationStatus::Rejected, "{}", s)
         }
         // And the store element
+<<<<<<< HEAD
         DgdOpLight::StoreElement(hh, _, _) if hh == invalid_header_hash => {
+=======
+        DhtOpLight::StoreElement(hh, _, _) if hh == invalid_header_hash => {
+>>>>>>> master
             assert_eq!(i.validation_status, ValidationStatus::Rejected, "{}", s);
         }
         _ => return false,
@@ -115,31 +144,51 @@ fn expected_invalid_entry(
 }
 
 // All others must be valid
+<<<<<<< HEAD
 fn others((hash, i, el): &(DgdOpHash, IntegratedDgdOpsValue, Element), line: u32) {
+=======
+fn others((hash, i, el): &(DhtOpHash, IntegratedDhtOpsValue, Element), line: u32) {
+>>>>>>> master
     let s = format!("\nline:{}\n{:?}\n{:?}\n{:?}", line, hash, i, el);
     match &i.op {
         // Register agent activity will be invalid if the previous header is invalid
         // This is very hard to track in these tests and this op also doesn't
         // go through app validation so it's more productive to skip it
+<<<<<<< HEAD
         DgdOpLight::RegisterAgentActivity(_, _) => {}
+=======
+        DhtOpLight::RegisterAgentActivity(_, _) => {}
+>>>>>>> master
         _ => assert_eq!(i.validation_status, ValidationStatus::Valid, "{}", s),
     }
 }
 
 // Now we expect an invalid link
 fn expected_invalid_link(
+<<<<<<< HEAD
     (hash, i, el): &(DgdOpHash, IntegratedDgdOpsValue, Element),
+=======
+    (hash, i, el): &(DhtOpHash, IntegratedDhtOpsValue, Element),
+>>>>>>> master
     line: u32,
     invalid_link_hash: &HeaderHash,
 ) -> bool {
     let s = format!("\nline:{}\n{:?}\n{:?}\n{:?}", line, hash, i, el);
     match &i.op {
         // Invalid link
+<<<<<<< HEAD
         DgdOpLight::RegisterAddLink(hh, _) if hh == invalid_link_hash => {
             assert_eq!(i.validation_status, ValidationStatus::Rejected, "{}", s)
         }
         // The store element for this CreateLink header is also rejected
         DgdOpLight::StoreElement(hh, _, _) if hh == invalid_link_hash => {
+=======
+        DhtOpLight::RegisterAddLink(hh, _) if hh == invalid_link_hash => {
+            assert_eq!(i.validation_status, ValidationStatus::Rejected, "{}", s)
+        }
+        // The store element for this CreateLink header is also rejected
+        DhtOpLight::StoreElement(hh, _, _) if hh == invalid_link_hash => {
+>>>>>>> master
             assert_eq!(i.validation_status, ValidationStatus::Rejected, "{}", s)
         }
         _ => return false,
@@ -149,14 +198,22 @@ fn expected_invalid_link(
 
 // Now we're trying to remove an invalid link
 fn expected_invalid_remove_link(
+<<<<<<< HEAD
     (hash, i, el): &(DgdOpHash, IntegratedDgdOpsValue, Element),
+=======
+    (hash, i, el): &(DhtOpHash, IntegratedDhtOpsValue, Element),
+>>>>>>> master
     line: u32,
     invalid_remove_hash: &HeaderHash,
 ) -> bool {
     let s = format!("\nline:{}\n{:?}\n{:?}\n{:?}", line, hash, i, el);
 
     // To make it simple we want to skip this op
+<<<<<<< HEAD
     if let DgdOpLight::RegisterAgentActivity(_, _) = &i.op {
+=======
+    if let DhtOpLight::RegisterAgentActivity(_, _) = &i.op {
+>>>>>>> master
         return false;
     }
 
@@ -175,11 +232,19 @@ fn expected_invalid_remove_link(
     }
     match &i.op {
         // The store element for the DeleteLink is invalid
+<<<<<<< HEAD
         DgdOpLight::StoreElement(hh, _, _) if hh == invalid_remove_hash => {
             assert_eq!(i.validation_status, ValidationStatus::Rejected, "{}", s)
         }
         // The remove link op is also invalid
         DgdOpLight::RegisterRemoveLink(hh, _) if hh == invalid_remove_hash => {
+=======
+        DhtOpLight::StoreElement(hh, _, _) if hh == invalid_remove_hash => {
+            assert_eq!(i.validation_status, ValidationStatus::Rejected, "{}", s)
+        }
+        // The remove link op is also invalid
+        DhtOpLight::RegisterRemoveLink(hh, _) if hh == invalid_remove_hash => {
+>>>>>>> master
             assert_eq!(i.validation_status, ValidationStatus::Rejected, "{}", s)
         }
         _ => return false,
@@ -213,7 +278,11 @@ async fn run_test(
     {
         let alice_env = handle.get_cell_env(&alice_cell_id).await.unwrap();
 
+<<<<<<< HEAD
         let workspace = IncomingDgdOpsWorkspace::new(alice_env.clone().into()).unwrap();
+=======
+        let workspace = IncomingDhtOpsWorkspace::new(alice_env.clone().into()).unwrap();
+>>>>>>> master
         // Validation should be empty
         let val = inspect_val_limbo(&alice_env, &workspace);
         assert_eq!(val.len(), 0);
@@ -227,7 +296,11 @@ async fn run_test(
 
     let (invalid_header_hash, invalid_entry_hash) =
         commit_invalid(&bob_cell_id, &handle, dna_file).await;
+<<<<<<< HEAD
     let invalid_entry_hash: AnyDgdHash = invalid_entry_hash.into();
+=======
+    let invalid_entry_hash: AnyDhtHash = invalid_entry_hash.into();
+>>>>>>> master
 
     // Integration should have 3 ops in it
     // StoreEntry should be invalid.
@@ -240,7 +313,11 @@ async fn run_test(
     {
         let alice_env = handle.get_cell_env(&alice_cell_id).await.unwrap();
 
+<<<<<<< HEAD
         let workspace = IncomingDgdOpsWorkspace::new(alice_env.clone().into()).unwrap();
+=======
+        let workspace = IncomingDhtOpsWorkspace::new(alice_env.clone().into()).unwrap();
+>>>>>>> master
         // Validation should be empty
         let val = inspect_val_limbo(&alice_env, &workspace);
         assert_eq!(val.len(), 0);
@@ -266,7 +343,11 @@ async fn run_test(
     {
         let alice_env = handle.get_cell_env(&alice_cell_id).await.unwrap();
 
+<<<<<<< HEAD
         let workspace = IncomingDgdOpsWorkspace::new(alice_env.clone().into()).unwrap();
+=======
+        let workspace = IncomingDhtOpsWorkspace::new(alice_env.clone().into()).unwrap();
+>>>>>>> master
         // Validation should be empty
         let val = inspect_val_limbo(&alice_env, &workspace);
         assert_eq!(val.len(), 0);
@@ -294,7 +375,11 @@ async fn run_test(
     {
         let alice_env = handle.get_cell_env(&alice_cell_id).await.unwrap();
 
+<<<<<<< HEAD
         let workspace = IncomingDgdOpsWorkspace::new(alice_env.clone().into()).unwrap();
+=======
+        let workspace = IncomingDhtOpsWorkspace::new(alice_env.clone().into()).unwrap();
+>>>>>>> master
         // Validation should be empty
         let val = inspect_val_limbo(&alice_env, &workspace);
         assert_eq!(val.len(), 0);
@@ -326,7 +411,11 @@ async fn run_test(
     {
         let alice_env = handle.get_cell_env(&alice_cell_id).await.unwrap();
 
+<<<<<<< HEAD
         let workspace = IncomingDgdOpsWorkspace::new(alice_env.clone().into()).unwrap();
+=======
+        let workspace = IncomingDhtOpsWorkspace::new(alice_env.clone().into()).unwrap();
+>>>>>>> master
         // Validation should be empty
         let val = inspect_val_limbo(&alice_env, &workspace);
         assert_eq!(val.len(), 0);
@@ -362,7 +451,11 @@ async fn run_test(
     {
         let alice_env = handle.get_cell_env(&alice_cell_id).await.unwrap();
 
+<<<<<<< HEAD
         let workspace = IncomingDgdOpsWorkspace::new(alice_env.clone().into()).unwrap();
+=======
+        let workspace = IncomingDhtOpsWorkspace::new(alice_env.clone().into()).unwrap();
+>>>>>>> master
         // Validation should be empty
         let val = inspect_val_limbo(&alice_env, &workspace);
         assert_eq!(val.len(), 0);
@@ -399,7 +492,11 @@ async fn run_test_entry_def_id(
 
     let (invalid_header_hash, invalid_entry_hash) =
         commit_invalid_post(&bob_cell_id, &handle, dna_file).await;
+<<<<<<< HEAD
     let invalid_entry_hash: AnyDgdHash = invalid_entry_hash.into();
+=======
+    let invalid_entry_hash: AnyDhtHash = invalid_entry_hash.into();
+>>>>>>> master
 
     // Integration should have 3 ops in it
     // StoreEntry and StoreElement should be invalid.
@@ -410,7 +507,11 @@ async fn run_test_entry_def_id(
     {
         let alice_env = handle.get_cell_env(&alice_cell_id).await.unwrap();
 
+<<<<<<< HEAD
         let workspace = IncomingDgdOpsWorkspace::new(alice_env.clone().into()).unwrap();
+=======
+        let workspace = IncomingDhtOpsWorkspace::new(alice_env.clone().into()).unwrap();
+>>>>>>> master
         // Validation should be empty
         let val = inspect_val_limbo(&alice_env, &workspace);
         assert_eq!(val.len(), 0);
@@ -418,13 +519,21 @@ async fn run_test_entry_def_id(
         for v in &int {
             match &v.1.op {
                 // A Store entry that matches these hashes
+<<<<<<< HEAD
                 DgdOpLight::StoreEntry(hh, _, eh)
+=======
+                DhtOpLight::StoreEntry(hh, _, eh)
+>>>>>>> master
                     if *eh == invalid_entry_hash && *hh == invalid_header_hash =>
                 {
                     assert_eq!(v.1.validation_status, ValidationStatus::Rejected, "{:?}", v)
                 }
                 // And the store element
+<<<<<<< HEAD
                 DgdOpLight::StoreElement(hh, _, _) if *hh == invalid_header_hash => {
+=======
+                DhtOpLight::StoreElement(hh, _, _) if *hh == invalid_header_hash => {
+>>>>>>> master
                     assert_eq!(v.1.validation_status, ValidationStatus::Rejected, "{:?}", v);
                 }
                 _ => {}
@@ -452,7 +561,11 @@ async fn commit_invalid(
 
     // Produce and publish these commits
     let mut triggers = handle.get_cell_triggers(&bob_cell_id).await.unwrap();
+<<<<<<< HEAD
     triggers.produce_dgd_ops.trigger();
+=======
+    triggers.produce_dht_ops.trigger();
+>>>>>>> master
     (invalid_header_hash, entry_hash)
 }
 
@@ -475,7 +588,11 @@ async fn commit_invalid_post(
 
     // Produce and publish these commits
     let mut triggers = handle.get_cell_triggers(&bob_cell_id).await.unwrap();
+<<<<<<< HEAD
     triggers.produce_dgd_ops.trigger();
+=======
+    triggers.produce_dht_ops.trigger();
+>>>>>>> master
     (invalid_header_hash, entry_hash)
 }
 
@@ -491,15 +608,24 @@ async fn call_zome_directly(
 
     // Produce and publish these commits
     let mut triggers = handle.get_cell_triggers(&bob_cell_id).await.unwrap();
+<<<<<<< HEAD
     triggers.produce_dgd_ops.trigger();
+=======
+    triggers.produce_dht_ops.trigger();
+>>>>>>> master
     output
 }
 
 #[instrument(skip(env, workspace))]
 fn inspect_val_limbo(
     env: &EnvironmentWrite,
+<<<<<<< HEAD
     workspace: &IncomingDgdOpsWorkspace,
 ) -> Vec<(DgdOpHash, ValidationLimboValue, Option<Element>)> {
+=======
+    workspace: &IncomingDhtOpsWorkspace,
+) -> Vec<(DhtOpHash, ValidationLimboValue, Option<Element>)> {
+>>>>>>> master
     debug!("start");
     let element_buf = ElementBuf::pending(env.clone().into()).unwrap();
     fresh_reader_test!(env, |r| {
@@ -508,7 +634,11 @@ fn inspect_val_limbo(
             .iter(&r)
             .unwrap()
             .map(|(k, i)| {
+<<<<<<< HEAD
                 let hash = DgdOpHash::from_raw_39_panicky(k.to_vec());
+=======
+                let hash = DhtOpHash::from_raw_39_panicky(k.to_vec());
+>>>>>>> master
                 let el = element_buf.get_element(&i.op.header_hash()).unwrap();
                 debug!(?hash, ?i, op_in_val = ?el);
                 Ok((hash, i, el))
@@ -521,18 +651,31 @@ fn inspect_val_limbo(
 #[instrument(skip(env, workspace))]
 fn inspect_integrated(
     env: &EnvironmentWrite,
+<<<<<<< HEAD
     workspace: &IncomingDgdOpsWorkspace,
 ) -> Vec<(DgdOpHash, IntegratedDgdOpsValue, Element)> {
+=======
+    workspace: &IncomingDhtOpsWorkspace,
+) -> Vec<(DhtOpHash, IntegratedDhtOpsValue, Element)> {
+>>>>>>> master
     debug!("start");
     let element_buf = ElementBuf::vault(env.clone().into(), true).unwrap();
     let element_buf_reject = ElementBuf::rejected(env.clone().into()).unwrap();
     fresh_reader_test!(env, |r| {
         workspace
+<<<<<<< HEAD
             .integrated_dgd_ops
             .iter(&r)
             .unwrap()
             .map(|(k, i)| {
                 let hash = DgdOpHash::from_raw_39_panicky(k.to_vec());
+=======
+            .integrated_dht_ops
+            .iter(&r)
+            .unwrap()
+            .map(|(k, i)| {
+                let hash = DhtOpHash::from_raw_39_panicky(k.to_vec());
+>>>>>>> master
                 let el = element_buf
                     .get_element(&i.op.header_hash())
                     .unwrap()

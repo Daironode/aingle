@@ -12,6 +12,7 @@
 //! |                        **gossip path**                                |
 //! | HandleGossip   | *n/a*            | ValidationQueue  | SysValidation  |
 //! | SysValidation  | ValidationQueue  | ValidationQueue  | AppValidation  |
+<<<<<<< HEAD
 //! | AppValidation  | ValidationQueue  | ValidationQueue  | DgdOpIntegr.   |
 //! |                       **authoring path**                              |
 //! | CallZome       | *n/a*            | ChainSequence    | ProduceDgdOps  |
@@ -21,6 +22,17 @@
 //! | Publish        | AuthoredDgdOps   | *n/a*            | *n/a*          |
 //!
 //! († Auth'd + IntQ is short for: AuthoredDgdOps + IntegrationLimbo)
+=======
+//! | AppValidation  | ValidationQueue  | ValidationQueue  | DhtOpIntegr.   |
+//! |                       **authoring path**                              |
+//! | CallZome       | *n/a*            | ChainSequence    | ProduceDhtOps  |
+//! | ProduceDhtOps  | ChainSequence    | Auth'd + IntQ †  | DhtOpIntegr.   |
+//! |                 **integration, common to both paths**                 |
+//! | DhtOpIntegr.   | IntegrationLimbo | IntegratedDhtOps | Publish        |
+//! | Publish        | AuthoredDhtOps   | *n/a*            | *n/a*          |
+//!
+//! († Auth'd + IntQ is short for: AuthoredDhtOps + IntegrationLimbo)
+>>>>>>> master
 //!
 //! Implicitly, every workflow also writes to its own source queue, i.e. to
 //! remove the item it has just processed.
@@ -36,20 +48,35 @@ use tokio::sync;
 use tokio::sync::mpsc;
 
 // TODO: move these to workflow mod
+<<<<<<< HEAD
 mod integrate_dgd_ops_consumer;
 use integrate_dgd_ops_consumer::*;
+=======
+mod integrate_dht_ops_consumer;
+use integrate_dht_ops_consumer::*;
+>>>>>>> master
 mod sys_validation_consumer;
 use sys_validation_consumer::*;
 mod app_validation_consumer;
 use app_validation_consumer::*;
+<<<<<<< HEAD
 mod produce_dgd_ops_consumer;
 use produce_dgd_ops_consumer::*;
 mod publish_dgd_ops_consumer;
+=======
+mod produce_dht_ops_consumer;
+use produce_dht_ops_consumer::*;
+mod publish_dht_ops_consumer;
+>>>>>>> master
 use crate::conductor::api::CellConductorApiT;
 use crate::conductor::manager::ManagedTaskAdd;
 use aingle_p2p::AIngleP2pCell;
 use aingle_state::workspace::WorkspaceError;
+<<<<<<< HEAD
 use publish_dgd_ops_consumer::*;
+=======
+use publish_dht_ops_consumer::*;
+>>>>>>> master
 
 /// Spawns several long-running tasks which are responsible for processing work
 /// which shows up on various databases.
@@ -65,7 +92,11 @@ pub async fn spawn_queue_consumer_tasks(
 ) -> (QueueTriggers, InitialQueueTriggers) {
     // Publish
     let (tx_publish, handle) =
+<<<<<<< HEAD
         spawn_publish_dgd_ops_consumer(env.clone(), stop.subscribe(), cell_network.clone());
+=======
+        spawn_publish_dht_ops_consumer(env.clone(), stop.subscribe(), cell_network.clone());
+>>>>>>> master
     task_sender
         .send(ManagedTaskAdd::dont_handle(handle))
         .await
@@ -75,7 +106,11 @@ pub async fn spawn_queue_consumer_tasks(
 
     // Integration
     let (tx_integration, handle) =
+<<<<<<< HEAD
         spawn_integrate_dgd_ops_consumer(env.clone(), stop.subscribe(), get_tx_sys);
+=======
+        spawn_integrate_dht_ops_consumer(env.clone(), stop.subscribe(), get_tx_sys);
+>>>>>>> master
     task_sender
         .send(ManagedTaskAdd::dont_handle(handle))
         .await
@@ -112,7 +147,11 @@ pub async fn spawn_queue_consumer_tasks(
 
     // Produce
     let (tx_produce, handle) =
+<<<<<<< HEAD
         spawn_produce_dgd_ops_consumer(env.clone(), stop.subscribe(), tx_publish.clone());
+=======
+        spawn_produce_dht_ops_consumer(env.clone(), stop.subscribe(), tx_publish.clone());
+>>>>>>> master
     task_sender
         .send(ManagedTaskAdd::dont_handle(handle))
         .await
@@ -129,8 +168,13 @@ pub async fn spawn_queue_consumer_tasks(
 pub struct QueueTriggers {
     /// Notify the SysValidation workflow to run, i.e. after handling gossip
     pub sys_validation: TriggerSender,
+<<<<<<< HEAD
     /// Notify the ProduceDgdOps workflow to run, i.e. after InvokeCallZome
     pub produce_dgd_ops: TriggerSender,
+=======
+    /// Notify the ProduceDhtOps workflow to run, i.e. after InvokeCallZome
+    pub produce_dht_ops: TriggerSender,
+>>>>>>> master
 }
 
 /// The triggers to run once at the start of a cell
@@ -138,18 +182,32 @@ pub struct InitialQueueTriggers {
     /// These triggers can only be run once
     /// so they are private
     sys_validation: TriggerSender,
+<<<<<<< HEAD
     produce_dgd_ops: TriggerSender,
     publish_dgd_ops: TriggerSender,
     app_validation: TriggerSender,
     integrate_dgd_ops: TriggerSender,
+=======
+    produce_dht_ops: TriggerSender,
+    publish_dht_ops: TriggerSender,
+    app_validation: TriggerSender,
+    integrate_dht_ops: TriggerSender,
+>>>>>>> master
 }
 
 impl QueueTriggers {
     /// Create a new queue trigger
+<<<<<<< HEAD
     pub fn new(sys_validation: TriggerSender, produce_dgd_ops: TriggerSender) -> Self {
         Self {
             sys_validation,
             produce_dgd_ops,
+=======
+    pub fn new(sys_validation: TriggerSender, produce_dht_ops: TriggerSender) -> Self {
+        Self {
+            sys_validation,
+            produce_dht_ops,
+>>>>>>> master
         }
     }
 }
@@ -157,6 +215,7 @@ impl QueueTriggers {
 impl InitialQueueTriggers {
     fn new(
         sys_validation: TriggerSender,
+<<<<<<< HEAD
         produce_dgd_ops: TriggerSender,
         publish_dgd_ops: TriggerSender,
         app_validation: TriggerSender,
@@ -168,6 +227,19 @@ impl InitialQueueTriggers {
             publish_dgd_ops,
             app_validation,
             integrate_dgd_ops,
+=======
+        produce_dht_ops: TriggerSender,
+        publish_dht_ops: TriggerSender,
+        app_validation: TriggerSender,
+        integrate_dht_ops: TriggerSender,
+    ) -> Self {
+        Self {
+            sys_validation,
+            produce_dht_ops,
+            publish_dht_ops,
+            app_validation,
+            integrate_dht_ops,
+>>>>>>> master
         }
     }
 
@@ -175,9 +247,15 @@ impl InitialQueueTriggers {
     pub fn initialize_workflows(mut self) {
         self.sys_validation.trigger();
         self.app_validation.trigger();
+<<<<<<< HEAD
         self.publish_dgd_ops.trigger();
         self.integrate_dgd_ops.trigger();
         self.produce_dgd_ops.trigger();
+=======
+        self.publish_dht_ops.trigger();
+        self.integrate_dht_ops.trigger();
+        self.produce_dht_ops.trigger();
+>>>>>>> master
     }
 }
 /// The means of nudging a queue consumer to tell it to look for more work

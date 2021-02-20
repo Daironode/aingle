@@ -8,8 +8,13 @@
 /// it is known that private entries should be protected, such as when handling
 /// a get_entry request from the network.
 use crate::source_chain::SourceChainResult;
+<<<<<<< HEAD
 use aingle_hash::hash_type::AnyDgd;
 use aingle_hash::AnyDgdHash;
+=======
+use aingle_hash::hash_type::AnyDht;
+use aingle_hash::AnyDhtHash;
+>>>>>>> master
 use aingle_hash::EntryHash;
 use aingle_hash::HasHash;
 use aingle_hash::HeaderHash;
@@ -153,9 +158,15 @@ where
         self.headers.contains(header_hash)
     }
 
+<<<<<<< HEAD
     pub fn contains_in_scratch(&self, hash: &AnyDgdHash) -> DatabaseResult<bool> {
         match *hash.hash_type() {
             AnyDgd::Entry => {
+=======
+    pub fn contains_in_scratch(&self, hash: &AnyDhtHash) -> DatabaseResult<bool> {
+        match *hash.hash_type() {
+            AnyDht::Entry => {
+>>>>>>> master
                 Ok(
                     if self
                         .public_entries
@@ -172,7 +183,11 @@ where
                     },
                 )
             }
+<<<<<<< HEAD
             AnyDgd::Header => self.headers.contains_in_scratch(&hash.clone().into()),
+=======
+            AnyDht::Header => self.headers.contains_in_scratch(&hash.clone().into()),
+>>>>>>> master
         }
     }
 

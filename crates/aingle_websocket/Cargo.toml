@@ -10,7 +10,11 @@ edition = "2018"
 
 [dependencies]
 futures = "0.3"
+<<<<<<< HEAD
 aingle_middleware_bytes = "=0.0.3"
+=======
+aingle_serialized_bytes = "=0.0.48"
+>>>>>>> master
 nanoid = "0.3"
 net2 = "0.2"
 serde = { version = "1", features = [ "derive" ] }

@@ -9,7 +9,11 @@
 //! ```
 //! use aingle_hash::AgentPubKey;
 //! use aingle_keystore::*;
+<<<<<<< HEAD
 //! use aingle_middleware_bytes::prelude::*;
+=======
+//! use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 //!
 //! #[tokio::main(threaded_scheduler)]
 //! async fn main() {
@@ -31,7 +35,11 @@
 //! }
 //! ```
 
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 
 mod error;
 pub use error::*;

@@ -1,9 +1,16 @@
 //! Links interrelate entries in a source chain.
 
+<<<<<<< HEAD
 use aingle_hash::AnyDgdHash;
 use aingle_hash::EntryHash;
 use aingle_hash::HeaderHash;
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_hash::AnyDhtHash;
+use aingle_hash::EntryHash;
+use aingle_hash::HeaderHash;
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 use aingle_zome_types::prelude::*;
 use regex::Regex;
 
@@ -42,7 +49,11 @@ pub struct GetLinksResponse {
 
 impl WireLinkMetaKey {
     /// Get the basis of this key
+<<<<<<< HEAD
     pub fn basis(&self) -> AnyDgdHash {
+=======
+    pub fn basis(&self) -> AnyDhtHash {
+>>>>>>> master
         use WireLinkMetaKey::*;
         match self {
             Base(b) | BaseZome(b, _) | BaseZomeTag(b, _, _) | Full(b, _, _, _) => b.clone().into(),

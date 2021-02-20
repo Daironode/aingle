@@ -2,7 +2,11 @@ use super::CapSecret;
 use crate::zome::FunctionName;
 use crate::zome::ZomeName;
 use aingle_hash::*;
+<<<<<<< HEAD
 use aingle_middleware_bytes::SerializedBytes;
+=======
+use aingle_serialized_bytes::SerializedBytes;
+>>>>>>> master
 use serde::Deserialize;
 use serde::Serialize;
 use std::collections::BTreeMap;

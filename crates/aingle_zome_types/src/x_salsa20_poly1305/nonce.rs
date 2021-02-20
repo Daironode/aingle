@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 
 pub const NONCE_BYTES: usize = 24;
 

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 use aingle_types::app::InstalledAppId;
 use aingle_zome_types::cell::CellId;
 use std::collections::HashMap;

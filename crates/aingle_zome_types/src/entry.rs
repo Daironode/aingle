@@ -12,7 +12,11 @@ use aingle_hash::hash_type;
 use aingle_hash::AgentPubKey;
 use aingle_hash::HashableContent;
 use aingle_hash::HashableContentBytes;
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 
 mod app_entry_bytes;
 mod error;
@@ -202,17 +206,28 @@ impl AsRef<crate::EntryDefId> for EntryWithDefId {
 /// Zome IO inner for get and get_details calls.
 #[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub struct GetInput {
+<<<<<<< HEAD
     /// Any DGD hash to pass to get or get_details.
     pub any_dgd_hash: aingle_hash::AnyDgdHash,
+=======
+    /// Any DHT hash to pass to get or get_details.
+    pub any_dht_hash: aingle_hash::AnyDhtHash,
+>>>>>>> master
     /// Options for the call.
     pub get_options: crate::entry::GetOptions,
 }
 
 impl GetInput {
     /// Constructor.
+<<<<<<< HEAD
     pub fn new(any_dgd_hash: aingle_hash::AnyDgdHash, get_options: crate::entry::GetOptions) -> Self {
         Self {
             any_dgd_hash,
+=======
+    pub fn new(any_dht_hash: aingle_hash::AnyDhtHash, get_options: crate::entry::GetOptions) -> Self {
+        Self {
+            any_dht_hash,
+>>>>>>> master
             get_options,
         }
     }

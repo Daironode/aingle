@@ -22,9 +22,15 @@ use crate::core::ribosome::ZomeCallInvocation;
 use crate::core::workflow::call_zome_workflow;
 use crate::core::workflow::error::WorkflowError;
 use crate::core::workflow::genesis_workflow::genesis_workflow;
+<<<<<<< HEAD
 use crate::core::workflow::incoming_dgd_ops_workflow::incoming_dgd_ops_workflow;
 use crate::core::workflow::initialize_zomes_workflow;
 use crate::core::workflow::produce_dgd_ops_workflow::dgd_op_light::light_to_op;
+=======
+use crate::core::workflow::incoming_dht_ops_workflow::incoming_dht_ops_workflow;
+use crate::core::workflow::initialize_zomes_workflow;
+use crate::core::workflow::produce_dht_ops_workflow::dht_op_light::light_to_op;
+>>>>>>> master
 use crate::core::workflow::CallZomeWorkflowArgs;
 use crate::core::workflow::CallZomeWorkspace;
 use crate::core::workflow::GenesisWorkflowArgs;
@@ -35,7 +41,11 @@ use call_zome_workflow::call_zome_workspace_lock::CallZomeWorkspaceLock;
 use error::CellError;
 use fallible_iterator::FallibleIterator;
 use futures::future::FutureExt;
+<<<<<<< HEAD
 use hash_type::AnyDgd;
+=======
+use hash_type::AnyDht;
+>>>>>>> master
 use aingle_hash::*;
 use aingle_cascade::authority;
 use aingle_lmdb::db::GetDb;
@@ -43,7 +53,11 @@ use aingle_lmdb::env::EnvironmentRead;
 use aingle_lmdb::env::EnvironmentWrite;
 use aingle_lmdb::env::ReadManager;
 use aingle_p2p::AIngleP2pCellT;
+<<<<<<< HEAD
 use aingle_middleware_bytes::SerializedBytes;
+=======
+use aingle_serialized_bytes::SerializedBytes;
+>>>>>>> master
 use aingle_state::prelude::*;
 use aingle_types::prelude::*;
 use observability::OpenSpanExt;
@@ -246,14 +260,22 @@ impl Cell {
                 respond,
                 from_agent,
                 request_validation_receipt,
+<<<<<<< HEAD
                 dgd_hash,
+=======
+                dht_hash,
+>>>>>>> master
                 ops,
                 ..
             } => {
                 async {
                     tracing::Span::set_current_context(span_context);
                     let res = self
+<<<<<<< HEAD
                         .handle_publish(from_agent, request_validation_receipt, dgd_hash, ops)
+=======
+                        .handle_publish(from_agent, request_validation_receipt, dht_hash, ops)
+>>>>>>> master
                         .await
                         .map_err(aingle_p2p::AIngleP2pError::other);
                     respond.respond(Ok(async move { res }.boxed().into()));
@@ -280,13 +302,21 @@ impl Cell {
             Get {
                 span_context: _,
                 respond,
+<<<<<<< HEAD
                 dgd_hash,
+=======
+                dht_hash,
+>>>>>>> master
                 options,
                 ..
             } => {
                 async {
                     let res = self
+<<<<<<< HEAD
                         .handle_get(dgd_hash, options)
+=======
+                        .handle_get(dht_hash, options)
+>>>>>>> master
                         .await
                         .map_err(aingle_p2p::AIngleP2pError::other);
                     respond.respond(Ok(async move { res }.boxed().into()));
@@ -297,13 +327,21 @@ impl Cell {
             GetMeta {
                 span_context: _,
                 respond,
+<<<<<<< HEAD
                 dgd_hash,
+=======
+                dht_hash,
+>>>>>>> master
                 options,
                 ..
             } => {
                 async {
                     let res = self
+<<<<<<< HEAD
                         .handle_get_meta(dgd_hash, options)
+=======
+                        .handle_get_meta(dht_hash, options)
+>>>>>>> master
                         .await
                         .map_err(aingle_p2p::AIngleP2pError::other);
                     respond.respond(Ok(async move { res }.boxed().into()));
@@ -363,14 +401,22 @@ impl Cell {
             FetchOpHashesForConstraints {
                 span_context: _,
                 respond,
+<<<<<<< HEAD
                 dgd_arc,
+=======
+                dht_arc,
+>>>>>>> master
                 since,
                 until,
                 ..
             } => {
                 async {
                     let res = self
+<<<<<<< HEAD
                         .handle_fetch_op_hashes_for_constraints(dgd_arc, since, until)
+=======
+                        .handle_fetch_op_hashes_for_constraints(dht_arc, since, until)
+>>>>>>> master
                         .map_err(aingle_p2p::AIngleP2pError::other);
                     respond.respond(Ok(async move { res }.boxed().into()));
                 }
@@ -412,16 +458,27 @@ impl Cell {
         Ok(())
     }
 
+<<<<<<< HEAD
     #[instrument(skip(self, _request_validation_receipt, _dgd_hash, ops))]
+=======
+    #[instrument(skip(self, _request_validation_receipt, _dht_hash, ops))]
+>>>>>>> master
     /// we are receiving a "publish" event from the network
     async fn handle_publish(
         &self,
         from_agent: AgentPubKey,
         _request_validation_receipt: bool,
+<<<<<<< HEAD
         _dgd_hash: aingle_hash::AnyDgdHash,
         ops: Vec<(aingle_hash::DgdOpHash, aingle_types::dgd_op::DgdOp)>,
     ) -> CellResult<()> {
         incoming_dgd_ops_workflow(
+=======
+        _dht_hash: aingle_hash::AnyDhtHash,
+        ops: Vec<(aingle_hash::DhtOpHash, aingle_types::dht_op::DhtOp)>,
+    ) -> CellResult<()> {
+        incoming_dht_ops_workflow(
+>>>>>>> master
             &self.env,
             self.queue_triggers.sys_validation.clone(),
             ops,
@@ -481,7 +538,11 @@ impl Cell {
     /// a remote node is asking us for entry data
     async fn handle_get(
         &self,
+<<<<<<< HEAD
         dgd_hash: aingle_hash::AnyDgdHash,
+=======
+        dht_hash: aingle_hash::AnyDhtHash,
+>>>>>>> master
         options: aingle_p2p::event::GetOptions,
     ) -> CellResult<GetElementResponse> {
         debug!("handling get");
@@ -489,9 +550,15 @@ impl Cell {
         // we can just have these defaults depending on whether or not
         // the hash is an entry or header.
         // In the future we should use GetOptions to choose which get to run.
+<<<<<<< HEAD
         let r = match *dgd_hash.hash_type() {
             AnyDgd::Entry => self.handle_get_entry(dgd_hash.into(), options).await,
             AnyDgd::Header => self.handle_get_element(dgd_hash.into()).await,
+=======
+        let r = match *dht_hash.hash_type() {
+            AnyDht::Entry => self.handle_get_entry(dht_hash.into(), options).await,
+            AnyDht::Header => self.handle_get_element(dht_hash.into()).await,
+>>>>>>> master
         };
         if let Err(e) = &r {
             error!(msg = "Error handling a get", ?e, agent = ?self.id.agent_pubkey());
@@ -515,11 +582,19 @@ impl Cell {
         authority::handle_get_element(env, hash).map_err(Into::into)
     }
 
+<<<<<<< HEAD
     #[instrument(skip(self, _dgd_hash, _options))]
     /// a remote node is asking us for metadata
     async fn handle_get_meta(
         &self,
         _dgd_hash: aingle_hash::AnyDgdHash,
+=======
+    #[instrument(skip(self, _dht_hash, _options))]
+    /// a remote node is asking us for metadata
+    async fn handle_get_meta(
+        &self,
+        _dht_hash: aingle_hash::AnyDhtHash,
+>>>>>>> master
         _options: aingle_p2p::event::GetMetaOptions,
     ) -> CellResult<MetadataSet> {
         unimplemented!()
@@ -557,6 +632,7 @@ impl Cell {
         unimplemented!()
     }
 
+<<<<<<< HEAD
     #[instrument(skip(self, dgd_arc, since, until))]
     /// the network module is requesting a list of dgd op hashes
     fn handle_fetch_op_hashes_for_constraints(
@@ -570,12 +646,28 @@ impl Cell {
         let integrated_dgd_ops = IntegratedDgdOpsBuf::new(self.env().clone().into())?;
         let result: Vec<DgdOpHash> = integrated_dgd_ops
             .query(&reader, Some(since), Some(until), Some(dgd_arc))?
+=======
+    #[instrument(skip(self, dht_arc, since, until))]
+    /// the network module is requesting a list of dht op hashes
+    fn handle_fetch_op_hashes_for_constraints(
+        &self,
+        dht_arc: aingle_p2p::dht_arc::DhtArc,
+        since: Timestamp,
+        until: Timestamp,
+    ) -> CellResult<Vec<DhtOpHash>> {
+        let env_ref = self.env.guard();
+        let reader = env_ref.reader()?;
+        let integrated_dht_ops = IntegratedDhtOpsBuf::new(self.env().clone().into())?;
+        let result: Vec<DhtOpHash> = integrated_dht_ops
+            .query(&reader, Some(since), Some(until), Some(dht_arc))?
+>>>>>>> master
             .map(|(k, _)| Ok(k))
             .collect()?;
         Ok(result)
     }
 
     #[instrument(skip(self, op_hashes))]
+<<<<<<< HEAD
     /// The network module is requesting the content for dgd ops
     async fn handle_fetch_op_hash_data(
         &self,
@@ -591,6 +683,23 @@ impl Cell {
         let mut out = vec![];
         for op_hash in op_hashes {
             let val = integrated_dgd_ops.get(&op_hash)?;
+=======
+    /// The network module is requesting the content for dht ops
+    async fn handle_fetch_op_hash_data(
+        &self,
+        op_hashes: Vec<aingle_hash::DhtOpHash>,
+    ) -> CellResult<
+        Vec<(
+            aingle_hash::AnyDhtHash,
+            aingle_hash::DhtOpHash,
+            aingle_types::dht_op::DhtOp,
+        )>,
+    > {
+        let integrated_dht_ops = IntegratedDhtOpsBuf::new(self.env().clone().into())?;
+        let mut out = vec![];
+        for op_hash in op_hashes {
+            let val = integrated_dht_ops.get(&op_hash)?;
+>>>>>>> master
             if let Some(val) = val {
                 let full_op = match &val.validation_status {
                     ValidationStatus::Valid => {
@@ -603,7 +712,11 @@ impl Cell {
                     }
                     ValidationStatus::Abandoned => todo!("Add when abandoned store is added"),
                 };
+<<<<<<< HEAD
                 let basis = full_op.dgd_basis();
+=======
+                let basis = full_op.dht_basis();
+>>>>>>> master
                 out.push((basis, op_hash, full_op));
             }
         }
@@ -688,7 +801,11 @@ impl Cell {
             keystore,
             arc.clone().into(),
             args,
+<<<<<<< HEAD
             self.queue_triggers.produce_dgd_ops.clone(),
+=======
+            self.queue_triggers.produce_dht_ops.clone(),
+>>>>>>> master
         )
         .await
         .map_err(Box::new)?)

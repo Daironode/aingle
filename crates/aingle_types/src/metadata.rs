@@ -3,8 +3,13 @@
 use crate::timestamp;
 use crate::Timestamp;
 use aingle_hash::HeaderHash;
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
 pub use aingle_zome_types::metadata::EntryDgdStatus;
+=======
+use aingle_serialized_bytes::prelude::*;
+pub use aingle_zome_types::metadata::EntryDhtStatus;
+>>>>>>> master
 use aingle_zome_types::HeaderHashed;
 use std::collections::BTreeSet;
 
@@ -34,7 +39,11 @@ pub struct MetadataSet {
     /// The status of an entry from an authority.
     /// This is simply a faster way of determining if
     /// there are any live headers on an entry.
+<<<<<<< HEAD
     pub entry_dgd_status: Option<EntryDgdStatus>,
+=======
+    pub entry_dht_status: Option<EntryDhtStatus>,
+>>>>>>> master
 }
 
 impl From<HeaderHashed> for TimedHeaderHash {

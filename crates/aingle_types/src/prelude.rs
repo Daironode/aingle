@@ -3,7 +3,11 @@
 pub use crate::Timestamp;
 pub use aingle_keystore::AgentPubKeyExt;
 pub use aingle_keystore::KeystoreSender;
+<<<<<<< HEAD
 pub use aingle_middleware_bytes::prelude::*;
+=======
+pub use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 pub use aingle_zome_types::prelude::*;
 pub use std::convert::TryFrom;
 pub use std::convert::TryInto;
@@ -13,8 +17,13 @@ pub use crate::app::*;
 pub use crate::autonomic::*;
 pub use crate::chain::*;
 pub use crate::db::*;
+<<<<<<< HEAD
 pub use crate::dgd_op::error::*;
 pub use crate::dgd_op::*;
+=======
+pub use crate::dht_op::error::*;
+pub use crate::dht_op::*;
+>>>>>>> master
 pub use crate::dna::error::*;
 pub use crate::dna::wasm::*;
 pub use crate::dna::zome::inline_zome::error::*;

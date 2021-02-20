@@ -17,7 +17,11 @@ pub mod async_lazy;
 mod auto_stream_select;
 pub use auto_stream_select::*;
 pub mod codec;
+<<<<<<< HEAD
 pub mod dgd_arc;
+=======
+pub mod dht_arc;
+>>>>>>> master
 pub mod metrics;
 pub mod transport;
 pub mod transport_mem;

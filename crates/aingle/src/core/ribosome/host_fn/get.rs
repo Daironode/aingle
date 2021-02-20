@@ -10,7 +10,11 @@ pub fn get<'a>(
     call_context: Arc<CallContext>,
     input: GetInput,
 ) -> Result<Option<Element>, WasmError> {
+<<<<<<< HEAD
     let GetInput{ any_dgd_hash, get_options } = input;
+=======
+    let GetInput{ any_dht_hash, get_options } = input;
+>>>>>>> master
 
     // Get the network from the context
     let network = call_context.host_access.network().clone();
@@ -23,7 +27,11 @@ pub fn get<'a>(
             .write()
             .await
             .cascade(network)
+<<<<<<< HEAD
             .dgd_get(any_dgd_hash, get_options)
+=======
+            .dht_get(any_dht_hash, get_options)
+>>>>>>> master
             .await
             .map_err(|cascade_error| WasmError::Host(cascade_error.to_string()))?;
 

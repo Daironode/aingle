@@ -11,7 +11,11 @@ use crate::core::validation::*;
 use error::WorkflowError;
 use error::WorkflowResult;
 use fallible_iterator::FallibleIterator;
+<<<<<<< HEAD
 use aingle_hash::DgdOpHash;
+=======
+use aingle_hash::DhtOpHash;
+>>>>>>> master
 use aingle_cascade::Cascade;
 use aingle_cascade::DbPair;
 use aingle_cascade::DbPairMut;
@@ -31,7 +35,11 @@ use std::convert::TryFrom;
 use std::convert::TryInto;
 use tracing::*;
 
+<<<<<<< HEAD
 use produce_dgd_ops_workflow::dgd_op_light::light_to_op;
+=======
+use produce_dht_ops_workflow::dht_op_light::light_to_op;
+>>>>>>> master
 use types::Outcome;
 
 pub mod types;
@@ -106,8 +114,13 @@ async fn sys_validation_workflow_inner(
                     // Sort the ops into a min-heap
                     let op = light_to_op(vlv.op.clone(), element_pending)?;
 
+<<<<<<< HEAD
                     let hash = DgdOpHash::with_data_sync(&op);
                     let order = DgdOpOrder::from(&op);
+=======
+                    let hash = DhtOpHash::with_data_sync(&op);
+                    let order = DhtOpOrder::from(&op);
+>>>>>>> master
                     let v = OrderedOp {
                         order,
                         hash,
@@ -133,15 +146,24 @@ async fn sys_validation_workflow_inner(
         // Create an incoming ops sender for any dependencies we find
         // that we are meant to be holding but aren't.
         // If we are not holding them they will be added to our incoming ops.
+<<<<<<< HEAD
         let incoming_dgd_ops_sender =
             IncomingDgdOpSender::new(workspace.env.clone().into(), sys_validation_trigger.clone());
+=======
+        let incoming_dht_ops_sender =
+            IncomingDhtOpSender::new(workspace.env.clone().into(), sys_validation_trigger.clone());
+>>>>>>> master
 
         let outcome = validate_op(
             &op,
             workspace,
             network.clone(),
             &conductor_api,
+<<<<<<< HEAD
             Some(incoming_dgd_ops_sender),
+=======
+            Some(incoming_dht_ops_sender),
+>>>>>>> master
         )
         .await?;
 
@@ -161,7 +183,11 @@ async fn sys_validation_workflow_inner(
                 // TODO: Try and get this dependency to add to limbo
                 //
                 // I actually can't see how we can do this because there's no
+<<<<<<< HEAD
                 // way to get an DgdOpHash without either having the op or the full
+=======
+                // way to get an DhtOpHash without either having the op or the full
+>>>>>>> master
                 // header. We have neither that's why where here.
                 //
                 // We need to be holding the dependency because
@@ -170,7 +196,11 @@ async fn sys_validation_workflow_inner(
                 vlv.status = ValidationLimboStatus::AwaitingSysDeps(missing_dep);
                 workspace.put_val_limbo(op_hash, vlv)?;
             }
+<<<<<<< HEAD
             Outcome::MissingDgdDep => {
+=======
+            Outcome::MissingDhtDep => {
+>>>>>>> master
                 vlv.status = ValidationLimboStatus::Pending;
                 workspace.put_val_limbo(op_hash, vlv)?;
             }
@@ -187,32 +217,52 @@ async fn sys_validation_workflow_inner(
 }
 
 async fn validate_op(
+<<<<<<< HEAD
     op: &DgdOp,
     workspace: &mut SysValidationWorkspace,
     network: AIngleP2pCell,
     conductor_api: &impl CellConductorApiT,
     incoming_dgd_ops_sender: Option<IncomingDgdOpSender>,
+=======
+    op: &DhtOp,
+    workspace: &mut SysValidationWorkspace,
+    network: AIngleP2pCell,
+    conductor_api: &impl CellConductorApiT,
+    incoming_dht_ops_sender: Option<IncomingDhtOpSender>,
+>>>>>>> master
 ) -> WorkflowResult<Outcome> {
     match validate_op_inner(
         op,
         workspace,
         network,
         conductor_api,
+<<<<<<< HEAD
         incoming_dgd_ops_sender,
+=======
+        incoming_dht_ops_sender,
+>>>>>>> master
     )
     .await
     {
         Ok(_) => match op {
             // TODO: Check strict mode where store element
             // is also run through app validation
+<<<<<<< HEAD
             DgdOp::RegisterAgentActivity(_, _) => Ok(Outcome::SkipAppValidation),
+=======
+            DhtOp::RegisterAgentActivity(_, _) => Ok(Outcome::SkipAppValidation),
+>>>>>>> master
             _ => Ok(Outcome::Accepted),
         },
         // Handle the errors that result in pending or awaiting deps
         Err(SysValidationError::ValidationOutcome(e)) => {
             warn!(
                 agent = %which_agent(conductor_api.cell_id().agent_pubkey()),
+<<<<<<< HEAD
                 msg = "DgdOp has failed system validation",
+=======
+                msg = "DhtOp has failed system validation",
+>>>>>>> master
                 ?op,
                 error = ?e,
                 error_msg = %e
@@ -233,7 +283,11 @@ fn handle_failed(error: ValidationOutcome) -> Outcome {
         ValidationOutcome::Counterfeit(_, _) => {
             unreachable!("Counterfeit ops are dropped before sys validation")
         }
+<<<<<<< HEAD
         ValidationOutcome::DepMissingFromDgd(_) => MissingDgdDep,
+=======
+        ValidationOutcome::DepMissingFromDht(_) => MissingDhtDep,
+>>>>>>> master
         ValidationOutcome::EntryDefId(_) => Rejected,
         ValidationOutcome::EntryHash => Rejected,
         ValidationOutcome::EntryTooLarge(_, _) => Rejected,
@@ -255,6 +309,7 @@ fn handle_failed(error: ValidationOutcome) -> Outcome {
 }
 
 async fn validate_op_inner(
+<<<<<<< HEAD
     op: &DgdOp,
     workspace: &mut SysValidationWorkspace,
     network: AIngleP2pCell,
@@ -263,6 +318,16 @@ async fn validate_op_inner(
 ) -> SysValidationResult<()> {
     match op {
         DgdOp::StoreElement(_, header, entry) => {
+=======
+    op: &DhtOp,
+    workspace: &mut SysValidationWorkspace,
+    network: AIngleP2pCell,
+    conductor_api: &impl CellConductorApiT,
+    incoming_dht_ops_sender: Option<IncomingDhtOpSender>,
+) -> SysValidationResult<()> {
+    match op {
+        DhtOp::StoreElement(_, header, entry) => {
+>>>>>>> master
             store_element(header, workspace, network.clone()).await?;
             if let Some(entry) = entry {
                 store_entry(
@@ -278,7 +343,11 @@ async fn validate_op_inner(
             }
             Ok(())
         }
+<<<<<<< HEAD
         DgdOp::StoreEntry(_, header, entry) => {
+=======
+        DhtOp::StoreEntry(_, header, entry) => {
+>>>>>>> master
             store_entry(
                 (header).into(),
                 entry.as_ref(),
@@ -292,14 +361,24 @@ async fn validate_op_inner(
             store_element(&header, workspace, network).await?;
             Ok(())
         }
+<<<<<<< HEAD
         DgdOp::RegisterAgentActivity(_, header) => {
             register_agent_activity(header, workspace, network.clone(), incoming_dgd_ops_sender)
+=======
+        DhtOp::RegisterAgentActivity(_, header) => {
+            register_agent_activity(header, workspace, network.clone(), incoming_dht_ops_sender)
+>>>>>>> master
                 .await?;
             store_element(header, workspace, network).await?;
             Ok(())
         }
+<<<<<<< HEAD
         DgdOp::RegisterUpdatedContent(_, header, entry) => {
             register_updated_content(header, workspace, network.clone(), incoming_dgd_ops_sender)
+=======
+        DhtOp::RegisterUpdatedContent(_, header, entry) => {
+            register_updated_content(header, workspace, network.clone(), incoming_dht_ops_sender)
+>>>>>>> master
                 .await?;
             if let Some(entry) = entry {
                 store_entry(
@@ -314,8 +393,13 @@ async fn validate_op_inner(
 
             Ok(())
         }
+<<<<<<< HEAD
         DgdOp::RegisterUpdatedElement(_, header, entry) => {
             register_updated_element(header, workspace, network.clone(), incoming_dgd_ops_sender)
+=======
+        DhtOp::RegisterUpdatedElement(_, header, entry) => {
+            register_updated_element(header, workspace, network.clone(), incoming_dht_ops_sender)
+>>>>>>> master
                 .await?;
             if let Some(entry) = entry {
                 store_entry(
@@ -330,6 +414,7 @@ async fn validate_op_inner(
 
             Ok(())
         }
+<<<<<<< HEAD
         DgdOp::RegisterDeletedBy(_, header) => {
             register_deleted_by(header, workspace, network, incoming_dgd_ops_sender).await?;
             Ok(())
@@ -345,6 +430,23 @@ async fn validate_op_inner(
         }
         DgdOp::RegisterRemoveLink(_, header) => {
             register_delete_link(header, workspace, network, incoming_dgd_ops_sender).await?;
+=======
+        DhtOp::RegisterDeletedBy(_, header) => {
+            register_deleted_by(header, workspace, network, incoming_dht_ops_sender).await?;
+            Ok(())
+        }
+        DhtOp::RegisterDeletedEntryHeader(_, header) => {
+            register_deleted_entry_header(header, workspace, network, incoming_dht_ops_sender)
+                .await?;
+            Ok(())
+        }
+        DhtOp::RegisterAddLink(_, header) => {
+            register_add_link(header, workspace, network, incoming_dht_ops_sender).await?;
+            Ok(())
+        }
+        DhtOp::RegisterRemoveLink(_, header) => {
+            register_delete_link(header, workspace, network, incoming_dht_ops_sender).await?;
+>>>>>>> master
             Ok(())
         }
     }
@@ -395,7 +497,11 @@ async fn sys_validate_element_inner(
     let signature = element.signature();
     let header = element.header();
     let entry = element.entry().as_option();
+<<<<<<< HEAD
     let incoming_dgd_ops_sender = None;
+=======
+    let incoming_dht_ops_sender = None;
+>>>>>>> master
     if !counterfeit_check(signature, header).await? {
         return Err(ValidationOutcome::Counterfeit(signature.clone(), header.clone()).into());
     }
@@ -416,6 +522,7 @@ async fn sys_validate_element_inner(
     }
     match header {
         Header::Update(header) => {
+<<<<<<< HEAD
             register_updated_content(header, workspace, network, incoming_dgd_ops_sender).await?;
         }
         Header::Delete(header) => {
@@ -427,6 +534,19 @@ async fn sys_validate_element_inner(
         }
         Header::DeleteLink(header) => {
             register_delete_link(header, workspace, network, incoming_dgd_ops_sender).await?;
+=======
+            register_updated_content(header, workspace, network, incoming_dht_ops_sender).await?;
+        }
+        Header::Delete(header) => {
+            register_deleted_entry_header(header, workspace, network, incoming_dht_ops_sender)
+                .await?;
+        }
+        Header::CreateLink(header) => {
+            register_add_link(header, workspace, network, incoming_dht_ops_sender).await?;
+        }
+        Header::DeleteLink(header) => {
+            register_delete_link(header, workspace, network, incoming_dht_ops_sender).await?;
+>>>>>>> master
         }
         _ => {}
     }
@@ -447,7 +567,11 @@ async fn register_agent_activity(
     header: &Header,
     workspace: &mut SysValidationWorkspace,
     network: AIngleP2pCell,
+<<<<<<< HEAD
     incoming_dgd_ops_sender: Option<IncomingDgdOpSender>,
+=======
+    incoming_dht_ops_sender: Option<IncomingDhtOpSender>,
+>>>>>>> master
 ) -> SysValidationResult<()> {
     // Get data ready to validate
     let prev_header_hash = header.prev_header();
@@ -460,7 +584,11 @@ async fn register_agent_activity(
             prev_header_hash,
             workspace,
             network,
+<<<<<<< HEAD
             incoming_dgd_ops_sender,
+=======
+            incoming_dht_ops_sender,
+>>>>>>> master
             |_| Ok(()),
         )
         .await?;
@@ -484,7 +612,11 @@ async fn store_element(
         let prev_header = cascade
             .retrieve_header(prev_header_hash.clone(), Default::default())
             .await?
+<<<<<<< HEAD
             .ok_or_else(|| ValidationOutcome::DepMissingFromDgd(prev_header_hash.clone().into()))?;
+=======
+            .ok_or_else(|| ValidationOutcome::DepMissingFromDht(prev_header_hash.clone().into()))?;
+>>>>>>> master
         check_prev_timestamp(&header, prev_header.header())?;
         check_prev_seq(&header, prev_header.header())?;
     }
@@ -519,7 +651,11 @@ async fn store_entry(
             .retrieve_header(original_header_address.clone(), Default::default())
             .await?
             .ok_or_else(|| {
+<<<<<<< HEAD
                 ValidationOutcome::DepMissingFromDgd(original_header_address.clone().into())
+=======
+                ValidationOutcome::DepMissingFromDht(original_header_address.clone().into())
+>>>>>>> master
             })?;
         update_check(entry_update, original_header.header())?;
     }
@@ -530,7 +666,11 @@ async fn register_updated_content(
     entry_update: &Update,
     workspace: &mut SysValidationWorkspace,
     network: AIngleP2pCell,
+<<<<<<< HEAD
     incoming_dgd_ops_sender: Option<IncomingDgdOpSender>,
+=======
+    incoming_dht_ops_sender: Option<IncomingDhtOpSender>,
+>>>>>>> master
 ) -> SysValidationResult<()> {
     // Get data ready to validate
     let original_header_address = &entry_update.original_header_address;
@@ -542,7 +682,11 @@ async fn register_updated_content(
         original_header_address,
         workspace,
         network,
+<<<<<<< HEAD
         incoming_dgd_ops_sender,
+=======
+        incoming_dht_ops_sender,
+>>>>>>> master
         dependency_check,
     )
     .await?;
@@ -553,7 +697,11 @@ async fn register_updated_element(
     entry_update: &Update,
     workspace: &mut SysValidationWorkspace,
     network: AIngleP2pCell,
+<<<<<<< HEAD
     incoming_dgd_ops_sender: Option<IncomingDgdOpSender>,
+=======
+    incoming_dht_ops_sender: Option<IncomingDhtOpSender>,
+>>>>>>> master
 ) -> SysValidationResult<()> {
     // Get data ready to validate
     let original_header_address = &entry_update.original_header_address;
@@ -565,7 +713,11 @@ async fn register_updated_element(
         original_header_address,
         workspace,
         network,
+<<<<<<< HEAD
         incoming_dgd_ops_sender,
+=======
+        incoming_dht_ops_sender,
+>>>>>>> master
         dependency_check,
     )
     .await?;
@@ -576,7 +728,11 @@ async fn register_deleted_by(
     element_delete: &Delete,
     workspace: &mut SysValidationWorkspace,
     network: AIngleP2pCell,
+<<<<<<< HEAD
     incoming_dgd_ops_sender: Option<IncomingDgdOpSender>,
+=======
+    incoming_dht_ops_sender: Option<IncomingDhtOpSender>,
+>>>>>>> master
 ) -> SysValidationResult<()> {
     // Get data ready to validate
     let removed_header_address = &element_delete.deletes_address;
@@ -589,7 +745,11 @@ async fn register_deleted_by(
         removed_header_address,
         workspace,
         network,
+<<<<<<< HEAD
         incoming_dgd_ops_sender,
+=======
+        incoming_dht_ops_sender,
+>>>>>>> master
         dependency_check,
     )
     .await?;
@@ -600,7 +760,11 @@ async fn register_deleted_entry_header(
     element_delete: &Delete,
     workspace: &mut SysValidationWorkspace,
     network: AIngleP2pCell,
+<<<<<<< HEAD
     incoming_dgd_ops_sender: Option<IncomingDgdOpSender>,
+=======
+    incoming_dht_ops_sender: Option<IncomingDhtOpSender>,
+>>>>>>> master
 ) -> SysValidationResult<()> {
     // Get data ready to validate
     let removed_header_address = &element_delete.deletes_address;
@@ -613,7 +777,11 @@ async fn register_deleted_entry_header(
         removed_header_address,
         workspace,
         network,
+<<<<<<< HEAD
         incoming_dgd_ops_sender,
+=======
+        incoming_dht_ops_sender,
+>>>>>>> master
         dependency_check,
     )
     .await?;
@@ -624,7 +792,11 @@ async fn register_add_link(
     link_add: &CreateLink,
     workspace: &mut SysValidationWorkspace,
     network: AIngleP2pCell,
+<<<<<<< HEAD
     incoming_dgd_ops_sender: Option<IncomingDgdOpSender>,
+=======
+    incoming_dht_ops_sender: Option<IncomingDhtOpSender>,
+>>>>>>> master
 ) -> SysValidationResult<()> {
     // Get data ready to validate
     let base_entry_address = &link_add.base_address;
@@ -635,7 +807,11 @@ async fn register_add_link(
         base_entry_address,
         workspace,
         network.clone(),
+<<<<<<< HEAD
         incoming_dgd_ops_sender,
+=======
+        incoming_dht_ops_sender,
+>>>>>>> master
         |_| Ok(()),
     )
     .await?;
@@ -644,7 +820,11 @@ async fn register_add_link(
     cascade
         .retrieve_entry(target_entry_address.clone(), Default::default())
         .await?
+<<<<<<< HEAD
         .ok_or_else(|| ValidationOutcome::DepMissingFromDgd(target_entry_address.clone().into()))?;
+=======
+        .ok_or_else(|| ValidationOutcome::DepMissingFromDht(target_entry_address.clone().into()))?;
+>>>>>>> master
 
     check_tag_size(&link_add.tag)?;
     Ok(())
@@ -654,7 +834,11 @@ async fn register_delete_link(
     link_remove: &DeleteLink,
     workspace: &mut SysValidationWorkspace,
     network: AIngleP2pCell,
+<<<<<<< HEAD
     incoming_dgd_ops_sender: Option<IncomingDgdOpSender>,
+=======
+    incoming_dht_ops_sender: Option<IncomingDhtOpSender>,
+>>>>>>> master
 ) -> SysValidationResult<()> {
     // Get data ready to validate
     let link_add_address = &link_remove.link_add_address;
@@ -664,7 +848,11 @@ async fn register_delete_link(
         link_add_address,
         workspace,
         network,
+<<<<<<< HEAD
         incoming_dgd_ops_sender,
+=======
+        incoming_dht_ops_sender,
+>>>>>>> master
         |_| Ok(()),
     )
     .await?;
@@ -761,7 +949,11 @@ impl SysValidationWorkspace {
 
     fn put_val_limbo(
         &mut self,
+<<<<<<< HEAD
         hash: DgdOpHash,
+=======
+        hash: DhtOpHash,
+>>>>>>> master
         mut vlv: ValidationLimboValue,
     ) -> WorkflowResult<()> {
         vlv.last_try = Some(timestamp::now());
@@ -771,7 +963,11 @@ impl SysValidationWorkspace {
     }
 
     #[tracing::instrument(skip(self, hash))]
+<<<<<<< HEAD
     fn put_int_limbo(&mut self, hash: DgdOpHash, iv: IntegrationLimboValue) -> WorkflowResult<()> {
+=======
+    fn put_int_limbo(&mut self, hash: DhtOpHash, iv: IntegrationLimboValue) -> WorkflowResult<()> {
+>>>>>>> master
         self.integration_limbo.put(hash, iv)?;
         Ok(())
     }

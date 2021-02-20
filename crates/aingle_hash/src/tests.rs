@@ -1,35 +1,59 @@
 #![cfg(test)]
 
 use crate::{HashableContent, AIngleHashed};
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 use std::convert::TryInto;
 
 /// test struct
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, SerializedBytes)]
+<<<<<<< HEAD
 struct TestDgdOp {
+=======
+struct TestDhtOp {
+>>>>>>> master
     /// string
     pub s: String,
     /// integer
     pub i: i64,
 }
 
+<<<<<<< HEAD
 type TestDgdOpHashed = AIngleHashed<TestDgdOp>;
+=======
+type TestDhtOpHashed = AIngleHashed<TestDhtOp>;
+>>>>>>> master
 
 /// test struct
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, SerializedBytes)]
 struct TestHeader(String);
 
+<<<<<<< HEAD
 impl_hashable_content!(TestDgdOp, DgdOp);
+=======
+impl_hashable_content!(TestDhtOp, DhtOp);
+>>>>>>> master
 impl_hashable_content!(TestHeader, Header);
 
 #[tokio::test(threaded_scheduler)]
 async fn check_hashed_type() {
+<<<<<<< HEAD
     let my_type = TestDgdOp {
+=======
+    let my_type = TestDhtOp {
+>>>>>>> master
         s: "test".to_string(),
         i: 42,
     };
 
+<<<<<<< HEAD
     let my_type_hashed = TestDgdOpHashed::from_content_sync(my_type);
+=======
+    let my_type_hashed = TestDhtOpHashed::from_content_sync(my_type);
+>>>>>>> master
 
     assert_eq!(
         "uhCQkQFRMcbVVfPJ5AbAv0HJq0geatTakGEEj5rpv_Dp0pjmJob3P",
@@ -89,10 +113,17 @@ fn aingle_hash_parse() {
         &format!("{:?}", h),
     );
 
+<<<<<<< HEAD
     let h = DgdOpHash::try_from("uhCQkWCsAgoKkkfwyJAglj30xX_GLLV-3BXuFy436a2SqpcEwyBzm").unwrap();
     assert_eq!(3_860_645_936, h.get_loc());
     assert_eq!(
         "DgdOpHash(uhCQkWCsAgoKkkfwyJAglj30xX_GLLV-3BXuFy436a2SqpcEwyBzm)",
+=======
+    let h = DhtOpHash::try_from("uhCQkWCsAgoKkkfwyJAglj30xX_GLLV-3BXuFy436a2SqpcEwyBzm").unwrap();
+    assert_eq!(3_860_645_936, h.get_loc());
+    assert_eq!(
+        "DhtOpHash(uhCQkWCsAgoKkkfwyJAglj30xX_GLLV-3BXuFy436a2SqpcEwyBzm)",
+>>>>>>> master
         &format!("{:?}", h),
     );
 }

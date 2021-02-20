@@ -21,7 +21,11 @@ pub use error::{TimestampError, TimestampResult};
 /// representable by either a chrono::Duration (which limits itself to +/- i64 milliseconds), *nor*
 /// by core::time::Duration (which limits itself to +'ve u64 seconds).  Many constructions of these
 /// chrono and core::time types will panic!, so painful measures must be taken to avoid this outcome
+<<<<<<< HEAD
 /// -- it is not acceptable for our core AIngle algorithms to panic when accessing DGD Header
+=======
+/// -- it is not acceptable for our core AIngle algorithms to panic when accessing DHT Header
+>>>>>>> master
 /// information committed by other random AIngle nodes!
 ///
 /// Timestamp implements `Serialize` and `Display` as rfc3339 time strings (if possible).

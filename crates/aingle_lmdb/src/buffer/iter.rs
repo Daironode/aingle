@@ -326,7 +326,11 @@ where
         match item {
             Some(Ok((k, Some(rkv::Value::Blob(buf))))) => Ok(Some((
                 k,
+<<<<<<< HEAD
                 aingle_middleware_bytes::decode(buf).expect(
+=======
+                aingle_serialized_bytes::decode(buf).expect(
+>>>>>>> master
                     "Failed to deserialize data from database. Database might be corrupted",
                 ),
             ))),

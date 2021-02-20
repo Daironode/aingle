@@ -1,6 +1,10 @@
 //! Types for requesting metadata
 
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 
 #[derive(Debug, Hash, PartialEq, Eq, Clone, Serialize, Deserialize)]
 /// Metadata that can be requested on a basis
@@ -20,7 +24,11 @@ pub struct MetadataRequest {
     /// Request the status of an entry.
     /// This is faster then getting all the headers
     /// and checking for live headers.
+<<<<<<< HEAD
     pub entry_dgd_status: bool,
+=======
+    pub entry_dht_status: bool,
+>>>>>>> master
 }
 
 impl Default for MetadataRequest {
@@ -31,7 +39,11 @@ impl Default for MetadataRequest {
             all_deletes: true,
             all_updates: true,
             follow_redirects: false,
+<<<<<<< HEAD
             entry_dgd_status: false,
+=======
+            entry_dht_status: false,
+>>>>>>> master
         }
     }
 }

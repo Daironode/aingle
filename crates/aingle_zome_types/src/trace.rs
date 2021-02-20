@@ -1,6 +1,10 @@
 //! Types related to the `debug` host function
 
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 
 /// Maps directly to the tracing Levels but here to define the interface.
 /// See https://docs.rs/tracing-core/0.1.17/tracing_core/struct.Level.html

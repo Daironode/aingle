@@ -4,9 +4,15 @@ use crate::core::ribosome::Invocation;
 use crate::core::ribosome::ZomesToInvoke;
 use crate::core::workflow::CallZomeWorkspaceLock;
 use derive_more::Constructor;
+<<<<<<< HEAD
 use aingle_hash::AnyDgdHash;
 use aingle_p2p::AIngleP2pCell;
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_hash::AnyDhtHash;
+use aingle_p2p::AIngleP2pCell;
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 use aingle_types::prelude::*;
 use std::sync::Arc;
 
@@ -88,7 +94,11 @@ pub enum ValidateResult {
     Invalid(String),
     /// subconscious needs to map this to either pending or abandoned based on context that the
     /// wasm can't possibly have
+<<<<<<< HEAD
     UnresolvedDependencies(Vec<AnyDgdHash>),
+=======
+    UnresolvedDependencies(Vec<AnyDhtHash>),
+>>>>>>> master
 }
 
 impl From<Vec<(ZomeName, ValidateCallbackResult)>> for ValidateResult {

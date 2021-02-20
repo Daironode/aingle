@@ -4,7 +4,11 @@
 //! - System-defined signals are produced in various places in the system
 
 use crate::impl_from;
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 use aingle_zome_types::prelude::*;
 
 /// A Signal is some information emitted from within AIngle out through

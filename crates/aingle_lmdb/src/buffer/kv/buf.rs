@@ -343,7 +343,11 @@ where
         for (k, op) in self.scratch.iter() {
             match op {
                 Put(v) => {
+<<<<<<< HEAD
                     let buf = aingle_middleware_bytes::encode(v)?;
+=======
+                    let buf = aingle_serialized_bytes::encode(v)?;
+>>>>>>> master
                     let encoded = rkv::Value::Blob(&buf);
                     self.store.db().put(writer, k, &encoded)?;
                 }
@@ -378,7 +382,11 @@ where
         for (k, op) in self.scratch.iter() {
             match op {
                 Put(v) => {
+<<<<<<< HEAD
                     let buf = aingle_middleware_bytes::encode(v)?;
+=======
+                    let buf = aingle_serialized_bytes::encode(v)?;
+>>>>>>> master
                     let encoded = rkv::Value::Blob(&buf);
                     self.store.db().put(
                         writer,

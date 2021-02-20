@@ -56,7 +56,11 @@ pub use crate::x_salsa20_poly1305::x_salsa20_poly1305_encrypt;
 pub use hdk_derive::hdk_entry;
 pub use hdk_derive::hdk_extern;
 pub use aingle_hash::AgentPubKey;
+<<<<<<< HEAD
 pub use aingle_hash::AnyDgdHash;
+=======
+pub use aingle_hash::AnyDhtHash;
+>>>>>>> master
 pub use aingle_hash::EntryHash;
 pub use aingle_hash::EntryHashes;
 pub use aingle_hash::HasHash;

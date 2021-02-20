@@ -26,11 +26,19 @@ pub mod error;
 pub mod app_validation_workflow;
 pub mod call_zome_workflow;
 pub mod genesis_workflow;
+<<<<<<< HEAD
 pub mod incoming_dgd_ops_workflow;
 pub mod initialize_zomes_workflow;
 pub mod integrate_dgd_ops_workflow;
 pub mod produce_dgd_ops_workflow;
 pub mod publish_dgd_ops_workflow;
+=======
+pub mod incoming_dht_ops_workflow;
+pub mod initialize_zomes_workflow;
+pub mod integrate_dht_ops_workflow;
+pub mod produce_dht_ops_workflow;
+pub mod publish_dht_ops_workflow;
+>>>>>>> master
 pub mod sys_validation_workflow;
 
 // TODO: either remove wildcards or add wildcards for all above child modules

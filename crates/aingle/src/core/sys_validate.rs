@@ -2,7 +2,11 @@
 //! This module contains all the checks we run for sys validation
 
 use super::queue_consumer::TriggerSender;
+<<<<<<< HEAD
 use super::workflow::incoming_dgd_ops_workflow::incoming_dgd_ops_workflow;
+=======
+use super::workflow::incoming_dht_ops_workflow::incoming_dht_ops_workflow;
+>>>>>>> master
 use super::workflow::sys_validation_workflow::SysValidationWorkspace;
 use crate::conductor::api::CellConductorApiT;
 use crate::conductor::entry_def_store::get_entry_def;
@@ -289,8 +293,13 @@ pub fn check_update_reference(
 }
 
 /// If we are not holding this header then
+<<<<<<< HEAD
 /// retrieve it and send it as a RegisterAddLink DgdOp
 /// to our incoming_dgd_ops_workflow.
+=======
+/// retrieve it and send it as a RegisterAddLink DhtOp
+/// to our incoming_dht_ops_workflow.
+>>>>>>> master
 ///
 /// Apply a checks callback to the Element.
 ///
@@ -300,7 +309,11 @@ pub async fn check_and_hold_register_add_link<F>(
     hash: &HeaderHash,
     workspace: &mut SysValidationWorkspace,
     network: AIngleP2pCell,
+<<<<<<< HEAD
     incoming_dgd_ops_sender: Option<IncomingDgdOpSender>,
+=======
+    incoming_dht_ops_sender: Option<IncomingDhtOpSender>,
+>>>>>>> master
     f: F,
 ) -> SysValidationResult<()>
 where
@@ -308,10 +321,17 @@ where
 {
     let source = check_and_hold(hash, workspace, network).await?;
     f(source.as_ref())?;
+<<<<<<< HEAD
     if let (Some(incoming_dgd_ops_sender), Source::Network(element)) =
         (incoming_dgd_ops_sender, source)
     {
         incoming_dgd_ops_sender
+=======
+    if let (Some(incoming_dht_ops_sender), Source::Network(element)) =
+        (incoming_dht_ops_sender, source)
+    {
+        incoming_dht_ops_sender
+>>>>>>> master
             .send_register_add_link(element)
             .await?;
     }
@@ -319,8 +339,13 @@ where
 }
 
 /// If we are not holding this header then
+<<<<<<< HEAD
 /// retrieve it and send it as a RegisterAgentActivity DgdOp
 /// to our incoming_dgd_ops_workflow.
+=======
+/// retrieve it and send it as a RegisterAgentActivity DhtOp
+/// to our incoming_dht_ops_workflow.
+>>>>>>> master
 ///
 /// Apply a checks callback to the Element.
 ///
@@ -330,7 +355,11 @@ pub async fn check_and_hold_register_agent_activity<F>(
     hash: &HeaderHash,
     workspace: &mut SysValidationWorkspace,
     network: AIngleP2pCell,
+<<<<<<< HEAD
     incoming_dgd_ops_sender: Option<IncomingDgdOpSender>,
+=======
+    incoming_dht_ops_sender: Option<IncomingDhtOpSender>,
+>>>>>>> master
     f: F,
 ) -> SysValidationResult<()>
 where
@@ -338,10 +367,17 @@ where
 {
     let source = check_and_hold(hash, workspace, network).await?;
     f(source.as_ref())?;
+<<<<<<< HEAD
     if let (Some(incoming_dgd_ops_sender), Source::Network(element)) =
         (incoming_dgd_ops_sender, source)
     {
         incoming_dgd_ops_sender
+=======
+    if let (Some(incoming_dht_ops_sender), Source::Network(element)) =
+        (incoming_dht_ops_sender, source)
+    {
+        incoming_dht_ops_sender
+>>>>>>> master
             .send_register_agent_activity(element)
             .await?;
     }
@@ -349,8 +385,13 @@ where
 }
 
 /// If we are not holding this header then
+<<<<<<< HEAD
 /// retrieve it and send it as a StoreEntry DgdOp
 /// to our incoming_dgd_ops_workflow.
+=======
+/// retrieve it and send it as a StoreEntry DhtOp
+/// to our incoming_dht_ops_workflow.
+>>>>>>> master
 ///
 /// Apply a checks callback to the Element.
 ///
@@ -360,7 +401,11 @@ pub async fn check_and_hold_store_entry<F>(
     hash: &HeaderHash,
     workspace: &mut SysValidationWorkspace,
     network: AIngleP2pCell,
+<<<<<<< HEAD
     incoming_dgd_ops_sender: Option<IncomingDgdOpSender>,
+=======
+    incoming_dht_ops_sender: Option<IncomingDhtOpSender>,
+>>>>>>> master
     f: F,
 ) -> SysValidationResult<()>
 where
@@ -368,18 +413,30 @@ where
 {
     let source = check_and_hold(hash, workspace, network).await?;
     f(source.as_ref())?;
+<<<<<<< HEAD
     if let (Some(incoming_dgd_ops_sender), Source::Network(element)) =
         (incoming_dgd_ops_sender, source)
     {
         incoming_dgd_ops_sender.send_store_entry(element).await?;
+=======
+    if let (Some(incoming_dht_ops_sender), Source::Network(element)) =
+        (incoming_dht_ops_sender, source)
+    {
+        incoming_dht_ops_sender.send_store_entry(element).await?;
+>>>>>>> master
     }
     Ok(())
 }
 
 /// If we are not holding this entry then
 /// retrieve any element at this EntryHash
+<<<<<<< HEAD
 /// and send it as a StoreEntry DgdOp
 /// to our incoming_dgd_ops_workflow.
+=======
+/// and send it as a StoreEntry DhtOp
+/// to our incoming_dht_ops_workflow.
+>>>>>>> master
 ///
 /// Note this is different to check_and_hold_store_entry
 /// because it gets the Element via an EntryHash which
@@ -393,7 +450,11 @@ pub async fn check_and_hold_any_store_entry<F>(
     hash: &EntryHash,
     workspace: &mut SysValidationWorkspace,
     network: AIngleP2pCell,
+<<<<<<< HEAD
     incoming_dgd_ops_sender: Option<IncomingDgdOpSender>,
+=======
+    incoming_dht_ops_sender: Option<IncomingDhtOpSender>,
+>>>>>>> master
     f: F,
 ) -> SysValidationResult<()>
 where
@@ -401,17 +462,29 @@ where
 {
     let source = check_and_hold(hash, workspace, network).await?;
     f(source.as_ref())?;
+<<<<<<< HEAD
     if let (Some(incoming_dgd_ops_sender), Source::Network(element)) =
         (incoming_dgd_ops_sender, source)
     {
         incoming_dgd_ops_sender.send_store_entry(element).await?;
+=======
+    if let (Some(incoming_dht_ops_sender), Source::Network(element)) =
+        (incoming_dht_ops_sender, source)
+    {
+        incoming_dht_ops_sender.send_store_entry(element).await?;
+>>>>>>> master
     }
     Ok(())
 }
 
 /// If we are not holding this header then
+<<<<<<< HEAD
 /// retrieve it and send it as a StoreElement DgdOp
 /// to our incoming_dgd_ops_workflow.
+=======
+/// retrieve it and send it as a StoreElement DhtOp
+/// to our incoming_dht_ops_workflow.
+>>>>>>> master
 ///
 /// Apply a checks callback to the Element.
 ///
@@ -421,7 +494,11 @@ pub async fn check_and_hold_store_element<F>(
     hash: &HeaderHash,
     workspace: &mut SysValidationWorkspace,
     network: AIngleP2pCell,
+<<<<<<< HEAD
     incoming_dgd_ops_sender: Option<IncomingDgdOpSender>,
+=======
+    incoming_dht_ops_sender: Option<IncomingDhtOpSender>,
+>>>>>>> master
     f: F,
 ) -> SysValidationResult<()>
 where
@@ -429,34 +506,61 @@ where
 {
     let source = check_and_hold(hash, workspace, network).await?;
     f(source.as_ref())?;
+<<<<<<< HEAD
     if let (Some(incoming_dgd_ops_sender), Source::Network(element)) =
         (incoming_dgd_ops_sender, source)
     {
         incoming_dgd_ops_sender.send_store_element(element).await?;
+=======
+    if let (Some(incoming_dht_ops_sender), Source::Network(element)) =
+        (incoming_dht_ops_sender, source)
+    {
+        incoming_dht_ops_sender.send_store_element(element).await?;
+>>>>>>> master
     }
     Ok(())
 }
 
 /// Allows you to send an op to the
+<<<<<<< HEAD
 /// incoming_dgd_ops_workflow if you
 /// found it on the network and were supposed
 /// to be holding it.
 #[derive(derive_more::Constructor)]
 pub struct IncomingDgdOpSender {
+=======
+/// incoming_dht_ops_workflow if you
+/// found it on the network and were supposed
+/// to be holding it.
+#[derive(derive_more::Constructor)]
+pub struct IncomingDhtOpSender {
+>>>>>>> master
     env: EnvironmentWrite,
     sys_validation_trigger: TriggerSender,
 }
 
+<<<<<<< HEAD
 impl IncomingDgdOpSender {
+=======
+impl IncomingDhtOpSender {
+>>>>>>> master
     /// Sends the op to the incoming workflow
     async fn send_op(
         self,
         element: Element,
+<<<<<<< HEAD
         make_op: fn(Element) -> Option<(DgdOpHash, DgdOp)>,
     ) -> SysValidationResult<()> {
         if let Some(op) = make_op(element) {
             let ops = vec![op];
             incoming_dgd_ops_workflow(&self.env, self.sys_validation_trigger, ops, None)
+=======
+        make_op: fn(Element) -> Option<(DhtOpHash, DhtOp)>,
+    ) -> SysValidationResult<()> {
+        if let Some(op) = make_op(element) {
+            let ops = vec![op];
+            incoming_dht_ops_workflow(&self.env, self.sys_validation_trigger, ops, None)
+>>>>>>> master
                 .await
                 .map_err(Box::new)?;
         }
@@ -500,12 +604,20 @@ impl AsRef<Element> for Source {
 /// This function also returns where the dependency
 /// was found so you can decide whether or not to add
 /// it to the incoming ops.
+<<<<<<< HEAD
 async fn check_and_hold<I: Into<AnyDgdHash> + Clone>(
+=======
+async fn check_and_hold<I: Into<AnyDhtHash> + Clone>(
+>>>>>>> master
     hash: &I,
     workspace: &mut SysValidationWorkspace,
     network: AIngleP2pCell,
 ) -> SysValidationResult<Source> {
+<<<<<<< HEAD
     let hash: AnyDgdHash = hash.clone().into();
+=======
+    let hash: AnyDhtHash = hash.clone().into();
+>>>>>>> master
     // Create a workspace with just the local stores
     let mut local_cascade = workspace.local_cascade();
     if let Some(el) = local_cascade
@@ -525,14 +637,22 @@ async fn check_and_hold<I: Into<AnyDgdHash> + Clone>(
     }
 }
 
+<<<<<<< HEAD
 /// Make a StoreElement DgdOp from an Element.
+=======
+/// Make a StoreElement DhtOp from an Element.
+>>>>>>> master
 /// Note that this can fail if the op is missing an
 /// Entry when it was supposed to have one.
 ///
 /// Because adding ops to incoming limbo while we are checking them
 /// is only faster then waiting for them through gossip we don't care enough
 /// to return an error.
+<<<<<<< HEAD
 fn make_store_element(element: Element) -> Option<(DgdOpHash, DgdOp)> {
+=======
+fn make_store_element(element: Element) -> Option<(DhtOpHash, DhtOp)> {
+>>>>>>> master
     // Extract the data
     let (shh, element_entry) = element.into_inner();
     let (header, signature) = shh.into_header_and_signature();
@@ -549,19 +669,32 @@ fn make_store_element(element: Element) -> Option<(DgdOpHash, DgdOp)> {
     };
 
     // Create the hash and op
+<<<<<<< HEAD
     let op = DgdOp::StoreElement(signature, header, maybe_entry_box);
     let hash = DgdOpHash::with_data_sync(&op);
     Some((hash, op))
 }
 
 /// Make a StoreEntry DgdOp from an Element.
+=======
+    let op = DhtOp::StoreElement(signature, header, maybe_entry_box);
+    let hash = DhtOpHash::with_data_sync(&op);
+    Some((hash, op))
+}
+
+/// Make a StoreEntry DhtOp from an Element.
+>>>>>>> master
 /// Note that this can fail if the op is missing an Entry or
 /// the header is the wrong type.
 ///
 /// Because adding ops to incoming limbo while we are checking them
 /// is only faster then waiting for them through gossip we don't care enough
 /// to return an error.
+<<<<<<< HEAD
 fn make_store_entry(element: Element) -> Option<(DgdOpHash, DgdOp)> {
+=======
+fn make_store_entry(element: Element) -> Option<(DhtOpHash, DhtOp)> {
+>>>>>>> master
     // Extract the data
     let (shh, element_entry) = element.into_inner();
     let (header, signature) = shh.into_header_and_signature();
@@ -572,18 +705,31 @@ fn make_store_entry(element: Element) -> Option<(DgdOpHash, DgdOp)> {
     let header = header.into_content().try_into().ok()?;
 
     // Create the hash and op
+<<<<<<< HEAD
     let op = DgdOp::StoreEntry(signature, header, entry_box);
     let hash = DgdOpHash::with_data_sync(&op);
     Some((hash, op))
 }
 
 /// Make a RegisterAddLink DgdOp from an Element.
+=======
+    let op = DhtOp::StoreEntry(signature, header, entry_box);
+    let hash = DhtOpHash::with_data_sync(&op);
+    Some((hash, op))
+}
+
+/// Make a RegisterAddLink DhtOp from an Element.
+>>>>>>> master
 /// Note that this can fail if the header is the wrong type
 ///
 /// Because adding ops to incoming limbo while we are checking them
 /// is only faster then waiting for them through gossip we don't care enough
 /// to return an error.
+<<<<<<< HEAD
 fn make_register_add_link(element: Element) -> Option<(DgdOpHash, DgdOp)> {
+=======
+fn make_register_add_link(element: Element) -> Option<(DhtOpHash, DhtOp)> {
+>>>>>>> master
     // Extract the data
     let (shh, _) = element.into_inner();
     let (header, signature) = shh.into_header_and_signature();
@@ -592,18 +738,31 @@ fn make_register_add_link(element: Element) -> Option<(DgdOpHash, DgdOp)> {
     let header = header.into_content().try_into().ok()?;
 
     // Create the hash and op
+<<<<<<< HEAD
     let op = DgdOp::RegisterAddLink(signature, header);
     let hash = DgdOpHash::with_data_sync(&op);
     Some((hash, op))
 }
 
 /// Make a RegisterAgentActivity DgdOp from an Element.
+=======
+    let op = DhtOp::RegisterAddLink(signature, header);
+    let hash = DhtOpHash::with_data_sync(&op);
+    Some((hash, op))
+}
+
+/// Make a RegisterAgentActivity DhtOp from an Element.
+>>>>>>> master
 /// Note that this can fail if the header is the wrong type
 ///
 /// Because adding ops to incoming limbo while we are checking them
 /// is only faster then waiting for them through gossip we don't care enough
 /// to return an error.
+<<<<<<< HEAD
 fn make_register_agent_activity(element: Element) -> Option<(DgdOpHash, DgdOp)> {
+=======
+fn make_register_agent_activity(element: Element) -> Option<(DhtOpHash, DhtOp)> {
+>>>>>>> master
     // Extract the data
     let (shh, _) = element.into_inner();
     let (header, signature) = shh.into_header_and_signature();
@@ -612,7 +771,12 @@ fn make_register_agent_activity(element: Element) -> Option<(DgdOpHash, DgdOp)> 
     let header = header.into_content();
 
     // Create the hash and op
+<<<<<<< HEAD
     let op = DgdOp::RegisterAgentActivity(signature, header);
     let hash = DgdOpHash::with_data_sync(&op);
+=======
+    let op = DhtOp::RegisterAgentActivity(signature, header);
+    let hash = DhtOpHash::with_data_sync(&op);
+>>>>>>> master
     Some((hash, op))
 }

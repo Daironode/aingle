@@ -67,7 +67,11 @@ impl<P: PrefixType> MiscMetaKey<P> {
 /// Matches the key
 pub enum MiscMetaValue {
     /// Collapsed status of an entry
+<<<<<<< HEAD
     EntryStatus(EntryDgdStatus),
+=======
+    EntryStatus(EntryDhtStatus),
+>>>>>>> master
     /// We have integrated a StoreElement for this key
     StoreElement,
     /// There is a header at this key.
@@ -155,7 +159,11 @@ where
 }
 
 impl MiscMetaValue {
+<<<<<<< HEAD
     pub fn entry_status(self) -> EntryDgdStatus {
+=======
+    pub fn entry_status(self) -> EntryDhtStatus {
+>>>>>>> master
         match self {
             MiscMetaValue::EntryStatus(e) => e,
             _ => unreachable!("Tried to go from {:?} to {:?}", self, "entry_status"),

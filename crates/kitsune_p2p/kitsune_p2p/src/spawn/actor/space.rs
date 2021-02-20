@@ -108,7 +108,11 @@ impl gossip::GossipEventHandler for Space {
         } else {
             let ReqOpHashesEvt {
                 to_agent,
+<<<<<<< HEAD
                 dgd_arc,
+=======
+                dht_arc,
+>>>>>>> master
                 since_utc_epoch_s,
                 until_utc_epoch_s,
                 from_agent,
@@ -133,7 +137,11 @@ impl gossip::GossipEventHandler for Space {
                     space,
                     from_agent,
                     to_agent,
+<<<<<<< HEAD
                     dgd_arc,
+=======
+                    dht_arc,
+>>>>>>> master
                     since_utc_epoch_s,
                     until_utc_epoch_s,
                     op_count,
@@ -277,7 +285,11 @@ pub fn local_req_op_hashes(
 ) -> impl std::future::Future<Output = Result<LocalOpHashesAgentHashes, KitsuneP2pError>> {
     let ReqOpHashesEvt {
         to_agent,
+<<<<<<< HEAD
         dgd_arc,
+=======
+        dht_arc,
+>>>>>>> master
         since_utc_epoch_s,
         until_utc_epoch_s,
         ..
@@ -285,7 +297,11 @@ pub fn local_req_op_hashes(
     let fut = evt_sender.fetch_op_hashes_for_constraints(FetchOpHashesForConstraintsEvt {
         space: space.clone(),
         agent: to_agent.clone(),
+<<<<<<< HEAD
         dgd_arc,
+=======
+        dht_arc,
+>>>>>>> master
         since_utc_epoch_s,
         until_utc_epoch_s,
     });

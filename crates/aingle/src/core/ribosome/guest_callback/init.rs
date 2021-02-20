@@ -7,7 +7,11 @@ use derive_more::Constructor;
 use aingle_hash::EntryHash;
 use aingle_keystore::KeystoreSender;
 use aingle_p2p::AIngleP2pCell;
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 use aingle_types::prelude::*;
 
 #[derive(Debug, Clone)]

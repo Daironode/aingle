@@ -45,8 +45,13 @@ impl AIngleP2pHandler for StubNetwork {
         dna_hash: DnaHash,
         from_agent: AgentPubKey,
         request_validation_receipt: bool,
+<<<<<<< HEAD
         dgd_hash: aingle_hash::AnyDgdHash,
         ops: Vec<(aingle_hash::DgdOpHash, aingle_types::dgd_op::DgdOp)>,
+=======
+        dht_hash: aingle_hash::AnyDhtHash,
+        ops: Vec<(aingle_hash::DhtOpHash, aingle_types::dht_op::DhtOp)>,
+>>>>>>> master
         timeout_ms: Option<u64>,
     ) -> AIngleP2pHandlerResult<()> {
         Err("stub".into())
@@ -61,7 +66,11 @@ impl AIngleP2pHandler for StubNetwork {
         &mut self,
         dna_hash: DnaHash,
         from_agent: AgentPubKey,
+<<<<<<< HEAD
         dgd_hash: aingle_hash::AnyDgdHash,
+=======
+        dht_hash: aingle_hash::AnyDhtHash,
+>>>>>>> master
         options: actor::GetOptions,
     ) -> AIngleP2pHandlerResult<Vec<GetElementResponse>> {
         Err("stub".into())
@@ -70,7 +79,11 @@ impl AIngleP2pHandler for StubNetwork {
         &mut self,
         dna_hash: DnaHash,
         from_agent: AgentPubKey,
+<<<<<<< HEAD
         dgd_hash: aingle_hash::AnyDgdHash,
+=======
+        dht_hash: aingle_hash::AnyDhtHash,
+>>>>>>> master
         options: actor::GetMetaOptions,
     ) -> AIngleP2pHandlerResult<Vec<MetadataSet>> {
         Err("stub".into())
@@ -322,9 +335,15 @@ mod tests {
         p2p.join(dna.clone(), a2.clone()).await.unwrap();
         p2p.join(dna.clone(), a3.clone()).await.unwrap();
 
+<<<<<<< HEAD
         let header_hash = aingle_hash::AnyDgdHash::from_raw_36_and_type(
             b"eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee".to_vec(),
             aingle_hash::hash_type::AnyDgd::Header,
+=======
+        let header_hash = aingle_hash::AnyDhtHash::from_raw_36_and_type(
+            b"eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee".to_vec(),
+            aingle_hash::hash_type::AnyDht::Header,
+>>>>>>> master
         );
 
         p2p.publish(dna, a1, true, header_hash, vec![], Some(200))
@@ -405,9 +424,15 @@ mod tests {
         p2p.join(dna.clone(), a1.clone()).await.unwrap();
         p2p.join(dna.clone(), a2.clone()).await.unwrap();
 
+<<<<<<< HEAD
         let hash = aingle_hash::AnyDgdHash::from_raw_36_and_type(
             b"eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee".to_vec(),
             aingle_hash::hash_type::AnyDgd::Header,
+=======
+        let hash = aingle_hash::AnyDhtHash::from_raw_36_and_type(
+            b"eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee".to_vec(),
+            aingle_hash::hash_type::AnyDht::Header,
+>>>>>>> master
         );
 
         let res = p2p

@@ -88,7 +88,11 @@ impl From<&[u8]> for TimestampKey {
 #[cfg(test)]
 mod tests {
     use super::*;
+<<<<<<< HEAD
     use aingle_middleware_bytes::prelude::*;
+=======
+    use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
     use std::convert::TryInto;
 
     const TEST_TS: &'static str = "2020-05-05T19:16:04.266431045Z";

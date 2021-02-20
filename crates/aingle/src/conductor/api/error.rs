@@ -94,7 +94,11 @@ pub enum ConductorApiError {
 pub enum SerializationError {
     /// Denotes inability to move into or out of SerializedBytes
     #[error(transparent)]
+<<<<<<< HEAD
     Bytes(#[from] aingle_middleware_bytes::SerializedBytesError),
+=======
+    Bytes(#[from] aingle_serialized_bytes::SerializedBytesError),
+>>>>>>> master
 
     /// Denotes inability to parse a UUID
     #[error(transparent)]

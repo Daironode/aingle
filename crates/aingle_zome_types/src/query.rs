@@ -5,7 +5,11 @@ use crate::header::Header;
 use crate::header::HeaderType;
 use crate::warrant::Warrant;
 use aingle_hash::HeaderHash;
+<<<<<<< HEAD
 pub use aingle_middleware_bytes::prelude::*;
+=======
+pub use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 
 /// Query arguments
 #[derive(

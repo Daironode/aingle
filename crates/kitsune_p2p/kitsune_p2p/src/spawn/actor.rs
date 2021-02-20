@@ -192,7 +192,11 @@ impl KitsuneP2pActor {
                                     space,
                                     from_agent,
                                     to_agent,
+<<<<<<< HEAD
                                     dgd_arc,
+=======
+                                    dht_arc,
+>>>>>>> master
                                     since_utc_epoch_s,
                                     until_utc_epoch_s,
                                     last_count,
@@ -200,7 +204,11 @@ impl KitsuneP2pActor {
                                     let input = ReqOpHashesEvt::new(
                                         from_agent,
                                         to_agent,
+<<<<<<< HEAD
                                         dgd_arc,
+=======
+                                        dht_arc,
+>>>>>>> master
                                         since_utc_epoch_s,
                                         until_utc_epoch_s,
                                         Default::default(),

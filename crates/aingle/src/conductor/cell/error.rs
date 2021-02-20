@@ -3,7 +3,11 @@ use crate::conductor::entry_def_store::error::EntryDefStoreError;
 use crate::core::ribosome::error::RibosomeError;
 use crate::core::ribosome::guest_callback::init::InitResult;
 use crate::core::workflow::error::WorkflowError;
+<<<<<<< HEAD
 use crate::core::workflow::produce_dgd_ops_workflow::dgd_op_light::error::DgdOpConvertError;
+=======
+use crate::core::workflow::produce_dht_ops_workflow::dht_op_light::error::DhtOpConvertError;
+>>>>>>> master
 use crate::core::SourceChainError;
 use aingle_cascade::error::CascadeError;
 use aingle_lmdb::error::DatabaseError;
@@ -53,9 +57,15 @@ pub enum CellError {
     #[error(transparent)]
     ConductorApiError(#[from] Box<ConductorApiError>),
     #[error(transparent)]
+<<<<<<< HEAD
     SerializedBytesError(#[from] aingle_middleware_bytes::SerializedBytesError),
     #[error(transparent)]
     DgdOpConvertError(#[from] DgdOpConvertError),
+=======
+    SerializedBytesError(#[from] aingle_serialized_bytes::SerializedBytesError),
+    #[error(transparent)]
+    DhtOpConvertError(#[from] DhtOpConvertError),
+>>>>>>> master
     #[error("Todo")]
     Todo,
 }

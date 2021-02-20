@@ -50,7 +50,11 @@
 /// ### Persisted Changes (data & structure):
 /// - all LMDB data stores created?
 /// - source chain genesis entries: DNA & Author Capabilities Grant (Agent Key)
+<<<<<<< HEAD
 /// - DGD transforms of genesis entries in CAS
+=======
+/// - DHT transforms of genesis entries in CAS
+>>>>>>> master
 /// - bootstrapped peers from attempt to publish key and join network
 ///
 /// ### Spawned Tasks (don't wait for result -signals/log/tracing=follow):

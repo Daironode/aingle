@@ -7,7 +7,11 @@ use aingle_hash::AgentPubKey;
 use aingle_hash::HeaderHash;
 use aingle_keystore::AgentPubKeyExt;
 use aingle_lmdb::env::EnvironmentWrite;
+<<<<<<< HEAD
 use aingle_middleware_bytes::SerializedBytes;
+=======
+use aingle_serialized_bytes::SerializedBytes;
+>>>>>>> master
 use aingle_types::prelude::*;
 use aingle_wasm_test_utils::TestWasm;
 use aingle_zome_types::ZomeCallResponse;

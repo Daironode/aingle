@@ -49,7 +49,11 @@ use crate::conductor::dna_store::MockDnaStore;
 use crate::conductor::error::ConductorResult;
 use crate::conductor::handle::ConductorHandle;
 use crate::core::queue_consumer::InitialQueueTriggers;
+<<<<<<< HEAD
 use crate::core::workflow::integrate_dgd_ops_workflow;
+=======
+use crate::core::workflow::integrate_dht_ops_workflow;
+>>>>>>> master
 pub use builder::*;
 use fallible_iterator::FallibleIterator;
 use futures::future;
@@ -761,7 +765,11 @@ where
 
         let peer_dump = p2p_store::dump_state(self.p2p_env.clone().into(), Some(cell_id.clone()))?;
         let source_chain_dump = source_chain.dump_state().await?;
+<<<<<<< HEAD
         let integration_dump = integrate_dgd_ops_workflow::dump_state(arc.clone().into())?;
+=======
+        let integration_dump = integrate_dht_ops_workflow::dump_state(arc.clone().into())?;
+>>>>>>> master
 
         let out = JsonDump {
             peer_dump,

@@ -1,5 +1,9 @@
 #![deny(missing_docs)]
+<<<<<<< HEAD
 //! P2p / dgd communication framework.
+=======
+//! P2p / dht communication framework.
+>>>>>>> master
 
 /// re-exported dependencies
 pub mod dependencies {

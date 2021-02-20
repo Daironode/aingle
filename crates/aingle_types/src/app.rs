@@ -2,7 +2,11 @@
 use crate::dna::{DnaFile, JsonProperties};
 use derive_more::Into;
 use aingle_hash::{AgentPubKey, DnaHash};
+<<<<<<< HEAD
 use aingle_middleware_bytes::SerializedBytes;
+=======
+use aingle_serialized_bytes::SerializedBytes;
+>>>>>>> master
 use aingle_zome_types::cell::CellId;
 use std::path::PathBuf;
 

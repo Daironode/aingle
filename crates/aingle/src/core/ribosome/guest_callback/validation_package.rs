@@ -4,9 +4,15 @@ use crate::core::ribosome::Invocation;
 use crate::core::ribosome::ZomesToInvoke;
 use crate::core::workflow::CallZomeWorkspaceLock;
 use derive_more::Constructor;
+<<<<<<< HEAD
 use aingle_hash::AnyDgdHash;
 use aingle_p2p::AIngleP2pCell;
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_hash::AnyDhtHash;
+use aingle_p2p::AIngleP2pCell;
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 use aingle_types::prelude::*;
 
 #[derive(Clone)]
@@ -76,7 +82,11 @@ impl TryFrom<ValidationPackageInvocation> for ExternIO {
 pub enum ValidationPackageResult {
     Success(ValidationPackage),
     Fail(String),
+<<<<<<< HEAD
     UnresolvedDependencies(Vec<AnyDgdHash>),
+=======
+    UnresolvedDependencies(Vec<AnyDhtHash>),
+>>>>>>> master
     NotImplemented,
 }
 

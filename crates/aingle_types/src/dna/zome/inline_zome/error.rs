@@ -1,6 +1,10 @@
 #![allow(missing_docs)]
 
+<<<<<<< HEAD
 use aingle_middleware_bytes::SerializedBytesError;
+=======
+use aingle_serialized_bytes::SerializedBytesError;
+>>>>>>> master
 use aingle_zome_types::prelude::*;
 use thiserror::Error;
 

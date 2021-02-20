@@ -1,5 +1,9 @@
 use crate::conductor::error::ConductorError;
+<<<<<<< HEAD
 use aingle_middleware_bytes::SerializedBytesError;
+=======
+use aingle_serialized_bytes::SerializedBytesError;
+>>>>>>> master
 use aingle_types::signal::Signal;
 
 /// Interface Error Type

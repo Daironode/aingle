@@ -6,7 +6,11 @@
 
 use fallible_iterator::FallibleIterator;
 use aingle_hash::AgentPubKey;
+<<<<<<< HEAD
 use aingle_hash::AnyDgdHash;
+=======
+use aingle_hash::AnyDhtHash;
+>>>>>>> master
 use aingle_hash::EntryHash;
 use aingle_hash::HasHash;
 use aingle_hash::HeaderHash;
@@ -22,7 +26,11 @@ use aingle_lmdb::error::DatabaseError;
 use aingle_lmdb::error::DatabaseResult;
 use aingle_lmdb::fresh_reader;
 use aingle_lmdb::prelude::*;
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 use aingle_types::prelude::*;
 use aingle_zome_types::HeaderHashed;
 use std::collections::HashSet;
@@ -81,7 +89,11 @@ where
     fn add_link(&mut self, link_add: CreateLink) -> DatabaseResult<()>;
 
     /// Register a HeaderHash directly on an entry hash.
+<<<<<<< HEAD
     /// Also updates the entry dgd status.
+=======
+    /// Also updates the entry dht status.
+>>>>>>> master
     /// Useful when you only have hashes and not full types
     fn register_raw_on_entry(
         &mut self,
@@ -90,7 +102,11 @@ where
     ) -> DatabaseResult<()>;
 
     /// Deregister a HeaderHash directly on an entry hash.
+<<<<<<< HEAD
     /// Also updates the entry dgd status.
+=======
+    /// Also updates the entry dht status.
+>>>>>>> master
     /// Useful when you only have hashes and not full types
     fn deregister_raw_on_entry(
         &mut self,
@@ -288,7 +304,11 @@ where
     fn get_updates<'r, R: Readable>(
         &'r self,
         reader: &'r R,
+<<<<<<< HEAD
         hash: AnyDgdHash,
+=======
+        hash: AnyDhtHash,
+>>>>>>> master
     ) -> DatabaseResult<Box<dyn FallibleIterator<Item = TimedHeaderHash, Error = DatabaseError> + '_>>;
 
     /// Returns all the hashes of [Delete] headers registered on a Header
@@ -305,12 +325,21 @@ where
         entry_hash: EntryHash,
     ) -> DatabaseResult<Box<dyn FallibleIterator<Item = TimedHeaderHash, Error = DatabaseError> + '_>>;
 
+<<<<<<< HEAD
     /// Returns the current [EntryDgdStatus] of an [Entry]
     fn get_dgd_status<'r, R: Readable>(
         &'r self,
         r: &'r R,
         entry_hash: &EntryHash,
     ) -> DatabaseResult<EntryDgdStatus>;
+=======
+    /// Returns the current [EntryDhtStatus] of an [Entry]
+    fn get_dht_status<'r, R: Readable>(
+        &'r self,
+        r: &'r R,
+        entry_hash: &EntryHash,
+    ) -> DatabaseResult<EntryDhtStatus>;
+>>>>>>> master
 
     /// Returns the current set of [ValidationStatus] for a [Header].
     /// A set of disputed status is returned.
@@ -468,7 +497,11 @@ where
     }
 
     #[instrument(skip(self))]
+<<<<<<< HEAD
     fn update_entry_dgd_status(&mut self, basis: EntryHash) -> DatabaseResult<()> {
+=======
+    fn update_entry_dht_status(&mut self, basis: EntryHash) -> DatabaseResult<()> {
+>>>>>>> master
         let status = fresh_reader!(self.env, |r| self.get_headers(&r, basis.clone())?.find_map(
             |header| {
                 if self
@@ -477,7 +510,11 @@ where
                     .is_none()
                 {
                     trace!("found live header");
+<<<<<<< HEAD
                     Ok(Some(EntryDgdStatus::Live))
+=======
+                    Ok(Some(EntryDhtStatus::Live))
+>>>>>>> master
                 } else {
                     trace!("found dead header");
                     Ok(None)
@@ -485,7 +522,11 @@ where
             }
         ))?
         // No evidence of life found so entry is marked dead
+<<<<<<< HEAD
         .unwrap_or(EntryDgdStatus::Dead);
+=======
+        .unwrap_or(EntryDhtStatus::Dead);
+>>>>>>> master
         self.misc_meta.put(
             MiscMetaKey::entry_status(&basis).into(),
             MiscMetaValue::EntryStatus(status),
@@ -696,7 +737,11 @@ where
     ) -> DatabaseResult<()> {
         self.system_meta
             .insert(SysMetaKey::from(entry_hash.clone()).into(), value);
+<<<<<<< HEAD
         self.update_entry_dgd_status(entry_hash)
+=======
+        self.update_entry_dht_status(entry_hash)
+>>>>>>> master
     }
 
     fn deregister_raw_on_entry(
@@ -706,7 +751,11 @@ where
     ) -> DatabaseResult<()> {
         self.system_meta
             .delete(SysMetaKey::from(entry_hash.clone()).into(), value);
+<<<<<<< HEAD
         self.update_entry_dgd_status(entry_hash)
+=======
+        self.update_entry_dht_status(entry_hash)
+>>>>>>> master
     }
 
     fn register_raw_on_header(&mut self, header_hash: HeaderHash, value: SysMetaVal) {
@@ -722,14 +771,22 @@ where
     fn register_header(&mut self, new_entry_header: NewEntryHeader) -> DatabaseResult<()> {
         let basis = new_entry_header.entry().clone();
         self.register_header_on_basis(basis.clone(), new_entry_header)?;
+<<<<<<< HEAD
         self.update_entry_dgd_status(basis)?;
+=======
+        self.update_entry_dht_status(basis)?;
+>>>>>>> master
         Ok(())
     }
 
     fn deregister_header(&mut self, new_entry_header: NewEntryHeader) -> DatabaseResult<()> {
         let basis = new_entry_header.entry().clone();
         self.deregister_header_on_basis(basis.clone(), new_entry_header)?;
+<<<<<<< HEAD
         self.update_entry_dgd_status(basis)?;
+=======
+        self.update_entry_dht_status(basis)?;
+>>>>>>> master
         Ok(())
     }
 
@@ -797,7 +854,11 @@ where
         let entry_hash = delete.deletes_entry_address.clone();
         self.register_header_on_basis(remove, delete.clone())?;
         self.register_header_on_basis(entry_hash.clone(), delete)?;
+<<<<<<< HEAD
         self.update_entry_dgd_status(entry_hash)
+=======
+        self.update_entry_dht_status(entry_hash)
+>>>>>>> master
     }
 
     fn deregister_delete(&mut self, delete: header::Delete) -> DatabaseResult<()> {
@@ -805,7 +866,11 @@ where
         let entry_hash = delete.deletes_entry_address.clone();
         self.deregister_header_on_basis(remove, delete.clone())?;
         self.deregister_header_on_basis(entry_hash.clone(), delete)?;
+<<<<<<< HEAD
         self.update_entry_dgd_status(entry_hash)
+=======
+        self.update_entry_dht_status(entry_hash)
+>>>>>>> master
     }
 
     fn register_validation_status(&mut self, hash: HeaderHash, status: ValidationStatus) {
@@ -1018,7 +1083,11 @@ where
     fn get_updates<'r, R: Readable>(
         &'r self,
         r: &'r R,
+<<<<<<< HEAD
         hash: AnyDgdHash,
+=======
+        hash: AnyDhtHash,
+>>>>>>> master
     ) -> DatabaseResult<Box<dyn FallibleIterator<Item = TimedHeaderHash, Error = DatabaseError> + '_>>
     {
         Ok(Box::new(
@@ -1150,16 +1219,28 @@ where
 
     // TODO: For now this is only checking for deletes
     // Once the validation is finished this should check for that as well
+<<<<<<< HEAD
     fn get_dgd_status<'r, R: Readable>(
         &self,
         r: &'r R,
         entry_hash: &EntryHash,
     ) -> DatabaseResult<EntryDgdStatus> {
+=======
+    fn get_dht_status<'r, R: Readable>(
+        &self,
+        r: &'r R,
+        entry_hash: &EntryHash,
+    ) -> DatabaseResult<EntryDhtStatus> {
+>>>>>>> master
         Ok(self
             .misc_meta
             .get(r, &MiscMetaKey::entry_status(entry_hash).into())?
             .map(MiscMetaValue::entry_status)
+<<<<<<< HEAD
             .unwrap_or(EntryDgdStatus::Dead))
+=======
+            .unwrap_or(EntryDhtStatus::Dead))
+>>>>>>> master
     }
 
     fn get_validation_status<'r, R: Readable>(

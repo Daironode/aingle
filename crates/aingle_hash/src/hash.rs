@@ -15,7 +15,11 @@
 //!
 //! P: 3 byte prefix to indicate hash type
 //! C: 32 byte hash, the "core"
+<<<<<<< HEAD
 //! L: 4 byte hash of the core hash, for DGD location
+=======
+//! L: 4 byte hash of the core hash, for DHT location
+>>>>>>> master
 //! ```
 //!
 //! The 36 bytes which exclude the initial 3-byte type prefix are known
@@ -59,7 +63,11 @@ macro_rules! assert_length {
 }
 
 /// A AIngleHash contains a vector of 36 bytes representing a 32-byte blake2b hash
+<<<<<<< HEAD
 /// plus 4 bytes representing a DGD location. It also contains a zero-sized
+=======
+/// plus 4 bytes representing a DHT location. It also contains a zero-sized
+>>>>>>> master
 /// type which specifies what it is a hash of.
 ///
 /// There is custom de/serialization implemented in [ser.rs]
@@ -127,7 +135,11 @@ impl<T: HashType> AIngleHash<T> {
         bytes
     }
 
+<<<<<<< HEAD
     /// Fetch the aingle DGD location for this hash
+=======
+    /// Fetch the aingle dht location for this hash
+>>>>>>> master
     pub fn get_loc(&self) -> u32 {
         bytes_to_loc(&self.hash[AINGLE_HASH_FULL_LEN - AINGLE_HASH_LOC_LEN..])
     }
@@ -148,7 +160,11 @@ impl<T: HashType> AIngleHash<T> {
     /// the location bytes will used as provided, not computed.
     pub fn from_raw_32_and_type(mut hash: Vec<u8>, hash_type: T) -> Self {
         if hash.len() == AINGLE_HASH_CORE_LEN {
+<<<<<<< HEAD
             hash.append(&mut encode::aingle_dgd_location_bytes(&hash));
+=======
+            hash.append(&mut encode::aingle_dht_location_bytes(&hash));
+>>>>>>> master
         }
 
         assert_length!(AINGLE_HASH_UNTYPED_LEN, &hash);
@@ -244,8 +260,13 @@ mod tests {
             EntryHash::from_raw_36(vec![0xdb; AINGLE_HASH_UNTYPED_LEN]),
         );
         assert_type(
+<<<<<<< HEAD
             "DgdOpHash",
             DgdOpHash::from_raw_36(vec![0xdb; AINGLE_HASH_UNTYPED_LEN]),
+=======
+            "DhtOpHash",
+            DhtOpHash::from_raw_36(vec![0xdb; AINGLE_HASH_UNTYPED_LEN]),
+>>>>>>> master
         );
     }
 

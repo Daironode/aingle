@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 
 /// The number of bits we want for a comfy secret.
 pub const CAP_SECRET_BITS: usize = 512;

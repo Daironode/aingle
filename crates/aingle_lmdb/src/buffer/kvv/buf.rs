@@ -165,7 +165,11 @@ where
         let iter = self.db.get(r, k)?;
         Ok(iter.filter_map(|v| match v {
             Ok((_, Some(rkv::Value::Blob(buf)))) => Some(
+<<<<<<< HEAD
                 aingle_middleware_bytes::decode(buf)
+=======
+                aingle_serialized_bytes::decode(buf)
+>>>>>>> master
                     .map(|n| {
                         trace!(?n);
                         n
@@ -235,7 +239,11 @@ where
             for (v, op) in deltas {
                 match op {
                     Insert => {
+<<<<<<< HEAD
                         let buf = aingle_middleware_bytes::encode(&v)?;
+=======
+                        let buf = aingle_serialized_bytes::encode(&v)?;
+>>>>>>> master
                         let encoded = rkv::Value::Blob(&buf);
                         if self.no_dup_data {
                             self.db
@@ -266,7 +274,11 @@ where
                     // everything
                     Delete if *delete_all => {}
                     Delete => {
+<<<<<<< HEAD
                         let buf = aingle_middleware_bytes::encode(&v)?;
+=======
+                        let buf = aingle_serialized_bytes::encode(&v)?;
+>>>>>>> master
                         let encoded = rkv::Value::Blob(&buf);
                         self.db.delete(writer, k.clone(), &encoded).or_else(|err| {
                             // Ignore the case where the key is not found

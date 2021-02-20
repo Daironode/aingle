@@ -66,8 +66,13 @@
 //! HDK implements several key features:
 //!
 //! - Capabilities and function level access control: capability module
+<<<<<<< HEAD
 //! - Application data and entry definitions for the source chain and DGD: entry module and `entry_defs` callback
 //! - Referencing/linking entries on the DGD together into a graph structure: link module
+=======
+//! - Application data and entry definitions for the source chain and DHT: entry module and `entry_defs` callback
+//! - Referencing/linking entries on the DHT together into a graph structure: link module
+>>>>>>> master
 //! - Defining tree-like structures out of links and entries for discoverability and scalability: hash_path module
 //! - Create, read, update, delete (CRUD) operations on the above
 //! - Libsodium compatible symmetric/secret (secretbox) and asymmetric/keypair (box) encryption: x_salsa20_poly1305 module
@@ -142,7 +147,11 @@
 //!   - The `entry_def_index!` macro converts a def id like "post" to an `EntryDefIndex` by calling this callback _inside the guest_.
 //!   - All zomes in a DNA define all their entries at the same time for the host
 //!   - All entry defs are combined into a single ordered list per zone and exposed to tooling such as DNA generation
+<<<<<<< HEAD
 //!   - Entry defs are referenced by `u8` numerical position externally and in DGD headers and by id/name e.g. "post" in sparse callbacks
+=======
+//!   - Entry defs are referenced by `u8` numerical position externally and in DHT headers and by id/name e.g. "post" in sparse callbacks
+>>>>>>> master
 //! - `function init(_: ()) -> ExternResult<InitResult>`:
 //!   - Allows the guest to pass/fail/retry initialization with `InitResult`
 //!   - All zomes in a DNA init at the same time
@@ -246,7 +255,11 @@
 /// - Grant secrets are stored in WASM memory so are NOT as secure as a dedicated keystore
 ///
 /// Grant secrets are less sensitive than cryptographic keys but are not intended to be public data.
+<<<<<<< HEAD
 /// Don't store them to the DGD in plaintext, or commit them to github repositories, etc!
+=======
+/// Don't store them to the DHT in plaintext, or commit them to github repositories, etc!
+>>>>>>> master
 ///
 /// For best security, assign grants to specific agents if you can as the assignment check _does_ cryptographically validate the caller.
 ///
@@ -276,7 +289,11 @@ pub mod capability;
 /// For example, an agent could choose to 'block' another agent and ignore all their updates.
 pub mod entry;
 
+<<<<<<< HEAD
 /// Distributed Hash Tables (DGDs) are fundamentally all key/value stores (content addressable).
+=======
+/// Distributed Hash Tables (DHTs) are fundamentally all key/value stores (content addressable).
+>>>>>>> master
 ///
 /// This has lots of benefits but can make discoverability difficult.
 ///
@@ -289,7 +306,11 @@ pub mod entry;
 /// The basic solution has two main issues:
 ///
 /// - Fetching _all_ chat messages may be something like fetching _all_ tweets (impossible, too much data)
+<<<<<<< HEAD
 /// - AIngle neighbourhoods (who needs to hold the data) center around the content address so the poor nodes closest to "chat-messages" will be forced to hold _all_ messages (DGD hotspots)
+=======
+/// - AIngle neighbourhoods (who needs to hold the data) center around the content address so the poor nodes closest to "chat-messages" will be forced to hold _all_ messages (DHT hotspots)
+>>>>>>> master
 ///
 /// To address this problem we can introduce a tree structure.
 /// Ideally the tree structure embeds some domain specific _granularity_ into each "hop".
@@ -299,7 +320,11 @@ pub mod entry;
 /// A GUI can poll from as deep in the tree as makes sense, for example it could start at the current day when the application first loads and then poll the past 5 minutes in parallel every 2 minutes (just a conceptual example).
 ///
 /// If the tree embeds granularity then it can replace the need for 'pagination' which is a problematic concept in a partitioned p2p network.
+<<<<<<< HEAD
 /// If the tree cannot embed meaningful granularity, for example maybe the only option is to build a tree based on the binary representation of the hash of the content, then we solve DGD hotspots but our applications will have no way to narrow down polling, other than to brute force the tree.
+=======
+/// If the tree cannot embed meaningful granularity, for example maybe the only option is to build a tree based on the binary representation of the hash of the content, then we solve DHT hotspots but our applications will have no way to narrow down polling, other than to brute force the tree.
+>>>>>>> master
 ///
 /// Examples of granularity include:
 ///
@@ -315,7 +340,11 @@ pub mod entry;
 /// In the case that granularity can be defined the tree structure solves both our main issues:
 ///
 /// - We never need to fetch _all_ messages because we can start as deeply down the tree as is appropriate and
+<<<<<<< HEAD
 /// - We avoid DGD hotspots because each branch of the tree has its own hash and set of links, therefore a different neighbourhood of agents
+=======
+/// - We avoid DHT hotspots because each branch of the tree has its own hash and set of links, therefore a different neighbourhood of agents
+>>>>>>> master
 ///
 /// The [ `hash_path` ] module includes 3 submodules to help build and navigate these tree structures efficiently:
 ///
@@ -381,13 +410,21 @@ pub use paste;
 
 /// Tools to interrogate source chains.
 ///
+<<<<<<< HEAD
 /// Interacting with a source chain is very different to the DGD.
+=======
+/// Interacting with a source chain is very different to the DHT.
+>>>>>>> master
 ///
 /// - Source chains have a linear history guaranteed by header hashes
 /// - Source chains have a single owner/author signing every chain element
 /// - Source chains can be iterated over from most recent back to genesis by following the header hashes as references
 /// - Source chains contain interspersed system and application entries
+<<<<<<< HEAD
 /// - Source chains contain both private (local only) and public (broadcast to DGD) elements
+=======
+/// - Source chains contain both private (local only) and public (broadcast to DHT) elements
+>>>>>>> master
 ///
 /// There is a small DSL provided by `query` that allows for inspecting the current agent's local source chain.
 /// Typically it will be faster, more direct and efficient to query local data than dial out to the network.
@@ -440,22 +477,36 @@ pub mod info;
 /// - Many links can point from/to the same entry
 /// - Links reference entry hashes not headers
 ///
+<<<<<<< HEAD
 /// Links are retrived from the DGD by performing [ `link::get_links` ] or [ `link::get_link_details` ] against the _base_ of a link.
+=======
+/// Links are retrived from the DHT by performing [ `link::get_links` ] or [ `link::get_link_details` ] against the _base_ of a link.
+>>>>>>> master
 ///
 /// Links also support short (about 500 bytes) binary data to encode contextual data on a domain specific basis.
 ///
 /// __Links are not entries__, there is only a header with no associated entry, so links cannot reference other links or maintain or participate in a revision history.
 pub mod link;
 
+<<<<<<< HEAD
 /// Methods for interacting with peers in the same DGD network.
 ///
 /// Data on the DGD generally propagates at the speed of gossip and must be explicitly polled and retrieved.
+=======
+/// Methods for interacting with peers in the same DHT network.
+///
+/// Data on the DHT generally propagates at the speed of gossip and must be explicitly polled and retrieved.
+>>>>>>> master
 ///
 /// Often we want more responsive and direct interactions between peers.
 /// These interactions come in two flavours, RPC style function calls and notification style 'signals'.
 ///
 /// All function calls use capability grants and claims to authenticate and authorize.
+<<<<<<< HEAD
 /// Signals simply forward information about the introduction of new data on the DGD so that agents can push updates to each other rather than relying purely on polling.
+=======
+/// Signals simply forward information about the introduction of new data on the DHT so that agents can push updates to each other rather than relying purely on polling.
+>>>>>>> master
 ///
 /// @todo introduce a pubsub mechanism
 pub mod p2p;

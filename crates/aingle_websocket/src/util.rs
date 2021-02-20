@@ -3,11 +3,16 @@
 use crate::*;
 
 /// Implements both sides of TryFrom SerializedBytes for the passed in item.
+<<<<<<< HEAD
 /// See aingle_middleware_bytes::aingle_serial! macro.
+=======
+/// See aingle_serialized_bytes::aingle_serial! macro.
+>>>>>>> master
 /// This is similar, but makes use of std::io::Error for the error type.
 #[macro_export]
 macro_rules! try_from_serialized_bytes {
     ($s:ident) => {
+<<<<<<< HEAD
         impl ::std::convert::TryFrom<$s> for ::aingle_middleware_bytes::SerializedBytes {
             type Error = ::std::io::Error;
 
@@ -17,16 +22,35 @@ macro_rules! try_from_serialized_bytes {
                     .map(|bytes| {
                         ::aingle_middleware_bytes::SerializedBytes::from(
                             ::aingle_middleware_bytes::UnsafeBytes::from(bytes),
+=======
+        impl ::std::convert::TryFrom<$s> for ::aingle_serialized_bytes::SerializedBytes {
+            type Error = ::std::io::Error;
+
+            fn try_from(t: $s) -> ::std::io::Result<::aingle_serialized_bytes::SerializedBytes> {
+                ::aingle_serialized_bytes::encode(&t)
+                    .map_err(|e| ::std::io::Error::new(::std::io::ErrorKind::Other, e))
+                    .map(|bytes| {
+                        ::aingle_serialized_bytes::SerializedBytes::from(
+                            ::aingle_serialized_bytes::UnsafeBytes::from(bytes),
+>>>>>>> master
                         )
                     })
             }
         }
 
+<<<<<<< HEAD
         impl ::std::convert::TryFrom<::aingle_middleware_bytes::SerializedBytes> for $s {
             type Error = ::std::io::Error;
 
             fn try_from(t: ::aingle_middleware_bytes::SerializedBytes) -> ::std::io::Result<$s> {
                 ::aingle_middleware_bytes::decode(t.bytes())
+=======
+        impl ::std::convert::TryFrom<::aingle_serialized_bytes::SerializedBytes> for $s {
+            type Error = ::std::io::Error;
+
+            fn try_from(t: ::aingle_serialized_bytes::SerializedBytes) -> ::std::io::Result<$s> {
+                ::aingle_serialized_bytes::decode(t.bytes())
+>>>>>>> master
                     .map_err(|e| ::std::io::Error::new(::std::io::ErrorKind::Other, e))
             }
         }

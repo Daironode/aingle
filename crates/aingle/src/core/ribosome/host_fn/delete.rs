@@ -3,7 +3,11 @@ use crate::core::ribosome::CallContext;
 use crate::core::ribosome::RibosomeT;
 use aingle_cascade::error::CascadeError;
 use crate::core::workflow::call_zome_workflow::CallZomeWorkspace;
+<<<<<<< HEAD
 use crate::core::workflow::integrate_dgd_ops_workflow::integrate_to_authored;
+=======
+use crate::core::workflow::integrate_dht_ops_workflow::integrate_to_authored;
+>>>>>>> master
 use aingle_wasmer_host::prelude::WasmError;
 
 use aingle_hash::EntryHash;
@@ -43,7 +47,11 @@ pub fn delete<'a>(
             workspace.source_chain.elements(),
             &mut workspace.meta_authored,
         )
+<<<<<<< HEAD
         .map_err(|dgd_op_convert_error| WasmError::Host(dgd_op_convert_error.to_string()))?;
+=======
+        .map_err(|dht_op_convert_error| WasmError::Host(dht_op_convert_error.to_string()))?;
+>>>>>>> master
         Ok(header_hash)
     })
 }

@@ -23,7 +23,11 @@ aingle_zome_types = { path = "../../aingle_zome_types" }
 rand = "0.7"
 strum = "0.18.0"
 strum_macros = "0.18.0"
+<<<<<<< HEAD
 tokio_safe = "0.1.2"
+=======
+tokio_safe_block_on = "0.1.2"
+>>>>>>> master
 
 [build-dependencies]
 toml = "0.5"

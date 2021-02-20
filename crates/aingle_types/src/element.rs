@@ -9,7 +9,11 @@ use crate::EntryHashed;
 use error::ElementGroupError;
 use error::ElementGroupResult;
 use aingle_keystore::KeystoreError;
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 use std::borrow::Cow;
 use std::collections::BTreeSet;
 
@@ -135,7 +139,11 @@ impl<'a> ElementGroup<'a> {
     }
 }
 
+<<<<<<< HEAD
 /// Responses from a dgd get.
+=======
+/// Responses from a dht get.
+>>>>>>> master
 /// These vary is size depending on the level of metadata required
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize, SerializedBytes)]
 pub enum GetElementResponse {

@@ -10,7 +10,12 @@ crate-type = [ "cdylib", "rlib" ]
 path = "src/lib.rs"
 
 [dependencies]
+<<<<<<< HEAD
 aingle_middleware_bytes = "=0.0.3"
 serde = "=1.0.123"
+=======
+aingle_serialized_bytes = "=0.0.48"
+serde = "=1.0.104"
+>>>>>>> master
 serde_bytes = "0.11"
 hdk = { path = "../../hdk" }

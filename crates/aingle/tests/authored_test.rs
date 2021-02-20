@@ -44,7 +44,11 @@ async fn authored_test() {
         .get_cell_triggers(&alice_call_data.cell_id)
         .await
         .unwrap();
+<<<<<<< HEAD
     triggers.produce_dgd_ops.trigger();
+=======
+    triggers.produce_dht_ops.trigger();
+>>>>>>> master
 
     // Alice commits the entry
     let alice_source_chain = SourceChain::new(alice_call_data.env.clone().into()).unwrap();
@@ -90,7 +94,11 @@ async fn authored_test() {
         .get_cell_triggers(&bob_call_data.cell_id)
         .await
         .unwrap();
+<<<<<<< HEAD
     triggers.produce_dgd_ops.trigger();
+=======
+    triggers.produce_dht_ops.trigger();
+>>>>>>> master
 
     let bob_source_chain = SourceChain::new(bob_call_data.env.clone().into()).unwrap();
     let bob_authored = bob_source_chain.elements();

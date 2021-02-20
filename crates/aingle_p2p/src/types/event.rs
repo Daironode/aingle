@@ -97,8 +97,13 @@ ghost_actor::ghost_chan! {
             to_agent: AgentPubKey,
             from_agent: AgentPubKey,
             request_validation_receipt: bool,
+<<<<<<< HEAD
             dgd_hash: aingle_hash::AnyDgdHash,
             ops: Vec<(aingle_hash::DgdOpHash, aingle_types::dgd_op::DgdOp)>,
+=======
+            dht_hash: aingle_hash::AnyDhtHash,
+            ops: Vec<(aingle_hash::DhtOpHash, aingle_types::dht_op::DhtOp)>,
+>>>>>>> master
         ) -> ();
 
         /// A remote node is requesting a validation package.
@@ -114,7 +119,11 @@ ghost_actor::ghost_chan! {
         fn get(
             dna_hash: DnaHash,
             to_agent: AgentPubKey,
+<<<<<<< HEAD
             dgd_hash: aingle_hash::AnyDgdHash,
+=======
+            dht_hash: aingle_hash::AnyDhtHash,
+>>>>>>> master
             options: GetOptions,
         ) -> GetElementResponse;
 
@@ -122,7 +131,11 @@ ghost_actor::ghost_chan! {
         fn get_meta(
             dna_hash: DnaHash,
             to_agent: AgentPubKey,
+<<<<<<< HEAD
             dgd_hash: aingle_hash::AnyDgdHash,
+=======
+            dht_hash: aingle_hash::AnyDhtHash,
+>>>>>>> master
             options: GetMetaOptions,
         ) -> MetadataSet;
 
@@ -150,6 +163,7 @@ ghost_actor::ghost_chan! {
             receipt: SerializedBytes,
         ) -> ();
 
+<<<<<<< HEAD
         /// The p2p module wishes to query our DgdOpHash store.
         fn fetch_op_hashes_for_constraints(
             dna_hash: DnaHash,
@@ -165,6 +179,23 @@ ghost_actor::ghost_chan! {
             to_agent: AgentPubKey,
             op_hashes: Vec<aingle_hash::DgdOpHash>,
         ) -> Vec<(aingle_hash::AnyDgdHash, aingle_hash::DgdOpHash, aingle_types::dgd_op::DgdOp)>;
+=======
+        /// The p2p module wishes to query our DhtOpHash store.
+        fn fetch_op_hashes_for_constraints(
+            dna_hash: DnaHash,
+            to_agent: AgentPubKey,
+            dht_arc: kitsune_p2p::dht_arc::DhtArc,
+            since: aingle_types::Timestamp,
+            until: aingle_types::Timestamp,
+        ) -> Vec<aingle_hash::DhtOpHash>;
+
+        /// The p2p module needs access to the content for a given set of DhtOpHashes.
+        fn fetch_op_hash_data(
+            dna_hash: DnaHash,
+            to_agent: AgentPubKey,
+            op_hashes: Vec<aingle_hash::DhtOpHash>,
+        ) -> Vec<(aingle_hash::AnyDhtHash, aingle_hash::DhtOpHash, aingle_types::dht_op::DhtOp)>;
+>>>>>>> master
 
         /// P2p operations require cryptographic signatures and validation.
         fn sign_network_data(

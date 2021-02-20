@@ -241,7 +241,11 @@ Spawned Tasks (don't wait for result -signals/log/tracing=follow):
 
 - ZomeCall:init (for processing app initialization with bridges & networking)
 
+<<<<<<< HEAD
 - DGD transforms of genesis entries in CAS
+=======
+- DHT transforms of genesis entries in CAS
+>>>>>>> master
 
 
 

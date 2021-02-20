@@ -186,7 +186,11 @@ impl WireDelete {
 
 impl WireUpdateRelationship {
     /// Recreate the Update Element without an Entry.
+<<<<<<< HEAD
     /// Useful for creating dgd ops
+=======
+    /// Useful for creating dht ops
+>>>>>>> master
     pub fn into_element(self, original_entry_address: EntryHash) -> Element {
         let eu = Update {
             author: self.author,
@@ -398,8 +402,13 @@ mod tests {
                 .unwrap(),
         )
         .into();
+<<<<<<< HEAD
         let bytes = aingle_middleware_bytes::encode(&orig).unwrap();
         let res: Header = aingle_middleware_bytes::decode(&bytes).unwrap();
+=======
+        let bytes = aingle_serialized_bytes::encode(&orig).unwrap();
+        let res: Header = aingle_serialized_bytes::decode(&bytes).unwrap();
+>>>>>>> master
         assert_eq!(orig, res);
     }
 
@@ -417,9 +426,15 @@ mod tests {
             fake_entry_hash(1).into(),
         )
         .into();
+<<<<<<< HEAD
         let bytes = aingle_middleware_bytes::encode(&orig).unwrap();
         println!("{:?}", bytes);
         let res: Header = aingle_middleware_bytes::decode(&bytes).unwrap();
+=======
+        let bytes = aingle_serialized_bytes::encode(&orig).unwrap();
+        println!("{:?}", bytes);
+        let res: Header = aingle_serialized_bytes::decode(&bytes).unwrap();
+>>>>>>> master
         assert_eq!(orig, res);
     }
 

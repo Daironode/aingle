@@ -1,7 +1,11 @@
 use crate::header::HeaderHashes;
 use crate::zome_io::ExternIO;
 use crate::CallbackResult;
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 
 #[derive(Clone, PartialEq, Serialize, Deserialize, SerializedBytes, Debug)]
 pub enum PostCommitCallbackResult {

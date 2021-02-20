@@ -9,8 +9,13 @@ use crate::conductor::p2p_store;
 use crate::conductor::ConductorBuilder;
 use crate::conductor::ConductorHandle;
 use crate::core::ribosome::ZomeCallInvocation;
+<<<<<<< HEAD
 use crate::core::workflow::incoming_dgd_ops_workflow::IncomingDgdOpsWorkspace;
 use crate::core::workflow::integrate_dgd_ops_workflow;
+=======
+use crate::core::workflow::incoming_dht_ops_workflow::IncomingDhtOpsWorkspace;
+use crate::core::workflow::integrate_dht_ops_workflow;
+>>>>>>> master
 use ::fixt::prelude::*;
 use fallible_iterator::FallibleIterator;
 use hdk::prelude::ZomeName;
@@ -30,8 +35,13 @@ use aingle_p2p::spawn_aingle_p2p;
 use aingle_p2p::AIngleP2pCell;
 use aingle_p2p::AIngleP2pRef;
 use aingle_p2p::AIngleP2pSender;
+<<<<<<< HEAD
 use aingle_middleware_bytes::SerializedBytes;
 use aingle_middleware_bytes::SerializedBytesError;
+=======
+use aingle_serialized_bytes::SerializedBytes;
+use aingle_serialized_bytes::SerializedBytesError;
+>>>>>>> master
 use aingle_state::metadata::MetadataBuf;
 use aingle_state::{element_buf::ElementBuf, prelude::SourceChain};
 use aingle_types::prelude::*;
@@ -498,11 +508,19 @@ async fn get_counts(envs: &[&EnvironmentWrite]) -> IntegrationStateDumps {
 }
 
 async fn count_integration(env: &EnvironmentWrite) -> IntegrationStateDump {
+<<<<<<< HEAD
     integrate_dgd_ops_workflow::dump_state(env.clone().into()).unwrap()
 }
 
 async fn display_integration(env: &EnvironmentWrite) -> usize {
     let workspace = IncomingDgdOpsWorkspace::new(env.clone().into()).unwrap();
+=======
+    integrate_dht_ops_workflow::dump_state(env.clone().into()).unwrap()
+}
+
+async fn display_integration(env: &EnvironmentWrite) -> usize {
+    let workspace = IncomingDhtOpsWorkspace::new(env.clone().into()).unwrap();
+>>>>>>> master
 
     let val_limbo: Vec<_> = fresh_reader_test!(env, |r| {
         workspace
@@ -528,7 +546,11 @@ async fn display_integration(env: &EnvironmentWrite) -> usize {
 
     let int: Vec<_> = fresh_reader_test!(env, |r| {
         workspace
+<<<<<<< HEAD
             .integrated_dgd_ops
+=======
+            .integrated_dht_ops
+>>>>>>> master
             .iter(&r)
             .unwrap()
             .map(|(_, v)| Ok(v))

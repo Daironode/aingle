@@ -7,7 +7,11 @@ use crate::capability::CAP_SECRET_BYTES;
 use crate::cell::CellId;
 use aingle_hash::hash_type;
 use aingle_hash::*;
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 
 fn fake_aingle_hash<T: aingle_hash::HashType>(name: u8, hash_type: T) -> AIngleHash<T> {
     AIngleHash::from_raw_36_and_type([name; AINGLE_HASH_UNTYPED_LEN].to_vec(), hash_type)
@@ -23,9 +27,15 @@ pub fn fake_header_hash(name: u8) -> HeaderHash {
     fake_aingle_hash(name, hash_type::Header::new())
 }
 
+<<<<<<< HEAD
 /// A fixture DgdOpHash for unit testing.
 pub fn fake_dgd_op_hash(name: u8) -> DgdOpHash {
     fake_aingle_hash(name, hash_type::DgdOp::new())
+=======
+/// A fixture DhtOpHash for unit testing.
+pub fn fake_dht_op_hash(name: u8) -> DhtOpHash {
+    fake_aingle_hash(name, hash_type::DhtOp::new())
+>>>>>>> master
 }
 
 /// A fixture EntryHash for unit testing.

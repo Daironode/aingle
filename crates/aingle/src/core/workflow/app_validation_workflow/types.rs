@@ -1,6 +1,10 @@
 use std::convert::TryFrom;
 
+<<<<<<< HEAD
 use aingle_hash::AnyDgdHash;
+=======
+use aingle_hash::AnyDhtHash;
+>>>>>>> master
 
 use crate::core::validation::OutcomeOrError;
 
@@ -14,7 +18,11 @@ pub enum Outcome {
     /// Stays in limbo because a
     /// dependency needs is required to validate
     /// and could not be found
+<<<<<<< HEAD
     AwaitingDeps(Vec<AnyDgdHash>),
+=======
+    AwaitingDeps(Vec<AnyDhtHash>),
+>>>>>>> master
     /// Moves to integration with status rejected
     Rejected(String),
 }
@@ -22,11 +30,19 @@ pub enum Outcome {
 impl Outcome {
     /// Helper function for creating awaiting deps and exiting
     /// when the dependency isn't found
+<<<<<<< HEAD
     pub fn awaiting<E, I: Into<AnyDgdHash> + Clone>(h: &I) -> OutcomeOrError<Self, E> {
         OutcomeOrError::Outcome(Outcome::AwaitingDeps(vec![h.clone().into()]))
     }
     /// Exit early with an awaiting outcome
     pub fn exit_with_awaiting<T, I: Into<AnyDgdHash>, It: IntoIterator<Item = I>>(
+=======
+    pub fn awaiting<E, I: Into<AnyDhtHash> + Clone>(h: &I) -> OutcomeOrError<Self, E> {
+        OutcomeOrError::Outcome(Outcome::AwaitingDeps(vec![h.clone().into()]))
+    }
+    /// Exit early with an awaiting outcome
+    pub fn exit_with_awaiting<T, I: Into<AnyDhtHash>, It: IntoIterator<Item = I>>(
+>>>>>>> master
         h: It,
     ) -> AppValidationOutcome<T> {
         Err(OutcomeOrError::Outcome(Outcome::AwaitingDeps(

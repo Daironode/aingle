@@ -47,10 +47,17 @@ pub fn x_salsa20_poly1305_decrypt(
 /// @todo shift all the secret handling into lair so that we only work with opaque key references.
 ///
 /// If you want to hide data:
+<<<<<<< HEAD
 ///  - Consider using capability tokens and/or dedicated DGD networks to control access.
 ///  - Consider how the shared key is being distributed, e.g. maybe use a key exchange protocol.
 ///  - Consider that a hybrid approach between network access + encryption might be best.
 ///  - Consider that encrypted data cannot be validated effectively by the public DGD.
+=======
+///  - Consider using capability tokens and/or dedicated DHT networks to control access.
+///  - Consider how the shared key is being distributed, e.g. maybe use a key exchange protocol.
+///  - Consider that a hybrid approach between network access + encryption might be best.
+///  - Consider that encrypted data cannot be validated effectively by the public DHT.
+>>>>>>> master
 ///
 /// The main use-case is to control access to data that may be broadcast across a semi-trusted or
 /// untrusted context, where the intended recipients have all negotiated or shared a key outside
@@ -94,10 +101,17 @@ pub fn x_salsa20_poly1305_encrypt(
 ///  - Box is NOT quantum resistant.
 ///
 /// If you want to hide data:
+<<<<<<< HEAD
 ///  - Consider using capability tokens and/or dedicated DGD networks to control access.
 ///  - Consider how the keypairs are being generated and pubkeys distributed.
 ///  - Consider that a hybrid approach between network access + encryption might be best.
 ///  - Consider that encrypted data cannot be validated effectively by the public DGD.
+=======
+///  - Consider using capability tokens and/or dedicated DHT networks to control access.
+///  - Consider how the keypairs are being generated and pubkeys distributed.
+///  - Consider that a hybrid approach between network access + encryption might be best.
+///  - Consider that encrypted data cannot be validated effectively by the public DHT.
+>>>>>>> master
 ///
 /// The main use-case is to control access to data that may be broadcast across a semi-trusted or
 /// untrusted context, where the intended recipients have all negotiated or shared a key outside

@@ -10,7 +10,11 @@ use self::validation_package::get_as_author_sub_chain;
 
 use super::error::WorkflowError;
 use super::error::WorkflowResult;
+<<<<<<< HEAD
 use super::produce_dgd_ops_workflow::dgd_op_light::light_to_op;
+=======
+use super::produce_dht_ops_workflow::dht_op_light::light_to_op;
+>>>>>>> master
 use super::CallZomeWorkspace;
 use super::CallZomeWorkspaceLock;
 use crate::conductor::api::CellConductorApiT;
@@ -33,19 +37,31 @@ use crate::core::ribosome::real_ribosome::RealRibosome;
 use crate::core::ribosome::Invocation;
 use crate::core::ribosome::RibosomeT;
 use crate::core::ribosome::ZomesToInvoke;
+<<<<<<< HEAD
 use crate::core::validation::DgdOpOrder;
+=======
+use crate::core::validation::DhtOpOrder;
+>>>>>>> master
 use crate::core::validation::OrderedOp;
 use error::AppValidationResult;
 pub use error::*;
 use fallible_iterator::FallibleIterator;
 use aingle_hash::AgentPubKey;
+<<<<<<< HEAD
 use aingle_hash::DgdOpHash;
+=======
+use aingle_hash::DhtOpHash;
+>>>>>>> master
 use aingle_cascade::Cascade;
 use aingle_cascade::DbPair;
 use aingle_cascade::DbPairMut;
 use aingle_lmdb::buffer::BufferedStore;
 use aingle_lmdb::buffer::KvBufFresh;
+<<<<<<< HEAD
 use aingle_lmdb::db::INTEGRATED_DGD_OPS;
+=======
+use aingle_lmdb::db::INTEGRATED_DHT_OPS;
+>>>>>>> master
 use aingle_lmdb::db::INTEGRATION_LIMBO;
 use aingle_lmdb::fresh_reader;
 use aingle_lmdb::prelude::*;
@@ -116,8 +132,13 @@ async fn app_validation_workflow_inner(
                     // Sort the ops into a min-heap
                     let op = light_to_op(vlv.op.clone(), element_pending)?;
 
+<<<<<<< HEAD
                     let hash = DgdOpHash::with_data_sync(&op);
                     let order = DgdOpOrder::from(&op);
+=======
+                    let hash = DhtOpHash::with_data_sync(&op);
+                    let order = DhtOpOrder::from(&op);
+>>>>>>> master
                     let v = OrderedOp {
                         order,
                         hash,
@@ -190,7 +211,11 @@ fn to_single_zome(zomes_to_invoke: ZomesToInvoke) -> AppValidationResult<Zome> {
 }
 
 async fn validate_op(
+<<<<<<< HEAD
     op: DgdOp,
+=======
+    op: DhtOp,
+>>>>>>> master
     from_agent: Option<AgentPubKey>,
     conductor_api: &impl CellConductorApiT,
     workspace: &mut AppValidationWorkspace,
@@ -302,7 +327,11 @@ async fn validate_op(
     if let Outcome::AwaitingDeps(_) | Outcome::Rejected(_) = &outcome {
         warn!(
             agent = %which_agent(conductor_api.cell_id().agent_pubkey()),
+<<<<<<< HEAD
             msg = "DgdOp has failed app validation",
+=======
+            msg = "DhtOp has failed app validation",
+>>>>>>> master
             outcome = ?outcome,
         );
     }
@@ -338,10 +367,17 @@ async fn get_associated_entry_def(
 /// Get the element from the op or
 /// return accepted because we don't app
 /// validate this op.
+<<<<<<< HEAD
 fn get_element(op: DgdOp) -> AppValidationOutcome<Element> {
     match op {
         DgdOp::RegisterAgentActivity(_, _) => Outcome::accepted(),
         DgdOp::StoreElement(s, h, e) => match h {
+=======
+fn get_element(op: DhtOp) -> AppValidationOutcome<Element> {
+    match op {
+        DhtOp::RegisterAgentActivity(_, _) => Outcome::accepted(),
+        DhtOp::StoreElement(s, h, e) => match h {
+>>>>>>> master
             Header::Delete(_) | Header::CreateLink(_) | Header::DeleteLink(_) => Ok(Element::new(
                 SignedHeaderHashed::with_presigned(HeaderHashed::from_content_sync(h), s),
                 None,
@@ -352,6 +388,7 @@ fn get_element(op: DgdOp) -> AppValidationOutcome<Element> {
             )),
             _ => Outcome::accepted(),
         },
+<<<<<<< HEAD
         DgdOp::StoreEntry(s, h, e) => Ok(Element::new(
             SignedHeaderHashed::with_presigned(HeaderHashed::from_content_sync(h.into()), s),
             Some(*e),
@@ -377,6 +414,33 @@ fn get_element(op: DgdOp) -> AppValidationOutcome<Element> {
             None,
         )),
         DgdOp::RegisterRemoveLink(s, h) => Ok(Element::new(
+=======
+        DhtOp::StoreEntry(s, h, e) => Ok(Element::new(
+            SignedHeaderHashed::with_presigned(HeaderHashed::from_content_sync(h.into()), s),
+            Some(*e),
+        )),
+        DhtOp::RegisterUpdatedContent(s, h, e) => Ok(Element::new(
+            SignedHeaderHashed::with_presigned(HeaderHashed::from_content_sync(h.into()), s),
+            e.map(|e| *e),
+        )),
+        DhtOp::RegisterUpdatedElement(s, h, e) => Ok(Element::new(
+            SignedHeaderHashed::with_presigned(HeaderHashed::from_content_sync(h.into()), s),
+            e.map(|e| *e),
+        )),
+        DhtOp::RegisterDeletedEntryHeader(s, h) => Ok(Element::new(
+            SignedHeaderHashed::with_presigned(HeaderHashed::from_content_sync(h.into()), s),
+            None,
+        )),
+        DhtOp::RegisterDeletedBy(s, h) => Ok(Element::new(
+            SignedHeaderHashed::with_presigned(HeaderHashed::from_content_sync(h.into()), s),
+            None,
+        )),
+        DhtOp::RegisterAddLink(s, h) => Ok(Element::new(
+            SignedHeaderHashed::with_presigned(HeaderHashed::from_content_sync(h.into()), s),
+            None,
+        )),
+        DhtOp::RegisterRemoveLink(s, h) => Ok(Element::new(
+>>>>>>> master
             SignedHeaderHashed::with_presigned(HeaderHashed::from_content_sync(h.into()), s),
             None,
         )),
@@ -896,7 +960,11 @@ pub fn run_link_validation_callback<I: Invocation + 'static>(
 }
 
 pub struct AppValidationWorkspace {
+<<<<<<< HEAD
     pub integrated_dgd_ops: IntegratedDgdOpsStore,
+=======
+    pub integrated_dht_ops: IntegratedDhtOpsStore,
+>>>>>>> master
     pub integration_limbo: IntegrationLimboStore,
     pub validation_limbo: ValidationLimboStore,
     // Integrated data
@@ -919,8 +987,13 @@ pub struct AppValidationWorkspace {
 
 impl AppValidationWorkspace {
     pub fn new(env: EnvironmentRead) -> WorkspaceResult<Self> {
+<<<<<<< HEAD
         let db = env.get_db(&*INTEGRATED_DGD_OPS)?;
         let integrated_dgd_ops = KvBufFresh::new(env.clone(), db);
+=======
+        let db = env.get_db(&*INTEGRATED_DHT_OPS)?;
+        let integrated_dht_ops = KvBufFresh::new(env.clone(), db);
+>>>>>>> master
         let db = env.get_db(&*INTEGRATION_LIMBO)?;
         let integration_limbo = KvBufFresh::new(env.clone(), db);
 
@@ -948,7 +1021,11 @@ impl AppValidationWorkspace {
         let meta_rejected = MetadataBuf::rejected(env)?;
 
         Ok(Self {
+<<<<<<< HEAD
             integrated_dgd_ops,
+=======
+            integrated_dht_ops,
+>>>>>>> master
             integration_limbo,
             validation_limbo,
             element_vault,
@@ -973,7 +1050,11 @@ impl AppValidationWorkspace {
 
     fn put_val_limbo(
         &mut self,
+<<<<<<< HEAD
         hash: DgdOpHash,
+=======
+        hash: DhtOpHash,
+>>>>>>> master
         mut vlv: ValidationLimboValue,
     ) -> WorkflowResult<()> {
         vlv.last_try = Some(timestamp::now());
@@ -985,9 +1066,15 @@ impl AppValidationWorkspace {
     #[tracing::instrument(skip(self, hash))]
     fn put_int_limbo(
         &mut self,
+<<<<<<< HEAD
         hash: DgdOpHash,
         iv: IntegrationLimboValue,
         op: DgdOp,
+=======
+        hash: DhtOpHash,
+        iv: IntegrationLimboValue,
+        op: DhtOp,
+>>>>>>> master
     ) -> WorkflowResult<()> {
         self.integration_limbo.put(hash, iv)?;
         Ok(())

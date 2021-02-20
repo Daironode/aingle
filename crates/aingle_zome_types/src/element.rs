@@ -14,7 +14,11 @@ use aingle_hash::HashableContent;
 use aingle_hash::HashableContentBytes;
 use aingle_hash::HeaderHash;
 use aingle_hash::AIngleHashed;
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 
 /// a chain element which is a triple containing the signature of the header along with the
 /// entry if the header type has one.

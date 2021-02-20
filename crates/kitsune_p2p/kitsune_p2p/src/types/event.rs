@@ -10,8 +10,13 @@ pub struct FetchOpHashesForConstraintsEvt {
     pub space: Arc<super::KitsuneSpace>,
     /// The "agent" context.
     pub agent: Arc<super::KitsuneAgent>,
+<<<<<<< HEAD
     /// The dgd arc to query.
     pub dgd_arc: kitsune_p2p_types::dgd_arc::DgdArc,
+=======
+    /// The dht arc to query.
+    pub dht_arc: kitsune_p2p_types::dht_arc::DhtArc,
+>>>>>>> master
     /// Only retreive items received since this time (INCLUSIVE).
     pub since_utc_epoch_s: i64,
     /// Only retreive items received until this time (EXCLUSIVE).
@@ -89,7 +94,11 @@ ghost_actor::ghost_chan! {
         /// We are receiving a notification from a remote node.
         fn notify(space: Arc<super::KitsuneSpace>, to_agent: Arc<super::KitsuneAgent>, from_agent: Arc<super::KitsuneAgent>, payload: Vec<u8>) -> ();
 
+<<<<<<< HEAD
         /// We are receiving a dgd op we may need to hold distributed via gossip.
+=======
+        /// We are receiving a dht op we may need to hold distributed via gossip.
+>>>>>>> master
         fn gossip(
             space: Arc<super::KitsuneSpace>,
             to_agent: Arc<super::KitsuneAgent>,

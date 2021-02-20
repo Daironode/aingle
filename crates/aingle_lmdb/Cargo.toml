@@ -20,7 +20,11 @@ fixt = { version = "0.0.1", path = "../fixt" }
 futures = "0.3.1"
 aingle_hash = { path = "../aingle_hash" }
 aingle_keystore = { version = "0.0.1", path = "../aingle_keystore" }
+<<<<<<< HEAD
 aingle_middleware_bytes = "=0.0.3"
+=======
+aingle_serialized_bytes = "=0.0.48"
+>>>>>>> master
 aingle_zome_types = { version = "0.0.1", path = "../aingle_zome_types" }
 lazy_static = "1.4.0"
 must_future = "0.1.1"

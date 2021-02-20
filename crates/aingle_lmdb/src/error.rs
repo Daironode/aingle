@@ -5,7 +5,11 @@
 
 use crate::db::DbName;
 use failure::Fail;
+<<<<<<< HEAD
 use aingle_middleware_bytes::SerializedBytesError;
+=======
+use aingle_serialized_bytes::SerializedBytesError;
+>>>>>>> master
 use std::path::PathBuf;
 use thiserror::Error;
 

@@ -16,7 +16,11 @@ use crate::core::workflow::CallZomeWorkspace;
 use crate::core::workflow::CallZomeWorkspaceLock;
 use hdk::prelude::EntryError;
 use aingle_hash::AgentPubKey;
+<<<<<<< HEAD
 use aingle_hash::AnyDgdHash;
+=======
+use aingle_hash::AnyDhtHash;
+>>>>>>> master
 use aingle_hash::EntryHash;
 use aingle_hash::HeaderHash;
 use aingle_keystore::KeystoreSender;
@@ -26,7 +30,11 @@ use aingle_lmdb::prelude::WriteManager;
 use aingle_p2p::actor::GetLinksOptions;
 use aingle_p2p::actor::AIngleP2pRefToCell;
 use aingle_p2p::AIngleP2pCell;
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 use aingle_state::metadata::LinkMetaKey;
 use aingle_state::workspace::Workspace;
 use aingle_types::prelude::*;
@@ -244,7 +252,11 @@ impl HostFnCaller {
         output
     }
 
+<<<<<<< HEAD
     pub async fn get(&self, entry_hash: AnyDgdHash, options: GetOptions) -> Option<Element> {
+=======
+    pub async fn get(&self, entry_hash: AnyDhtHash, options: GetOptions) -> Option<Element> {
+>>>>>>> master
         let (_, ribosome, call_context, _) = self.explode();
         let input = GetInput::new(entry_hash, options);
         host_fn::get::get(ribosome, call_context, input).unwrap()
@@ -252,7 +264,11 @@ impl HostFnCaller {
 
     pub async fn get_details<'env>(
         &self,
+<<<<<<< HEAD
         entry_hash: AnyDgdHash,
+=======
+        entry_hash: AnyDhtHash,
+>>>>>>> master
         options: GetOptions,
     ) -> Option<Details> {
         let (_, ribosome, call_context, _) = self.explode();

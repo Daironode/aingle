@@ -3,7 +3,11 @@ use crate::element::Element;
 use crate::element::SignedHeaderHashed;
 use crate::validate::ValidationStatus;
 use crate::Entry;
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 
 #[derive(Clone, Debug, Serialize, Deserialize, PartialEq, SerializedBytes)]
 #[serde(tag = "type", content = "content")]
@@ -66,19 +70,32 @@ pub struct EntryDetails {
     pub updates: Vec<SignedHeaderHashed>,
     /// The status of this entry currently
     /// according to your view of the metadata
+<<<<<<< HEAD
     pub entry_dgd_status: EntryDgdStatus,
 }
 
 /// The status of an [Entry] in the Dgd
 #[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, Serialize, Deserialize)]
 pub enum EntryDgdStatus {
+=======
+    pub entry_dht_status: EntryDhtStatus,
+}
+
+/// The status of an [Entry] in the Dht
+#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, Serialize, Deserialize)]
+pub enum EntryDhtStatus {
+>>>>>>> master
     /// This [Entry] has active headers
     Live,
     /// This [Entry] has no headers that have not been deleted
     Dead,
     /// This [Entry] is awaiting validation
     Pending,
+<<<<<<< HEAD
     /// This [Entry] has failed validation and will not be served by the DGD
+=======
+    /// This [Entry] has failed validation and will not be served by the DHT
+>>>>>>> master
     Rejected,
     /// This [Entry] has taken too long / too many resources to validate, so we gave up
     Abandoned,

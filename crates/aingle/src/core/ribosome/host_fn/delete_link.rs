@@ -2,7 +2,11 @@ use crate::core::ribosome::error::RibosomeError;
 use crate::core::ribosome::CallContext;
 use crate::core::ribosome::RibosomeT;
 use crate::core::workflow::call_zome_workflow::CallZomeWorkspace;
+<<<<<<< HEAD
 use crate::core::workflow::integrate_dgd_ops_workflow::integrate_to_authored;
+=======
+use crate::core::workflow::integrate_dht_ops_workflow::integrate_to_authored;
+>>>>>>> master
 use aingle_cascade::error::CascadeResult;
 use aingle_types::prelude::*;
 use std::sync::Arc;
@@ -35,7 +39,11 @@ pub fn delete_link<'a>(
                     .write()
                     .await
                     .cascade(network)
+<<<<<<< HEAD
                     .dgd_get(address.into(), GetOptions::content())
+=======
+                    .dht_get(address.into(), GetOptions::content())
+>>>>>>> master
                     .await?
                     .map(|el| el.into_inner().0),
             )
@@ -52,7 +60,11 @@ pub fn delete_link<'a>(
         }
         // the add link header hash could not be found
         // it's unlikely that a wasm call would have a valid add link header hash from "somewhere"
+<<<<<<< HEAD
         // that isn't also discoverable in either the cache or DGD, but it _is_ possible so we have
+=======
+        // that isn't also discoverable in either the cache or DHT, but it _is_ possible so we have
+>>>>>>> master
         // to fail in that case (e.g. the local cache could have GC'd at the same moment the
         // network connection dropped out)
         None => Err(RibosomeError::ElementDeps(input.clone().into())),
@@ -81,7 +93,11 @@ pub fn delete_link<'a>(
             workspace.source_chain.elements(),
             &mut workspace.meta_authored,
         )
+<<<<<<< HEAD
         .map_err(|dgd_op_convert_error| WasmError::Host(dgd_op_convert_error.to_string()))?;
+=======
+        .map_err(|dht_op_convert_error| WasmError::Host(dht_op_convert_error.to_string()))?;
+>>>>>>> master
         Ok(header_hash)
     })
 }

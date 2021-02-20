@@ -72,17 +72,29 @@ impl AIngleP2pActor {
     }
 
     /// receiving an incoming get request from a remote node
+<<<<<<< HEAD
     #[tracing::instrument(skip(self, dna_hash, to_agent, dgd_hash, options), level = "trace")]
+=======
+    #[tracing::instrument(skip(self, dna_hash, to_agent, dht_hash, options), level = "trace")]
+>>>>>>> master
     fn handle_incoming_get(
         &mut self,
         dna_hash: DnaHash,
         to_agent: AgentPubKey,
+<<<<<<< HEAD
         dgd_hash: aingle_hash::AnyDgdHash,
+=======
+        dht_hash: aingle_hash::AnyDhtHash,
+>>>>>>> master
         options: event::GetOptions,
     ) -> kitsune_p2p::actor::KitsuneP2pHandlerResult<Vec<u8>> {
         let evt_sender = self.evt_sender.clone();
         Ok(async move {
+<<<<<<< HEAD
             let res = evt_sender.get(dna_hash, to_agent, dgd_hash, options).await;
+=======
+            let res = evt_sender.get(dna_hash, to_agent, dht_hash, options).await;
+>>>>>>> master
             res.and_then(|r| Ok(SerializedBytes::try_from(r)?))
                 .map_err(kitsune_p2p::KitsuneP2pError::from)
                 .map(|res| UnsafeBytes::from(res).into())
@@ -97,13 +109,21 @@ impl AIngleP2pActor {
         &mut self,
         dna_hash: DnaHash,
         to_agent: AgentPubKey,
+<<<<<<< HEAD
         dgd_hash: aingle_hash::AnyDgdHash,
+=======
+        dht_hash: aingle_hash::AnyDhtHash,
+>>>>>>> master
         options: event::GetMetaOptions,
     ) -> kitsune_p2p::actor::KitsuneP2pHandlerResult<Vec<u8>> {
         let evt_sender = self.evt_sender.clone();
         Ok(async move {
             let res = evt_sender
+<<<<<<< HEAD
                 .get_meta(dna_hash, to_agent, dgd_hash, options)
+=======
+                .get_meta(dna_hash, to_agent, dht_hash, options)
+>>>>>>> master
                 .await;
             res.and_then(|r| Ok(SerializedBytes::try_from(r)?))
                 .map_err(kitsune_p2p::KitsuneP2pError::from)
@@ -163,8 +183,13 @@ impl AIngleP2pActor {
         to_agent: AgentPubKey,
         from_agent: AgentPubKey,
         request_validation_receipt: bool,
+<<<<<<< HEAD
         dgd_hash: aingle_hash::AnyDgdHash,
         ops: Vec<(aingle_hash::DgdOpHash, aingle_types::dgd_op::DgdOp)>,
+=======
+        dht_hash: aingle_hash::AnyDhtHash,
+        ops: Vec<(aingle_hash::DhtOpHash, aingle_types::dht_op::DhtOp)>,
+>>>>>>> master
     ) -> kitsune_p2p::actor::KitsuneP2pHandlerResult<()> {
         let evt_sender = self.evt_sender.clone();
         Ok(async move {
@@ -174,7 +199,11 @@ impl AIngleP2pActor {
                     to_agent,
                     from_agent,
                     request_validation_receipt,
+<<<<<<< HEAD
                     dgd_hash,
+=======
+                    dht_hash,
+>>>>>>> master
                     ops,
                 )
                 .await?;
@@ -316,11 +345,19 @@ impl kitsune_p2p::event::KitsuneP2pEventHandler for AIngleP2pActor {
             } => self.handle_incoming_call_remote(
                 space, to_agent, from_agent, zome_name, fn_name, cap, data,
             ),
+<<<<<<< HEAD
             crate::wire::WireMessage::Get { dgd_hash, options } => {
                 self.handle_incoming_get(space, to_agent, dgd_hash, options)
             }
             crate::wire::WireMessage::GetMeta { dgd_hash, options } => {
                 self.handle_incoming_get_meta(space, to_agent, dgd_hash, options)
+=======
+            crate::wire::WireMessage::Get { dht_hash, options } => {
+                self.handle_incoming_get(space, to_agent, dht_hash, options)
+            }
+            crate::wire::WireMessage::GetMeta { dht_hash, options } => {
+                self.handle_incoming_get_meta(space, to_agent, dht_hash, options)
+>>>>>>> master
             }
             crate::wire::WireMessage::GetLinks { link_key, options } => {
                 self.handle_incoming_get_links(space, to_agent, link_key, options)
@@ -378,14 +415,22 @@ impl kitsune_p2p::event::KitsuneP2pEventHandler for AIngleP2pActor {
             }
             crate::wire::WireMessage::Publish {
                 request_validation_receipt,
+<<<<<<< HEAD
                 dgd_hash,
+=======
+                dht_hash,
+>>>>>>> master
                 ops,
             } => self.handle_incoming_publish(
                 space,
                 to_agent,
                 from_agent,
                 request_validation_receipt,
+<<<<<<< HEAD
                 dgd_hash,
+=======
+                dht_hash,
+>>>>>>> master
                 ops,
             ),
         }
@@ -403,15 +448,25 @@ impl kitsune_p2p::event::KitsuneP2pEventHandler for AIngleP2pActor {
         let space = DnaHash::from_kitsune(&space);
         let to_agent = AgentPubKey::from_kitsune(&to_agent);
         let _from_agent = AgentPubKey::from_kitsune(&from_agent);
+<<<<<<< HEAD
         let op_hash = DgdOpHash::from_kitsune(&op_hash);
         let op_data =
             crate::wire::WireDgdOpData::decode(op_data).map_err(AIngleP2pError::from)?;
+=======
+        let op_hash = DhtOpHash::from_kitsune(&op_hash);
+        let op_data =
+            crate::wire::WireDhtOpData::decode(op_data).map_err(AIngleP2pError::from)?;
+>>>>>>> master
         self.handle_incoming_publish(
             space,
             to_agent,
             op_data.from_agent,
             false,
+<<<<<<< HEAD
             op_data.dgd_hash,
+=======
+            op_data.dht_hash,
+>>>>>>> master
             vec![(op_hash, op_data.op_data)],
         )
     }
@@ -425,7 +480,11 @@ impl kitsune_p2p::event::KitsuneP2pEventHandler for AIngleP2pActor {
         let kitsune_p2p::event::FetchOpHashesForConstraintsEvt {
             space,
             agent,
+<<<<<<< HEAD
             dgd_arc,
+=======
+            dht_arc,
+>>>>>>> master
             since_utc_epoch_s,
             until_utc_epoch_s,
         } = input;
@@ -437,7 +496,11 @@ impl kitsune_p2p::event::KitsuneP2pEventHandler for AIngleP2pActor {
         let evt_sender = self.evt_sender.clone();
         Ok(async move {
             Ok(evt_sender
+<<<<<<< HEAD
                 .fetch_op_hashes_for_constraints(space, agent, dgd_arc, since, until)
+=======
+                .fetch_op_hashes_for_constraints(space, agent, dht_arc, since, until)
+>>>>>>> master
                 .await?
                 .into_iter()
                 .map(|h| h.into_kitsune())
@@ -464,23 +527,38 @@ impl kitsune_p2p::event::KitsuneP2pEventHandler for AIngleP2pActor {
         let agent = AgentPubKey::from_kitsune(&agent);
         let op_hashes = op_hashes
             .into_iter()
+<<<<<<< HEAD
             .map(|h| DgdOpHash::from_kitsune(&h))
+=======
+            .map(|h| DhtOpHash::from_kitsune(&h))
+>>>>>>> master
             // the allowance of clippy::needless_collcect refers to the following call
             .collect::<Vec<_>>();
 
         let evt_sender = self.evt_sender.clone();
         Ok(async move {
             let mut out = vec![];
+<<<<<<< HEAD
             for (dgd_hash, op_hash, dgd_op) in evt_sender
+=======
+            for (dht_hash, op_hash, dht_op) in evt_sender
+>>>>>>> master
                 .fetch_op_hash_data(space, agent.clone(), op_hashes)
                 .await?
             {
                 out.push((
                     op_hash.into_kitsune(),
+<<<<<<< HEAD
                     crate::wire::WireDgdOpData {
                         from_agent: agent.clone(),
                         dgd_hash,
                         op_data: dgd_op,
+=======
+                    crate::wire::WireDhtOpData {
+                        from_agent: agent.clone(),
+                        dht_hash,
+                        op_data: dht_op,
+>>>>>>> master
                     }
                     .encode()
                     .map_err(kitsune_p2p::KitsuneP2pError::other)?,
@@ -579,15 +657,26 @@ impl AIngleP2pHandler for AIngleP2pActor {
         dna_hash: DnaHash,
         from_agent: AgentPubKey,
         request_validation_receipt: bool,
+<<<<<<< HEAD
         dgd_hash: aingle_hash::AnyDgdHash,
         ops: Vec<(aingle_hash::DgdOpHash, aingle_types::dgd_op::DgdOp)>,
+=======
+        dht_hash: aingle_hash::AnyDhtHash,
+        ops: Vec<(aingle_hash::DhtOpHash, aingle_types::dht_op::DhtOp)>,
+>>>>>>> master
         timeout_ms: Option<u64>,
     ) -> AIngleP2pHandlerResult<()> {
         let space = dna_hash.into_kitsune();
         let from_agent = from_agent.into_kitsune();
+<<<<<<< HEAD
         let basis = dgd_hash.to_kitsune();
 
         let payload = crate::wire::WireMessage::publish(request_validation_receipt, dgd_hash, ops)
+=======
+        let basis = dht_hash.to_kitsune();
+
+        let payload = crate::wire::WireMessage::publish(request_validation_receipt, dht_hash, ops)
+>>>>>>> master
             .encode()?;
 
         let kitsune_p2p = self.kitsune_p2p.clone();
@@ -631,20 +720,35 @@ impl AIngleP2pHandler for AIngleP2pActor {
         .into())
     }
 
+<<<<<<< HEAD
     #[tracing::instrument(skip(self, dna_hash, from_agent, dgd_hash, options), level = "trace")]
+=======
+    #[tracing::instrument(skip(self, dna_hash, from_agent, dht_hash, options), level = "trace")]
+>>>>>>> master
     fn handle_get(
         &mut self,
         dna_hash: DnaHash,
         from_agent: AgentPubKey,
+<<<<<<< HEAD
         dgd_hash: aingle_hash::AnyDgdHash,
+=======
+        dht_hash: aingle_hash::AnyDhtHash,
+>>>>>>> master
         options: actor::GetOptions,
     ) -> AIngleP2pHandlerResult<Vec<GetElementResponse>> {
         let space = dna_hash.into_kitsune();
         let from_agent = from_agent.into_kitsune();
+<<<<<<< HEAD
         let basis = dgd_hash.to_kitsune();
         let r_options: event::GetOptions = (&options).into();
 
         let payload = crate::wire::WireMessage::get(dgd_hash, r_options).encode()?;
+=======
+        let basis = dht_hash.to_kitsune();
+        let r_options: event::GetOptions = (&options).into();
+
+        let payload = crate::wire::WireMessage::get(dht_hash, r_options).encode()?;
+>>>>>>> master
 
         let kitsune_p2p = self.kitsune_p2p.clone();
         Ok(async move {
@@ -679,15 +783,26 @@ impl AIngleP2pHandler for AIngleP2pActor {
         &mut self,
         dna_hash: DnaHash,
         from_agent: AgentPubKey,
+<<<<<<< HEAD
         dgd_hash: aingle_hash::AnyDgdHash,
+=======
+        dht_hash: aingle_hash::AnyDhtHash,
+>>>>>>> master
         options: actor::GetMetaOptions,
     ) -> AIngleP2pHandlerResult<Vec<MetadataSet>> {
         let space = dna_hash.into_kitsune();
         let from_agent = from_agent.into_kitsune();
+<<<<<<< HEAD
         let basis = dgd_hash.to_kitsune();
         let r_options: event::GetMetaOptions = (&options).into();
 
         let payload = crate::wire::WireMessage::get_meta(dgd_hash, r_options).encode()?;
+=======
+        let basis = dht_hash.to_kitsune();
+        let r_options: event::GetMetaOptions = (&options).into();
+
+        let payload = crate::wire::WireMessage::get_meta(dht_hash, r_options).encode()?;
+>>>>>>> master
 
         let kitsune_p2p = self.kitsune_p2p.clone();
         Ok(async move {
@@ -772,9 +887,15 @@ impl AIngleP2pHandler for AIngleP2pActor {
     ) -> AIngleP2pHandlerResult<Vec<AgentActivityResponse>> {
         let space = dna_hash.into_kitsune();
         let from_agent = from_agent.into_kitsune();
+<<<<<<< HEAD
         // Convert the agent key to an any dgd hash so it can be used
         // as the basis for sending this request
         let agent_hash: AnyDgdHash = agent.clone().into();
+=======
+        // Convert the agent key to an any dht hash so it can be used
+        // as the basis for sending this request
+        let agent_hash: AnyDhtHash = agent.clone().into();
+>>>>>>> master
         let basis = agent_hash.to_kitsune();
         let r_options: event::GetActivityOptions = (&options).into();
 

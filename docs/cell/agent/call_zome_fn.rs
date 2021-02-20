@@ -48,7 +48,11 @@
 /// Check header signature
 /// Check header timestamp is later than previous timestamp
 /// Check entry content matches entry schema
+<<<<<<< HEAD
 /// Depending on the type of the commit, validate all possible validations for the DGD Op that would be produced by it
+=======
+/// Depending on the type of the commit, validate all possible validations for the DHT Op that would be produced by it
+>>>>>>> master
 ///   4.2. Call app validation of list of entries and headers:
 ///
 /// Call validate_set_of_entries_and_headers (any necessary get results where we receive None / Timeout on retrieving validation dependencies, should produce error/fail)
@@ -58,7 +62,11 @@
 /// Check if chain_head === 'as-at'. If it is not, fail the whole process. It is important that we read after we have opened the write handle since this will lock the handle and we'll avoid race conditions.
 /// Write the new Entries and Headers into the CAS.
 /// Write the new Entries and Headers CRUDstatus=Live to CAS-Meta.
+<<<<<<< HEAD
 /// Write the new Headers records on Source Chain, with dgd_transforms_completed=false.
+=======
+/// Write the new Headers records on Source Chain, with dht_transforms_completed=false.
+>>>>>>> master
 /// Store CRUDstatus=Live in CAS-meta
 /// Write the new chain_head on Source Chain.
 ///
@@ -82,4 +90,8 @@
 ///
 /// Triggers:
 ///
+<<<<<<< HEAD
 /// Publish to DGD (Public Chain Entries, Headers)
+=======
+/// Publish to DHT (Public Chain Entries, Headers)
+>>>>>>> master

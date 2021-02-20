@@ -3,7 +3,11 @@ use crate::validate::RequiredValidationType;
 use crate::zome_io::ExternIO;
 use crate::CallbackResult;
 use crate::EntryDefIndex;
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 
 const DEFAULT_REQUIRED_VALIDATIONS: u8 = 5;
 

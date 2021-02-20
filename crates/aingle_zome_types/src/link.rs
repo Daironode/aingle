@@ -1,6 +1,10 @@
 use crate::element::SignedHeaderHashed;
 use aingle_hash::HeaderHash;
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 
 /// Opaque tag for the link applied at the app layer, used to differentiate
 /// between different semantics and validation rules for different links

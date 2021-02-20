@@ -9,7 +9,11 @@ use aingle_hash::AgentPubKey;
 use aingle_hash::DnaHash;
 use aingle_hash::EntryHash;
 use aingle_hash::HeaderHash;
+<<<<<<< HEAD
 use aingle_middleware_bytes::SerializedBytes;
+=======
+use aingle_serialized_bytes::SerializedBytes;
+>>>>>>> master
 
 #[derive(Debug)]
 pub struct HeaderBuilderCommon {

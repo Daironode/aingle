@@ -8,14 +8,23 @@ use futures::future::FutureExt;
 use ghost_actor::GhostControlSender;
 use hdk::prelude::EntryVisibility;
 use aingle_hash::hash_type;
+<<<<<<< HEAD
 use aingle_hash::hash_type::AnyDgd;
 use aingle_hash::AnyDgdHash;
+=======
+use aingle_hash::hash_type::AnyDht;
+use aingle_hash::AnyDhtHash;
+>>>>>>> master
 use aingle_hash::EntryHash;
 use aingle_hash::HasHash;
 use aingle_hash::HeaderHash;
 use aingle::conductor::dna_store::MockDnaStore;
 use aingle::conductor::interface::websocket::test_utils::setup_app;
+<<<<<<< HEAD
 use aingle::core::workflow::produce_dgd_ops_workflow::dgd_op_light::error::DgdOpConvertResult;
+=======
+use aingle::core::workflow::produce_dht_ops_workflow::dht_op_light::error::DhtOpConvertResult;
+>>>>>>> master
 use aingle::core::workflow::CallZomeWorkspace;
 use aingle::test_utils::test_network;
 use aingle_cascade::integrate_single_metadata;
@@ -29,7 +38,11 @@ use aingle_p2p::actor::GetLinksOptions;
 use aingle_p2p::actor::GetMetaOptions;
 use aingle_p2p::AIngleP2pCell;
 use aingle_p2p::AIngleP2pRef;
+<<<<<<< HEAD
 use aingle_middleware_bytes::SerializedBytes;
+=======
+use aingle_serialized_bytes::SerializedBytes;
+>>>>>>> master
 use aingle_state::element_buf::ElementBuf;
 use aingle_state::metadata::MetadataBuf;
 use aingle_state::metadata::MetadataBufT;
@@ -147,7 +160,11 @@ async fn get_meta_updates_meta_cache() {
             .get_headers(
                 &reader,
                 match expected.0.hash_type().clone() {
+<<<<<<< HEAD
                     hash_type::AnyDgd::Entry => expected.0.clone().into(),
+=======
+                    hash_type::AnyDht::Entry => expected.0.clone().into(),
+>>>>>>> master
                     _ => unreachable!(),
                 },
             )
@@ -168,7 +185,11 @@ async fn get_from_another_agent() {
     observability::test_run().ok();
     let dna_file = DnaFile::new(
         DnaDef {
+<<<<<<< HEAD
             name: "dgd_get_test".to_string(),
+=======
+            name: "dht_get_test".to_string(),
+>>>>>>> master
             uuid: "ba1d046d-ce29-4778-914b-47e6010d2faf".to_string(),
             properties: SerializedBytes::try_from(()).unwrap(),
             zomes: vec![TestWasm::Create.into()].into(),
@@ -280,7 +301,11 @@ async fn get_from_another_agent() {
     assert_eq!(entry_details.headers.len(), 1);
     assert_eq!(entry_details.deletes.len(), 1);
     assert_eq!(entry_details.updates.len(), 1);
+<<<<<<< HEAD
     assert_eq!(entry_details.entry_dgd_status, EntryDgdStatus::Dead);
+=======
+    assert_eq!(entry_details.entry_dht_status, EntryDhtStatus::Dead);
+>>>>>>> master
     assert_eq!(
         *entry_details.headers.get(0).unwrap().header_address(),
         header_hash
@@ -312,7 +337,11 @@ async fn get_links_from_another_agent() {
     observability::test_run().ok();
     let dna_file = DnaFile::new(
         DnaDef {
+<<<<<<< HEAD
             name: "dgd_get_test".to_string(),
+=======
+            name: "dht_get_test".to_string(),
+>>>>>>> master
             uuid: "ba1d046d-ce29-4778-914b-47e6010d2faf".to_string(),
             properties: SerializedBytes::try_from(()).unwrap(),
             zomes: vec![TestWasm::Create.into()].into(),
@@ -479,7 +508,11 @@ impl Shutdown {
 ///    and constructs a `MetadataSet` containing only that single `TimedHeaderHash`
 async fn run_fixt_network(
     element_fixt_store: BTreeMap<HeaderHash, Element>,
+<<<<<<< HEAD
     meta_fixt_store: BTreeMap<AnyDgdHash, TimedHeaderHash>,
+=======
+    meta_fixt_store: BTreeMap<AnyDhtHash, TimedHeaderHash>,
+>>>>>>> master
 ) -> (AIngleP2pCell, Shutdown) {
     // Create the network
     let (network, mut recv, cell_network) = test_network(None, None).await;
@@ -497,15 +530,26 @@ async fn run_fixt_network(
                 debug!(?evt);
                 match evt {
                     Get {
+<<<<<<< HEAD
                         dgd_hash, respond, ..
                     } => {
                         let dgd_hash = match dgd_hash.hash_type() {
                             AnyDgd::Header => dgd_hash.into(),
+=======
+                        dht_hash, respond, ..
+                    } => {
+                        let dht_hash = match dht_hash.hash_type() {
+                            AnyDht::Header => dht_hash.into(),
+>>>>>>> master
                             _ => unreachable!(),
                         };
 
                         let chain_element = element_fixt_store
+<<<<<<< HEAD
                             .get(&dgd_hash)
+=======
+                            .get(&dht_hash)
+>>>>>>> master
                             .cloned()
                             .map(|element| {
                                 GetElementResponse::GetHeader(Some(Box::new(
@@ -522,19 +566,31 @@ async fn run_fixt_network(
                         respond.respond(Ok(async move { Ok(chain_element) }.boxed().into()));
                     }
                     GetMeta {
+<<<<<<< HEAD
                         dgd_hash,
+=======
+                        dht_hash,
+>>>>>>> master
                         // TODO; Use options
                         options: _options,
                         respond,
                         ..
                     } => {
+<<<<<<< HEAD
                         let header_hash = meta_fixt_store.get(&dgd_hash).cloned().unwrap();
+=======
+                        let header_hash = meta_fixt_store.get(&dht_hash).cloned().unwrap();
+>>>>>>> master
                         let metadata = MetadataSet {
                             headers: btreeset! {header_hash},
                             deletes: btreeset! {},
                             updates: btreeset! {},
                             invalid_headers: btreeset! {},
+<<<<<<< HEAD
                             entry_dgd_status: None,
+=======
+                            entry_dht_status: None,
+>>>>>>> master
                         };
                         respond.respond(Ok(async move { Ok(metadata.try_into().unwrap()) }
                             .boxed()
@@ -558,7 +614,11 @@ async fn run_fixt_network(
 
 async fn generate_fixt_store() -> (
     BTreeMap<HeaderHash, Element>,
+<<<<<<< HEAD
     BTreeMap<AnyDgdHash, TimedHeaderHash>,
+=======
+    BTreeMap<AnyDhtHash, TimedHeaderHash>,
+>>>>>>> master
 ) {
     let mut store = BTreeMap::new();
     let mut meta_store = BTreeMap::new();
@@ -585,7 +645,11 @@ async fn generate_fixt_store() -> (
     (store, meta_store)
 }
 
+<<<<<<< HEAD
 async fn fake_authority(hash: AnyDgdHash, call_data: &HostFnCaller) {
+=======
+async fn fake_authority(hash: AnyDhtHash, call_data: &HostFnCaller) {
+>>>>>>> master
     // Check bob can get the entry
     let element = call_data
         .get(hash.clone().into(), GetOptions::content())
@@ -618,7 +682,11 @@ async fn integrate_to_integrated<C: MetadataBufT<IntegratedPrefix>>(
     element: &Element,
     element_store: &ElementBuf<IntegratedPrefix>,
     meta_store: &mut C,
+<<<<<<< HEAD
 ) -> DgdOpConvertResult<()> {
+=======
+) -> DhtOpConvertResult<()> {
+>>>>>>> master
     // Produce the light directly
     for op in produce_op_lights_from_elements(vec![element])? {
         // we don't integrate element data, because it is already in our vault.

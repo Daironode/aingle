@@ -1,8 +1,16 @@
+<<<<<<< HEAD
 // use crate::aingle::core::workflow::produce_dgd_ops_workflow::dgd_op_light::error::DgdOpConvertError;
 use aingle_hash::EntryHash;
 use aingle_hash::HeaderHash;
 use aingle_lmdb::error::DatabaseError;
 use aingle_middleware_bytes::prelude::*;
+=======
+// use crate::aingle::core::workflow::produce_dht_ops_workflow::dht_op_light::error::DhtOpConvertError;
+use aingle_hash::EntryHash;
+use aingle_hash::HeaderHash;
+use aingle_lmdb::error::DatabaseError;
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 use aingle_types::prelude::*;
 use thiserror::Error;
 
@@ -57,7 +65,11 @@ pub enum SourceChainError {
     BlockOnError(#[from] tokio_safe_block_on::BlockOnError),
 
     #[error(transparent)]
+<<<<<<< HEAD
     DgdOpError(#[from] DgdOpError),
+=======
+    DhtOpError(#[from] DhtOpError),
+>>>>>>> master
 
     #[error("Required the scratch space to be empty but contained values")]
     ScratchNotFresh,

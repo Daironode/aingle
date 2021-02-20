@@ -5,7 +5,11 @@ use aingle_hash::HashType;
 use aingle_hash::AIngleHash;
 use aingle_hash::PrimitiveHashType;
 use aingle_hash::AINGLE_HASH_FULL_LEN;
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 pub use prefix::*;
 use serde::de::DeserializeOwned;
 use serde::Serialize;
@@ -94,7 +98,11 @@ impl From<IntKey> for u32 {
 impl<T: HashType + Send + Sync> BufKey for AIngleHash<T> {
     fn from_key_bytes_or_friendly_panic(bytes: &[u8]) -> Self {
         assert_length!(AINGLE_HASH_FULL_LEN, bytes);
+<<<<<<< HEAD
         aingle_middleware_bytes::decode(bytes).expect("from_key_bytes_or_friendly_panic error")
+=======
+        aingle_serialized_bytes::decode(bytes).expect("from_key_bytes_or_friendly_panic error")
+>>>>>>> master
     }
 }
 

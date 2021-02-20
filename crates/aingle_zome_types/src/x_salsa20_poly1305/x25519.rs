@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 
 pub const X25519_PUB_KEY_BYTES: usize = 32;
 

@@ -117,7 +117,11 @@ dependencies = [
 name = "fixt"
 version = "0.0.1"
 dependencies = [
+<<<<<<< HEAD
  "aingle_middleware_bytes",
+=======
+ "aingle_serialized_bytes",
+>>>>>>> master
  "lazy_static",
  "parking_lot",
  "paste",
@@ -202,7 +206,11 @@ dependencies = [
  "base64",
  "blake2b_simd",
  "fixt",
+<<<<<<< HEAD
  "aingle_middleware_bytes",
+=======
+ "aingle_serialized_bytes",
+>>>>>>> master
  "rand",
  "serde",
  "serde_bytes",
@@ -210,12 +218,21 @@ dependencies = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "aingle_middleware_bytes"
 version = "0.0.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9c03f4a0a5203dc8fb86097bc33c02a54bd5813c8d3d67595fe3e9d0a2272ff0"
 dependencies = [
  "aingle_middleware_bytes_derive",
+=======
+name = "aingle_serialized_bytes"
+version = "0.0.48"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "79ff6ebed11c8d4cbc9cb2ea1ee779100d623e819e4cb3bdca16481a775126da"
+dependencies = [
+ "aingle_serialized_bytes_derive",
+>>>>>>> master
  "rmp-serde",
  "serde",
  "serde-transcode",
@@ -225,8 +242,13 @@ dependencies = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "aingle_middleware_bytes_derive"
 version = "0.0.3"
+=======
+name = "aingle_serialized_bytes_derive"
+version = "0.0.48"
+>>>>>>> master
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4dbd32f37d69ab4772ec726b8d8349b6f0752f3757deac724a5791149c34ec1e"
 dependencies = [
@@ -239,11 +261,60 @@ name = "aingle_test_wasm_common"
 version = "0.0.1"
 dependencies = [
  "hdk",
+<<<<<<< HEAD
  "aingle_middleware_bytes",
  "serde",
  "serde_bytes",
 ]
 
+=======
+ "aingle_serialized_bytes",
+ "serde",
+ "serde_bytes",
+]
+
+[[package]]
+name = "aingle_wasmer_common"
+version = "0.0.66"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a4e10d2eeb178ad798f49473a9315a21f49384a287de0265af48d080112575df"
+dependencies = [
+ "aingle_serialized_bytes",
+ "serde",
+ "serde_bytes",
+ "thiserror",
+]
+
+[[package]]
+name = "aingle_wasmer_guest"
+version = "0.0.66"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ff071b25faac0c38cf87c487b25a855a407954daea1ace87d61bd274266e9bcf"
+dependencies = [
+ "aingle_serialized_bytes",
+ "aingle_wasmer_common",
+ "serde",
+ "tracing",
+]
+
+[[package]]
+name = "aingle_zome_types"
+version = "0.0.1"
+dependencies = [
+ "chrono",
+ "fixt",
+ "aingle_hash",
+ "aingle_serialized_bytes",
+ "paste",
+ "rand",
+ "serde",
+ "serde_bytes",
+ "strum",
+ "subtle",
+ "thiserror",
+ "tracing",
+]
+>>>>>>> master
 
 [[package]]
 name = "indexmap"

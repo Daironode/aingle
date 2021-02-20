@@ -7,7 +7,11 @@ use crate::conductor::conductor::StopReceiver;
 use crate::conductor::interface::*;
 use crate::conductor::manager::ManagedTaskHandle;
 use crate::conductor::manager::ManagedTaskResult;
+<<<<<<< HEAD
 use aingle_middleware_bytes::SerializedBytes;
+=======
+use aingle_serialized_bytes::SerializedBytes;
+>>>>>>> master
 use aingle_types::signal::Signal;
 use aingle_websocket::websocket_bind;
 use aingle_websocket::WebsocketConfig;
@@ -292,7 +296,11 @@ pub mod test_utils {
     use crate::conductor::dna_store::MockDnaStore;
     use crate::conductor::ConductorHandle;
     use aingle_lmdb::test_utils::test_environments;
+<<<<<<< HEAD
     use aingle_middleware_bytes::prelude::*;
+=======
+    use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
     use aingle_types::app::InstalledCell;
     use std::sync::Arc;
     use tempdir::TempDir;
@@ -357,7 +365,11 @@ pub mod test {
     use aingle_lmdb::buffer::KvStoreT;
     use aingle_lmdb::fresh_reader_test;
     use aingle_lmdb::test_utils::test_environments;
+<<<<<<< HEAD
     use aingle_middleware_bytes::prelude::*;
+=======
+    use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
     use aingle_types::app::InstallAppDnaPayload;
     use aingle_types::app::InstallAppPayload;
     use aingle_types::app::InstalledCell;

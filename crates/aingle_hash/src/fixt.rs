@@ -1,10 +1,18 @@
 #![allow(missing_docs)]
 
+<<<<<<< HEAD
 use crate::encode::aingle_dgd_location_bytes;
 use crate::hash_type;
 use crate::AgentPubKey;
 use crate::AnyDgdHash;
 use crate::DgdOpHash;
+=======
+use crate::encode::aingle_dht_location_bytes;
+use crate::hash_type;
+use crate::AgentPubKey;
+use crate::AnyDhtHash;
+use crate::DhtOpHash;
+>>>>>>> master
 use crate::DnaHash;
 use crate::EntryHash;
 use crate::HeaderHash;
@@ -14,7 +22,11 @@ use ::fixt::prelude::*;
 use std::convert::TryFrom;
 
 pub type HashTypeEntry = hash_type::Entry;
+<<<<<<< HEAD
 pub type HashTypeAnyDgd = hash_type::AnyDgd;
+=======
+pub type HashTypeAnyDht = hash_type::AnyDht;
+>>>>>>> master
 
 // TODO: use strum to do this:
 //
@@ -24,10 +36,17 @@ pub type HashTypeAnyDgd = hash_type::AnyDgd;
 // );
 
 fixturator!(
+<<<<<<< HEAD
     HashTypeAnyDgd;
     curve Empty HashTypeAnyDgd::Header;
     curve Unpredictable HashTypeAnyDgd::Header;
     curve Predictable HashTypeAnyDgd::Header;
+=======
+    HashTypeAnyDht;
+    curve Empty HashTypeAnyDht::Header;
+    curve Unpredictable HashTypeAnyDht::Header;
+    curve Predictable HashTypeAnyDht::Header;
+>>>>>>> master
 );
 
 /// A type alias for a Vec<u8> whose fixturator is expected to only return
@@ -60,7 +79,11 @@ fixturator!(
 );
 
 fn append_location(mut base: Vec<u8>) -> Vec<u8> {
+<<<<<<< HEAD
     let mut loc_bytes = aingle_dgd_location_bytes(&base);
+=======
+    let mut loc_bytes = aingle_dht_location_bytes(&base);
+>>>>>>> master
     base.append(&mut loc_bytes);
     base
 }
@@ -93,7 +116,11 @@ fixturator!(
 );
 
 fixturator!(
+<<<<<<< HEAD
     DgdOpHash;
+=======
+    DhtOpHash;
+>>>>>>> master
     constructor fn from_raw_36(ThirtySixHashBytes);
 );
 
@@ -113,6 +140,11 @@ fixturator!(
 );
 
 fixturator!(
+<<<<<<< HEAD
     AnyDgdHash;
     constructor fn from_raw_36_and_type(ThirtySixHashBytes, HashTypeAnyDgd);
+=======
+    AnyDhtHash;
+    constructor fn from_raw_36_and_type(ThirtySixHashBytes, HashTypeAnyDht);
+>>>>>>> master
 );

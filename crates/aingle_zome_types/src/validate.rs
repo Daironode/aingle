@@ -1,8 +1,13 @@
 use crate::element::Element;
 use crate::zome_io::ExternIO;
 use crate::CallbackResult;
+<<<<<<< HEAD
 use aingle_hash::AnyDgdHash;
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_hash::AnyDhtHash;
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 
 /// The validation status for an op or element
 /// much of this happens in the subconscious
@@ -33,7 +38,11 @@ pub enum ValidateCallbackResult {
     Invalid(String),
     /// Subconscious needs to map this to either pending or abandoned based on context that the
     /// wasm can't possibly have.
+<<<<<<< HEAD
     UnresolvedDependencies(Vec<AnyDgdHash>),
+=======
+    UnresolvedDependencies(Vec<AnyDhtHash>),
+>>>>>>> master
 }
 
 impl CallbackResult for ValidateCallbackResult {
@@ -72,7 +81,11 @@ pub enum RequiredValidationType {
 pub enum ValidationPackageCallbackResult {
     Success(ValidationPackage),
     Fail(String),
+<<<<<<< HEAD
     UnresolvedDependencies(Vec<AnyDgdHash>),
+=======
+    UnresolvedDependencies(Vec<AnyDhtHash>),
+>>>>>>> master
 }
 
 impl From<ExternIO> for ValidationPackageCallbackResult {

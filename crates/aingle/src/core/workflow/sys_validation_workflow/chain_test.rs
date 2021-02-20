@@ -4,7 +4,11 @@ use crate::test_utils::setup_app;
 use crate::test_utils::wait_for_integration;
 use ::fixt::prelude::*;
 use aingle_keystore::AgentPubKeyExt;
+<<<<<<< HEAD
 use aingle_middleware_bytes::SerializedBytes;
+=======
+use aingle_serialized_bytes::SerializedBytes;
+>>>>>>> master
 use aingle_state::source_chain::SourceChain;
 
 use aingle_wasm_test_utils::TestWasm;
@@ -100,8 +104,13 @@ async fn run_test(alice_cell_id: CellId, handle: ConductorHandle) {
         .unwrap();
 
     // Create the activity op
+<<<<<<< HEAD
     let op = DgdOp::RegisterAgentActivity(signature, h1.clone().into());
     ops.push((DgdOpHash::with_data_sync(&op), op));
+=======
+    let op = DhtOp::RegisterAgentActivity(signature, h1.clone().into());
+    ops.push((DhtOpHash::with_data_sync(&op), op));
+>>>>>>> master
 
     // Make valid signature
     let signature = alice_cell_id
@@ -111,11 +120,19 @@ async fn run_test(alice_cell_id: CellId, handle: ConductorHandle) {
         .unwrap();
 
     // Create the activity op
+<<<<<<< HEAD
     let op = DgdOp::RegisterAgentActivity(signature, h2.clone().into());
     ops.push((DgdOpHash::with_data_sync(&op), op));
 
     // Add the ops to incoming
     incoming_dgd_ops_workflow::incoming_dgd_ops_workflow(
+=======
+    let op = DhtOp::RegisterAgentActivity(signature, h2.clone().into());
+    ops.push((DhtOpHash::with_data_sync(&op), op));
+
+    // Add the ops to incoming
+    incoming_dht_ops_workflow::incoming_dht_ops_workflow(
+>>>>>>> master
         &alice_env,
         sys_validation_trigger.clone(),
         ops,
@@ -156,8 +173,13 @@ async fn run_test(alice_cell_id: CellId, handle: ConductorHandle) {
         .unwrap();
 
     // Create the activity op
+<<<<<<< HEAD
     let op = DgdOp::RegisterAgentActivity(signature, h1.into());
     ops.push((DgdOpHash::with_data_sync(&op), op));
+=======
+    let op = DhtOp::RegisterAgentActivity(signature, h1.into());
+    ops.push((DhtOpHash::with_data_sync(&op), op));
+>>>>>>> master
 
     // Make valid signature
     let signature = alice_cell_id
@@ -167,11 +189,19 @@ async fn run_test(alice_cell_id: CellId, handle: ConductorHandle) {
         .unwrap();
 
     // Create the activity op
+<<<<<<< HEAD
     let op = DgdOp::RegisterAgentActivity(signature, h2.into());
     ops.push((DgdOpHash::with_data_sync(&op), op));
 
     // Add the ops to incoming
     incoming_dgd_ops_workflow::incoming_dgd_ops_workflow(
+=======
+    let op = DhtOp::RegisterAgentActivity(signature, h2.into());
+    ops.push((DhtOpHash::with_data_sync(&op), op));
+
+    // Add the ops to incoming
+    incoming_dht_ops_workflow::incoming_dht_ops_workflow(
+>>>>>>> master
         &alice_env,
         sys_validation_trigger,
         ops,

@@ -15,7 +15,11 @@ kitsune_p2p = { version = "0.0.1", path = "../kitsune_p2p/kitsune_p2p" }
 aingle_hash = { version = "0.0.1", path = "../aingle_hash", features = ["full"] }
 aingle_p2p = { version = "0.0.1", path = "../aingle_p2p" }
 aingle_state = { version = "0.0.1", path = "../aingle_state" }
+<<<<<<< HEAD
 aingle_middleware_bytes = "=0.0.3"
+=======
+aingle_serialized_bytes = "=0.0.48"
+>>>>>>> master
 aingle_types = { version = "0.0.1", path = "../aingle_types" }
 aingle_zome_types = { version = "0.0.1", path = "../aingle_zome_types" }
 serde = { version = "1.0.104", features = [ "derive" ] }

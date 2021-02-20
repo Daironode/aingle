@@ -380,7 +380,11 @@ async fn get_agent_activity_test() {
     // Commit private messages
     commit_some_data("create_priv_msg", &alice_call_data, &handle).await;
 
+<<<<<<< HEAD
     alice_call_data.triggers.produce_dgd_ops.trigger();
+=======
+    alice_call_data.triggers.produce_dht_ops.trigger();
+>>>>>>> master
 
     expected_count += NUM_COMMITS * 2;
     wait_for_integration(
@@ -427,7 +431,11 @@ async fn get_agent_activity_test() {
         .clone();
 
     // Wait for alice to integrate the chain as an authority
+<<<<<<< HEAD
     alice_call_data.triggers.produce_dgd_ops.trigger();
+=======
+    alice_call_data.triggers.produce_dht_ops.trigger();
+>>>>>>> master
     expected_count += NUM_COMMITS * 3;
     wait_for_integration(
         &alice_call_data.env,

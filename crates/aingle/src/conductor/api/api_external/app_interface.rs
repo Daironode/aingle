@@ -7,7 +7,11 @@ use crate::conductor::interface::error::InterfaceResult;
 use crate::conductor::state::AppInterfaceId;
 use crate::conductor::ConductorHandle;
 
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 
 use aingle_types::prelude::*;
 

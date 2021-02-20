@@ -48,4 +48,8 @@ opt-level = "z"
 [patch.crates-io]
 # aingle_wasmer_guest = { path = "../../../../../aingle-wasmer/crates/guest" }
 # aingle_wasmer_guest = { git = "https://github.com/Daironode/aingle-wasmer.git", branch = "2021-02-05-error" }
+<<<<<<< HEAD
 # aingle_middleware_bytes = { git = "https://github.com/Daironode/aingle-serialization.git", branch = "try_from_ref" }
+=======
+# aingle_serialized_bytes = { git = "https://github.com/Daironode/aingle-serialization.git", branch = "try_from_ref" }
+>>>>>>> master

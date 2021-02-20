@@ -1,7 +1,11 @@
 //! App-defined signals
 
 use aingle_hash::AgentPubKey;
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 
 /// A signal emitted by an app via `emit_signal`
 #[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]

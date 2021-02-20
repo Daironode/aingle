@@ -1,5 +1,9 @@
 use crate::conductor::manager::spawn_task_manager;
+<<<<<<< HEAD
 use crate::core::workflow::incoming_dgd_ops_workflow::IncomingDgdOpsWorkspace;
+=======
+use crate::core::workflow::incoming_dht_ops_workflow::IncomingDhtOpsWorkspace;
+>>>>>>> master
 use crate::fixt::DnaFileFixturator;
 use crate::fixt::SignatureFixturator;
 use crate::test_utils::test_network;
@@ -55,8 +59,13 @@ async fn test_cell_handle_publish() {
         timestamp: timestamp::now().into(),
         hash: dna.clone(),
     });
+<<<<<<< HEAD
     let op = DgdOp::StoreElement(sig, header.clone(), None);
     let op_hash = DgdOpHashed::from_content_sync(op.clone()).into_hash();
+=======
+    let op = DhtOp::StoreElement(sig, header.clone(), None);
+    let op_hash = DhtOpHashed::from_content_sync(op.clone()).into_hash();
+>>>>>>> master
     let header_hash = HeaderHashed::from_content_sync(header.clone()).into_hash();
 
     cell.handle_publish(
@@ -69,7 +78,11 @@ async fn test_cell_handle_publish() {
     .unwrap();
 
     let workspace =
+<<<<<<< HEAD
         IncomingDgdOpsWorkspace::new(cell.env.clone().into()).expect("Could not create Workspace");
+=======
+        IncomingDhtOpsWorkspace::new(cell.env.clone().into()).expect("Could not create Workspace");
+>>>>>>> master
 
     workspace.op_exists(&op_hash).unwrap();
 

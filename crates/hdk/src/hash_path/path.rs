@@ -24,7 +24,11 @@ pub const DELIMITER: &str = ".";
 pub const NAME: [u8; 8] = [0x68, 0x64, 0x6b, 0x2e, 0x70, 0x61, 0x74, 0x68];
 
 /// Each path component is arbitrary bytes to be hashed together in a predictable way when the path
+<<<<<<< HEAD
 /// is hashed to create something that can be linked and discovered by all DGD participants.
+=======
+/// is hashed to create something that can be linked and discovered by all DHT participants.
+>>>>>>> master
 #[derive(Clone, PartialEq, Debug, Default, serde::Deserialize, serde::Serialize)]
 #[repr(transparent)]
 pub struct Component(#[serde(with = "serde_bytes")] Vec<u8>);
@@ -132,10 +136,17 @@ impl TryFrom<&Component> for String {
 /// It represents a single traversal of a tree structure down to some arbitrary point.
 /// The main intent is that we can recursively walk back up the tree, hashing, committing and
 /// linking each sub-path along the way until we reach the root.
+<<<<<<< HEAD
 /// At this point it is possible to follow DGD links from the root back up the path.
 /// i.e. the ahead-of-time predictability of the hashes of a given path allows us to travel "up"
 /// the tree and the linking functionality of the aingle DGD allows us to travel "down" the tree
 /// after at least one DGD participant has followed the path "up".
+=======
+/// At this point it is possible to follow DHT links from the root back up the path.
+/// i.e. the ahead-of-time predictability of the hashes of a given path allows us to travel "up"
+/// the tree and the linking functionality of the aingle DHT allows us to travel "down" the tree
+/// after at least one DHT participant has followed the path "up".
+>>>>>>> master
 #[derive(
     Clone, Debug, PartialEq, Default, serde::Deserialize, serde::Serialize, SerializedBytes,
 )]
@@ -185,7 +196,11 @@ impl AsRef<Vec<Component>> for Path {
 /// - foo..bar
 ///
 /// There is no normalisation of paths, e.g. to guarantee a specific root component exists, at this
+<<<<<<< HEAD
 /// layer so there is a risk that there are hash collisions with other data on the DGD network if
+=======
+/// layer so there is a risk that there are hash collisions with other data on the DHT network if
+>>>>>>> master
 /// some disambiguation logic is not included in higher level abstractions.
 ///
 /// This supports sharding strategies from a small inline DSL.

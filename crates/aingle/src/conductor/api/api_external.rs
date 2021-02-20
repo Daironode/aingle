@@ -1,5 +1,9 @@
 use crate::conductor::interface::error::InterfaceResult;
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 
 mod admin_interface;
 mod app_interface;

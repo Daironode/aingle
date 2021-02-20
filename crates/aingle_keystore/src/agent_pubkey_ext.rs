@@ -45,7 +45,11 @@ impl AgentPubKeyExt for aingle_hash::AgentPubKey {
         use ghost_actor::dependencies::futures::future::FutureExt;
         let keystore = keystore.clone();
         let maybe_data: Result<Vec<u8>, SerializedBytesError> =
+<<<<<<< HEAD
             aingle_middleware_bytes::encode(&input);
+=======
+            aingle_serialized_bytes::encode(&input);
+>>>>>>> master
         let key = self.clone();
         async move {
             let data = maybe_data?;

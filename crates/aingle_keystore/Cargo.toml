@@ -13,7 +13,11 @@ edition = "2018"
 [dependencies]
 ghost_actor = "0.3.0-alpha.1"
 aingle_hash = { version = "0.0.1", path = "../aingle_hash", features = ["full"] }
+<<<<<<< HEAD
 aingle_middleware_bytes = "=0.0.3"
+=======
+aingle_serialized_bytes = "=0.0.48"
+>>>>>>> master
 aingle_zome_types = { path = "../aingle_zome_types" }
 lair_keystore_api = "=0.0.1-alpha.10"
 lair_keystore_client = "=0.0.1-alpha.10"

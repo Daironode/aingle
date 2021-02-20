@@ -2,7 +2,11 @@
 
 use ::fixt::prelude::*;
 use aingle_hash::EntryHash;
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::SerializedBytes;
+=======
+use aingle_serialized_bytes::prelude::SerializedBytes;
+>>>>>>> master
 
 use crate::{
     entry_def::EntryVisibility, header::*, link::LinkTag, signal::AppSignal, timestamp::Timestamp,

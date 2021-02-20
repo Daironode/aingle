@@ -3,7 +3,11 @@ use crate::core::ribosome::HostAccess;
 use crate::core::ribosome::Invocation;
 use crate::core::ribosome::ZomesToInvoke;
 use derive_more::Constructor;
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 use aingle_types::dna::zome::HostFnAccess;
 use aingle_types::prelude::*;
 use std::collections::BTreeMap;

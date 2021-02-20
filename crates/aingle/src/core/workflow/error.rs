@@ -2,7 +2,11 @@
 #![allow(missing_docs)]
 
 use super::app_validation_workflow::AppValidationError;
+<<<<<<< HEAD
 use super::produce_dgd_ops_workflow::dgd_op_light::error::DgdOpConvertError;
+=======
+use super::produce_dht_ops_workflow::dht_op_light::error::DhtOpConvertError;
+>>>>>>> master
 use crate::conductor::api::error::ConductorApiError;
 use crate::conductor::CellError;
 use crate::core::queue_consumer::QueueTriggerClosedError;
@@ -49,7 +53,11 @@ pub enum WorkflowError {
     SerializedBytesError(#[from] SerializedBytesError),
 
     #[error(transparent)]
+<<<<<<< HEAD
     DgdOpConvertError(#[from] DgdOpConvertError),
+=======
+    DhtOpConvertError(#[from] DhtOpConvertError),
+>>>>>>> master
 
     #[error(transparent)]
     CellError(#[from] CellError),
@@ -64,7 +72,11 @@ pub enum WorkflowError {
     AIngleP2pError(#[from] AIngleP2pError),
 
     #[error(transparent)]
+<<<<<<< HEAD
     DgdOpError(#[from] DgdOpError),
+=======
+    DhtOpError(#[from] DhtOpError),
+>>>>>>> master
 
     #[error(transparent)]
     SysValidationError(#[from] SysValidationError),

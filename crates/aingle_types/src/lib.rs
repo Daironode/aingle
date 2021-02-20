@@ -13,7 +13,11 @@ pub mod app;
 pub mod autonomic;
 pub mod chain;
 pub mod db;
+<<<<<<< HEAD
 pub mod dgd_op;
+=======
+pub mod dht_op;
+>>>>>>> master
 pub mod dna;
 pub mod element;
 pub mod entry;

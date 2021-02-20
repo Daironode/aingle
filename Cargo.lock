@@ -54,6 +54,7 @@ dependencies = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "aingle"
 version = "0.0.1"
 dependencies = [
@@ -501,6 +502,8 @@ dependencies = [
 ]
 
 [[package]]
+=======
+>>>>>>> master
 name = "ansi_term"
 version = "0.11.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1319,9 +1322,15 @@ dependencies = [
 name = "dna_util"
 version = "0.0.1"
 dependencies = [
+<<<<<<< HEAD
  "aingle",
  "aingle_hash",
  "aingle_middleware_bytes",
+=======
+ "aingle_hash",
+ "aingle",
+ "aingle_serialized_bytes",
+>>>>>>> master
  "aingle_types",
  "aingle_zome_types",
  "serde",
@@ -1448,7 +1457,11 @@ checksum = "4443176a9f2c162692bd3d352d745ef9413eec5782a80d8fd6f8a1ac692a07f7"
 name = "fixt"
 version = "0.0.1"
 dependencies = [
+<<<<<<< HEAD
  "aingle_middleware_bytes",
+=======
+ "aingle_serialized_bytes",
+>>>>>>> master
  "lazy_static",
  "parking_lot",
  "paste 1.0.3",
@@ -1590,6 +1603,20 @@ dependencies = [
 ]
 
 [[package]]
+<<<<<<< HEAD
+name = "futures-io"
+version = "0.3.8"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "611834ce18aaa1bd13c4b374f5d653e1027cf99b6b502584ff8c9a64413b30bb"
+
+[[package]]
+name = "futures-macro"
+version = "0.3.8"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "77408a692f1f97bcc61dc001d752e00643408fbc922e4d634c655df50d595556"
+dependencies = [
+ "proc-macro-hack",
+=======
 name = "futures-io"
 version = "0.3.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1769,6 +1796,520 @@ checksum = "d7afe4a420e3fe79967a00898cc1f4db7c8a49a9333a29f8a4bd76a253d5cd04"
 name = "hdk"
 version = "0.0.1"
 dependencies = [
+ "fixt",
+ "hdk_derive",
+ "aingle_hash",
+ "aingle_wasmer_guest",
+ "aingle_zome_types",
+ "paste 1.0.3",
+ "serde",
+ "serde_bytes",
+ "thiserror",
+ "tracing",
+ "tracing-core",
+ "tracing-subscriber",
+]
+
+[[package]]
+name = "hdk_derive"
+version = "0.0.1"
+dependencies = [
+ "aingle_zome_types",
+ "paste 1.0.3",
+>>>>>>> master
+ "proc-macro2",
+ "quote",
+ "syn",
+]
+
+[[package]]
+<<<<<<< HEAD
+name = "futures-sink"
+version = "0.3.8"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f878195a49cee50e006b02b93cf7e0a95a38ac7b776b4c4d9cc1207cd20fcb3d"
+
+[[package]]
+name = "futures-task"
+version = "0.3.8"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7c554eb5bf48b2426c4771ab68c6b14468b6e76cc90996f528c3338d761a4d0d"
+dependencies = [
+ "once_cell",
+]
+
+[[package]]
+name = "futures-util"
+version = "0.3.8"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d304cff4a7b99cfb7986f7d43fbe93d175e72e704a8860787cc95e9ffd85cbd2"
+dependencies = [
+ "futures-channel",
+ "futures-core",
+ "futures-io",
+ "futures-macro",
+ "futures-sink",
+ "futures-task",
+ "memchr",
+ "pin-project 1.0.2",
+ "pin-utils",
+ "proc-macro-hack",
+ "proc-macro-nested",
+ "slab",
+]
+
+[[package]]
+name = "gcc"
+version = "0.3.55"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8f5f3913fa0bfe7ee1fd8248b6b9f42a5af4b9d65ec2dd2c3c26132b950ecfc2"
+
+[[package]]
+name = "generator"
+version = "0.6.23"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8cdc09201b2e8ca1b19290cf7e65de2246b8e91fb6874279722189c4de7b94dc"
+dependencies = [
+ "cc",
+ "libc",
+ "log",
+ "rustc_version",
+ "winapi 0.3.9",
+]
+
+[[package]]
+name = "generic-array"
+version = "0.12.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c68f0274ae0e023facc3c97b2e00f076be70e254bc851d972503b328db79b2ec"
+dependencies = [
+ "typenum",
+]
+
+[[package]]
+name = "generic-array"
+version = "0.14.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "501466ecc8a30d1d3b7fc9229b122b2ce8ed6e9d9223f1138d4babb253e51817"
+dependencies = [
+ "typenum",
+ "version_check",
+]
+
+[[package]]
+name = "getrandom"
+version = "0.1.16"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8fc3cb4d91f53b50155bdcfd23f6a4c39ae1969c2ae85982b135750cccaf5fce"
+dependencies = [
+ "cfg-if 1.0.0",
+ "libc",
+ "wasi 0.9.0+wasi-snapshot-preview1",
+]
+
+[[package]]
+name = "getrandom"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ee8025cf36f917e6a52cce185b7c7177689b838b7ec138364e50cc2277a56cf4"
+dependencies = [
+ "cfg-if 0.1.10",
+ "libc",
+ "wasi 0.9.0+wasi-snapshot-preview1",
+]
+
+[[package]]
+name = "ghost_actor"
+version = "0.3.0-alpha.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6d5180a86962ed70e36dd39b469d1c17d1a4cfefa610e63be5bbb10a4cec9bcc"
+dependencies = [
+ "futures",
+ "must_future",
+ "observability",
+ "paste 0.1.18",
+ "thiserror",
+=======
+name = "heck"
+version = "0.3.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "87cbf45460356b7deeb5e3415b5563308c0a9b057c85e12b06ad551f98d0a6ac"
+dependencies = [
+ "unicode-segmentation",
+]
+
+[[package]]
+name = "hermit-abi"
+version = "0.1.17"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5aca5565f760fb5b220e499d72710ed156fdb74e631659e99377d9ebfbd13ae8"
+dependencies = [
+ "libc",
+]
+
+[[package]]
+name = "hex"
+version = "0.4.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "644f9158b2f133fd50f5fb3242878846d9eb792e445c893805ff0e3824006e35"
+
+[[package]]
+name = "aingle_hash"
+version = "0.0.1"
+dependencies = [
+ "base64 0.13.0",
+ "blake2b_simd",
+ "fixt",
+ "aingle_serialized_bytes",
+ "rand 0.7.3",
+ "serde",
+ "serde_bytes",
+ "serde_json",
+ "thiserror",
+ "tracing",
+]
+
+[[package]]
+name = "aingle"
+version = "0.0.100"
+dependencies = [
+ "anyhow",
+ "assert_cmd",
+ "async-trait",
+ "base64 0.13.0",
+ "byteorder",
+ "cfg-if 0.1.10",
+ "chrono",
+ "criterion",
+ "derivative",
+ "derive_more",
+ "directories 2.0.2",
+ "either",
+ "fallible-iterator",
+ "fixt",
+ "futures",
+ "ghost_actor",
+ "hdk",
+ "aingle_hash",
+ "aingle_cascade",
+ "aingle_conductor_api",
+ "aingle_keystore",
+ "aingle_lmdb",
+ "aingle_p2p",
+ "aingle_serialized_bytes",
+ "aingle_state",
+ "aingle_test_wasm_common",
+ "aingle_types",
+ "aingle_wasm_test_utils",
+ "aingle_wasmer_host",
+ "aingle_websocket",
+ "aingle_zome_types",
+ "human-panic",
+ "itertools 0.9.0",
+ "kitsune_p2p",
+ "lazy_static",
+ "maplit",
+ "matches",
+ "mockall",
+ "must_future",
+ "nanoid",
+ "num_cpus",
+ "observability",
+ "once_cell",
+ "parking_lot",
+ "predicates",
+ "pretty_assertions",
+ "rand 0.7.3",
+ "ring",
+ "serde",
+ "serde_json",
+ "serde_yaml",
+ "serial_test",
+ "shrinkwraprs",
+ "structopt",
+ "strum",
+ "tempdir",
+ "test-case",
+ "thiserror",
+ "tokio",
+ "tokio_safe_block_on",
+ "toml",
+ "tracing",
+ "tracing-futures",
+ "tracing-subscriber",
+ "unwrap_to",
+ "url 1.7.2",
+ "url2",
+ "url_serde",
+ "uuid 0.7.4",
+ "xsalsa20poly1305",
+]
+
+[[package]]
+name = "aingle_cascade"
+version = "0.0.1"
+dependencies = [
+ "derive_more",
+ "either",
+ "fallible-iterator",
+ "fixt",
+ "futures",
+ "ghost_actor",
+ "hdk",
+ "hdk_derive",
+ "aingle_hash",
+ "aingle_lmdb",
+ "aingle_p2p",
+ "aingle_serialized_bytes",
+ "aingle_state",
+ "aingle_types",
+ "aingle_zome_types",
+ "kitsune_p2p",
+ "serde",
+ "serde_derive",
+ "thiserror",
+ "tokio",
+ "tracing",
+ "tracing-futures",
+]
+
+[[package]]
+name = "aingle_conductor_api"
+version = "0.0.1"
+dependencies = [
+ "derive_more",
+ "directories 2.0.2",
+ "aingle_hash",
+ "aingle_p2p",
+ "aingle_serialized_bytes",
+ "aingle_state",
+ "aingle_types",
+ "aingle_zome_types",
+ "kitsune_p2p",
+ "matches",
+ "observability",
+ "serde",
+ "serde_derive",
+ "serde_yaml",
+ "structopt",
+ "thiserror",
+ "tracing",
+ "url2",
+]
+
+[[package]]
+name = "aingle_hc"
+version = "0.1.0"
+dependencies = [
+ "ansi_term 0.12.1",
+ "anyhow",
+ "assert_cmd",
+ "chrono",
+ "futures",
+ "aingle_conductor_api",
+ "aingle_p2p",
+ "aingle_types",
+ "aingle_websocket",
+ "lazy_static",
+ "matches",
+ "nanoid",
+ "observability",
+ "portpicker",
+ "serde_yaml",
+ "structopt",
+ "tokio",
+ "tracing",
+ "url2",
+ "walkdir",
+]
+
+[[package]]
+name = "aingle_keystore"
+version = "0.0.1"
+dependencies = [
+ "ghost_actor",
+ "aingle_hash",
+ "aingle_serialized_bytes",
+ "aingle_zome_types",
+ "lair_keystore_api",
+ "lair_keystore_client",
+ "serde",
+ "serde_bytes",
+ "thiserror",
+ "tokio",
+ "tracing",
+]
+
+[[package]]
+name = "aingle_lmdb"
+version = "0.0.1"
+dependencies = [
+ "anyhow",
+ "byteorder",
+ "chrono",
+ "derive_more",
+ "either",
+ "failure",
+ "fallible-iterator",
+ "fixt",
+ "futures",
+ "aingle_hash",
+ "aingle_keystore",
+ "aingle_serialized_bytes",
+ "aingle_zome_types",
+ "lazy_static",
+ "must_future",
+ "nanoid",
+ "observability",
+ "parking_lot",
+ "rand 0.7.3",
+ "rkv",
+ "rmp-serde",
+ "serde",
+ "serde_derive",
+ "shrinkwraprs",
+ "tempdir",
+ "thiserror",
+ "tokio",
+ "tokio_safe_block_on",
+>>>>>>> master
+ "tracing",
+ "tracing-futures",
+]
+
+[[package]]
+<<<<<<< HEAD
+name = "gimli"
+version = "0.20.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "81dd6190aad0f05ddbbf3245c54ed14ca4aa6dd32f22312b70d8f168c3e3e633"
+dependencies = [
+ "byteorder",
+ "indexmap",
+]
+
+[[package]]
+name = "gimli"
+version = "0.23.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f6503fe142514ca4799d4c26297c4248239fe8838d827db6bd6065c6ed29a6ce"
+
+[[package]]
+name = "h2"
+version = "0.2.7"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5e4728fd124914ad25e99e3d15a9361a879f6620f63cb56bbb08f95abb97a535"
+dependencies = [
+ "bytes",
+ "fnv",
+ "futures-core",
+ "futures-sink",
+ "futures-util",
+ "http",
+ "indexmap",
+ "slab",
+ "tokio",
+ "tokio-util",
+=======
+name = "aingle_p2p"
+version = "0.0.1"
+dependencies = [
+ "async-trait",
+ "fixt",
+ "futures",
+ "ghost_actor",
+ "aingle_hash",
+ "aingle_keystore",
+ "aingle_serialized_bytes",
+ "aingle_types",
+ "aingle_zome_types",
+ "kitsune_p2p",
+ "kitsune_p2p_types",
+ "mockall",
+ "observability",
+ "serde",
+ "serde_bytes",
+ "thiserror",
+ "tokio",
+ "tokio_safe_block_on",
+]
+
+[[package]]
+name = "aingle_serialized_bytes"
+version = "0.0.48"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "79ff6ebed11c8d4cbc9cb2ea1ee779100d623e819e4cb3bdca16481a775126da"
+dependencies = [
+ "aingle_serialized_bytes_derive",
+ "rmp-serde",
+ "serde",
+ "serde-transcode",
+ "serde_bytes",
+ "serde_json",
+ "thiserror",
+]
+
+[[package]]
+name = "aingle_serialized_bytes_derive"
+version = "0.0.48"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4dbd32f37d69ab4772ec726b8d8349b6f0752f3757deac724a5791149c34ec1e"
+dependencies = [
+ "quote",
+ "syn",
+]
+
+[[package]]
+name = "aingle_state"
+version = "0.0.1"
+dependencies = [
+ "anyhow",
+ "byteorder",
+ "chrono",
+ "derive_more",
+ "fallible-iterator",
+ "fixt",
+ "hdk",
+ "aingle_hash",
+ "aingle_keystore",
+ "aingle_lmdb",
+ "aingle_p2p",
+ "aingle_serialized_bytes",
+ "aingle_types",
+ "aingle_wasm_test_utils",
+ "aingle_zome_types",
+ "matches",
+ "mockall",
+ "observability",
+ "pretty_assertions",
+ "serde",
+ "serde_json",
+ "shrinkwraprs",
+ "thiserror",
+ "tokio",
+ "tokio_safe_block_on",
+>>>>>>> master
+ "tracing",
+ "tracing-futures",
+]
+
+[[package]]
+<<<<<<< HEAD
+name = "half"
+version = "1.6.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d36fab90f82edc3c747f9d438e06cf0a491055896f2a279638bb5beed6c40177"
+
+[[package]]
+name = "hashbrown"
+version = "0.9.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d7afe4a420e3fe79967a00898cc1f4db7c8a49a9333a29f8a4bd76a253d5cd04"
+
+[[package]]
+name = "hdk"
+version = "0.0.1"
+dependencies = [
  "aingle_hash",
  "aingle_wasmer_guest",
  "aingle_zome_types",
@@ -1841,6 +2382,147 @@ checksum = "492dd78dd4fae9fa835a5138e41ef089a139df98a823e0cb9a707ba5915aefb1"
 dependencies = [
  "quote",
  "syn",
+=======
+name = "aingle_test_wasm_common"
+version = "0.0.1"
+dependencies = [
+ "hdk",
+ "aingle_serialized_bytes",
+ "serde",
+ "serde_bytes",
+]
+
+[[package]]
+name = "aingle_types"
+version = "0.0.1"
+dependencies = [
+ "anyhow",
+ "async-trait",
+ "backtrace",
+ "base64 0.13.0",
+ "chrono",
+ "derive_builder",
+ "derive_more",
+ "fixt",
+ "flate2",
+ "futures",
+ "aingle_hash",
+ "aingle_keystore",
+ "aingle_serialized_bytes",
+ "aingle_zome_types",
+ "lazy_static",
+ "maplit",
+ "must_future",
+ "nanoid",
+ "observability",
+ "rand 0.7.3",
+ "regex",
+ "serde",
+ "serde_bytes",
+ "serde_derive",
+ "serde_json",
+ "shrinkwraprs",
+ "strum",
+ "tempdir",
+ "thiserror",
+ "tokio",
+ "tokio_safe_block_on",
+ "tracing",
+]
+
+[[package]]
+name = "aingle_wasm_test_utils"
+version = "0.0.1"
+dependencies = [
+ "fixt",
+ "aingle_hash",
+ "aingle_types",
+ "aingle_zome_types",
+ "rand 0.7.3",
+ "strum",
+ "strum_macros",
+ "tokio_safe_block_on",
+ "toml",
+ "walkdir",
+]
+
+[[package]]
+name = "aingle_wasmer_common"
+version = "0.0.66"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a4e10d2eeb178ad798f49473a9315a21f49384a287de0265af48d080112575df"
+dependencies = [
+ "aingle_serialized_bytes",
+ "serde",
+ "serde_bytes",
+ "thiserror",
+]
+
+[[package]]
+name = "aingle_wasmer_guest"
+version = "0.0.66"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ff071b25faac0c38cf87c487b25a855a407954daea1ace87d61bd274266e9bcf"
+dependencies = [
+ "aingle_serialized_bytes",
+ "aingle_wasmer_common",
+ "serde",
+ "tracing",
+]
+
+[[package]]
+name = "aingle_wasmer_host"
+version = "0.0.66"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d191677b0474b449b624be5c057d0da3d3aa6ca375261b6b598c4749b609720f"
+dependencies = [
+ "aingle_serialized_bytes",
+ "aingle_wasmer_common",
+ "lazy_static",
+ "serde",
+ "tracing",
+ "wasmer-runtime",
+ "wasmer-runtime-core",
+]
+
+[[package]]
+name = "aingle_websocket"
+version = "0.0.1"
+dependencies = [
+ "futures",
+ "aingle_serialized_bytes",
+ "aingle_types",
+ "linefeed",
+ "nanoid",
+ "net2",
+ "observability",
+ "serde",
+ "serde_bytes",
+ "tokio",
+ "tokio-tungstenite",
+ "tracing",
+ "tracing-futures",
+ "tungstenite",
+ "url2",
+]
+
+[[package]]
+name = "aingle_zome_types"
+version = "0.0.1"
+dependencies = [
+ "chrono",
+ "fixt",
+ "aingle_hash",
+ "aingle_serialized_bytes",
+ "paste 1.0.3",
+ "rand 0.7.3",
+ "serde",
+ "serde_bytes",
+ "strum",
+ "subtle 2.4.0",
+ "thiserror",
+ "tracing",
+>>>>>>> master
 ]
 
 [[package]]
@@ -2630,7 +3312,11 @@ checksum = "04ee3ae3ce7a7b9f875526d3f956c106f991114f1c61a0e10553918256efc8fc"
 dependencies = [
  "chrono",
  "derive_more",
+<<<<<<< HEAD
  "holochain_serialized_bytes",
+=======
+ "aingle_serialized_bytes",
+>>>>>>> master
  "inferno",
  "once_cell",
  "opentelemetry",
@@ -3670,9 +4356,15 @@ checksum = "388a1df253eca08550bef6c72392cfe7c30914bf41df5269b68cbd6ff8f570a3"
 
 [[package]]
 name = "serde"
+<<<<<<< HEAD
 version = "1.0.123"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "92d5161132722baa40d802cc70b15262b98258453e85e5d1d365c757c73869ae"
+=======
+version = "1.0.104"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "414115f25f818d7dfccec8ee535d76949ae78584fc4f79a6f45a904bf8ab4449"
+>>>>>>> master
 dependencies = [
  "serde_derive",
 ]
@@ -3717,9 +4409,15 @@ dependencies = [
 
 [[package]]
 name = "serde_derive"
+<<<<<<< HEAD
 version = "1.0.123"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9391c295d64fc0abb2c556bad848f33cb8296276b1ad2677d1ae1ace4f258f31"
+=======
+version = "1.0.104"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "128f9e303a5a29922045a830221b8f78ec74a5f544944f3d5984f8ec3895ef64"
+>>>>>>> master
 dependencies = [
  "proc-macro2",
  "quote",
@@ -3955,9 +4653,15 @@ checksum = "1e81da0851ada1f3e9d4312c704aa4f8806f0f9d69faaf8df2f3464b4a9437c2"
 
 [[package]]
 name = "syn"
+<<<<<<< HEAD
 version = "1.0.60"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c700597eca8a5a762beb35753ef6b94df201c81cca676604f547495a0d7f0081"
+=======
+version = "1.0.57"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4211ce9909eb971f111059df92c45640aad50a619cf55cd76476be803c4c68e6"
+>>>>>>> master
 dependencies = [
  "proc-macro2",
  "quote",
@@ -4221,6 +4925,7 @@ dependencies = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "tokio_safe"
 version = "0.1.2"
 source = "git+https://github.com/Daironode/tokio_safe.git?branch=master#cc4f3d34a734699e609ea620e8d1d06390403a28"
@@ -4230,6 +4935,8 @@ dependencies = [
 ]
 
 [[package]]
+=======
+>>>>>>> master
 name = "tokio_safe_block_on"
 version = "0.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4920,3 +5627,11 @@ dependencies = [
  "syn",
  "synstructure",
 ]
+<<<<<<< HEAD
+=======
+
+[[patch.unused]]
+name = "tokio_safe"
+version = "0.1.2"
+source = "git+https://github.com/Daironode/tokio_safe.git?branch=master#cc4f3d34a734699e609ea620e8d1d06390403a28"
+>>>>>>> master

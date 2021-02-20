@@ -1,18 +1,31 @@
 use crate::conductor::ConductorHandle;
+<<<<<<< HEAD
 use crate::core::workflow::incoming_dgd_ops_workflow::IncomingDgdOpsWorkspace;
+=======
+use crate::core::workflow::incoming_dht_ops_workflow::IncomingDhtOpsWorkspace;
+>>>>>>> master
 use crate::test_utils::host_fn_caller::*;
 use crate::test_utils::setup_app;
 use crate::test_utils::wait_for_integration;
 use ::fixt::prelude::*;
 use fallible_iterator::FallibleIterator;
 use hdk::prelude::LinkTag;
+<<<<<<< HEAD
 use aingle_hash::AnyDgdHash;
 use aingle_hash::DgdOpHash;
+=======
+use aingle_hash::AnyDhtHash;
+use aingle_hash::DhtOpHash;
+>>>>>>> master
 use aingle_hash::EntryHash;
 use aingle_hash::HeaderHash;
 use aingle_lmdb::fresh_reader_test;
 use aingle_lmdb::prelude::ReadManager;
+<<<<<<< HEAD
 use aingle_middleware_bytes::SerializedBytes;
+=======
+use aingle_serialized_bytes::SerializedBytes;
+>>>>>>> master
 use aingle_state::element_buf::ElementBuf;
 use aingle_state::validation_db::ValidationLimboStatus;
 use aingle_types::prelude::*;
@@ -95,7 +108,11 @@ async fn run_test(
         )
         .await;
 
+<<<<<<< HEAD
         let workspace = IncomingDgdOpsWorkspace::new(alice_env.clone().into()).unwrap();
+=======
+        let workspace = IncomingDhtOpsWorkspace::new(alice_env.clone().into()).unwrap();
+>>>>>>> master
         // Validation should be empty
         let res: Vec<_> = fresh_reader_test!(alice_env, |r| {
             workspace
@@ -111,7 +128,11 @@ async fn run_test(
             let _g = s.enter();
             let element_buf = ElementBuf::vault(alice_env.clone().into(), true).unwrap();
             for (k, i) in &res {
+<<<<<<< HEAD
                 let hash = DgdOpHash::from_raw_39(k.clone());
+=======
+                let hash = DhtOpHash::from_raw_39(k.clone());
+>>>>>>> master
                 let el = element_buf.get_element(&i.op.header_hash()).unwrap();
                 debug!(?hash, ?i, op_in_val = ?el);
             }
@@ -129,7 +150,11 @@ async fn run_test(
         assert_eq!(int_limbo.len(), 0, "{:?}", int_limbo);
         let res: Vec<_> = fresh_reader_test!(alice_env, |r| {
             workspace
+<<<<<<< HEAD
                 .integrated_dgd_ops
+=======
+                .integrated_dht_ops
+>>>>>>> master
                 .iter(&r)
                 .unwrap()
                 // Every op should be valid
@@ -173,7 +198,11 @@ async fn run_test(
         )
         .await;
 
+<<<<<<< HEAD
         let workspace = IncomingDgdOpsWorkspace::new(alice_env.clone().into()).unwrap();
+=======
+        let workspace = IncomingDhtOpsWorkspace::new(alice_env.clone().into()).unwrap();
+>>>>>>> master
         // Validation should be empty
         assert_eq!(
             fresh_reader_test!(alice_env, |r| workspace
@@ -192,7 +221,11 @@ async fn run_test(
             0
         );
 
+<<<<<<< HEAD
         let bad_update_entry_hash: AnyDgdHash = bad_update_entry_hash.into();
+=======
+        let bad_update_entry_hash: AnyDhtHash = bad_update_entry_hash.into();
+>>>>>>> master
 
         let int_limbo: Vec<_> = fresh_reader_test!(alice_env, |r| workspace
             .integration_limbo
@@ -204,7 +237,11 @@ async fn run_test(
 
         assert_eq!(
             fresh_reader_test!(alice_env, |r| workspace
+<<<<<<< HEAD
                 .integrated_dgd_ops
+=======
+                .integrated_dht_ops
+>>>>>>> master
                 .iter(&r)
                 .unwrap()
                 // Every op should be valid except register updated by
@@ -214,11 +251,16 @@ async fn run_test(
                     let _g = s.enter();
                     debug!(?i.op);
                     match &i.op {
+<<<<<<< HEAD
                         DgdOpLight::StoreEntry(hh, _, eh)
+=======
+                        DhtOpLight::StoreEntry(hh, _, eh)
+>>>>>>> master
                             if eh == &bad_update_entry_hash && hh == &bad_update_header =>
                         {
                             assert_eq!(i.validation_status, ValidationStatus::Rejected)
                         }
+<<<<<<< HEAD
                         DgdOpLight::StoreElement(hh, _, _) if hh == &bad_update_header => {
                             assert_eq!(i.validation_status, ValidationStatus::Rejected)
                         }
@@ -226,11 +268,24 @@ async fn run_test(
                             assert_eq!(i.validation_status, ValidationStatus::Rejected)
                         }
                         DgdOpLight::RegisterUpdatedContent(hh, _, _)
+=======
+                        DhtOpLight::StoreElement(hh, _, _) if hh == &bad_update_header => {
+                            assert_eq!(i.validation_status, ValidationStatus::Rejected)
+                        }
+                        DhtOpLight::RegisterAddLink(hh, _) if hh == &link_add_hash => {
+                            assert_eq!(i.validation_status, ValidationStatus::Rejected)
+                        }
+                        DhtOpLight::RegisterUpdatedContent(hh, _, _)
+>>>>>>> master
                             if hh == &bad_update_header =>
                         {
                             assert_eq!(i.validation_status, ValidationStatus::Rejected)
                         }
+<<<<<<< HEAD
                         DgdOpLight::RegisterUpdatedElement(hh, _, _)
+=======
+                        DhtOpLight::RegisterUpdatedElement(hh, _, _)
+>>>>>>> master
                             if hh == &bad_update_header =>
                         {
                             assert_eq!(i.validation_status, ValidationStatus::Rejected)
@@ -263,7 +318,11 @@ async fn run_test(
         .await;
         let env_ref = alice_env.guard();
 
+<<<<<<< HEAD
         let workspace = IncomingDgdOpsWorkspace::new(alice_env.clone().into()).unwrap();
+=======
+        let workspace = IncomingDhtOpsWorkspace::new(alice_env.clone().into()).unwrap();
+>>>>>>> master
         // Validation should still contain bobs link pending because the target was missing
         assert_eq!(
             {
@@ -292,7 +351,11 @@ async fn run_test(
             {
                 let r = env_ref.reader().unwrap();
                 workspace
+<<<<<<< HEAD
                     .integrated_dgd_ops
+=======
+                    .integrated_dht_ops
+>>>>>>> master
                     .iter(&r)
                     .unwrap()
                     .count()
@@ -336,7 +399,11 @@ async fn bob_links_in_a_legit_way(
 
     // Produce and publish these commits
     let mut triggers = handle.get_cell_triggers(&bob_cell_id).await.unwrap();
+<<<<<<< HEAD
     triggers.produce_dgd_ops.trigger();
+=======
+    triggers.produce_dht_ops.trigger();
+>>>>>>> master
     link_add_address
 }
 
@@ -390,7 +457,11 @@ async fn bob_makes_a_large_link(
 
     // Produce and publish these commits
     let mut triggers = handle.get_cell_triggers(&bob_cell_id).await.unwrap();
+<<<<<<< HEAD
     triggers.produce_dgd_ops.trigger();
+=======
+    triggers.produce_dht_ops.trigger();
+>>>>>>> master
     (bad_update_header, bad_update_entry_hash, link_add_address)
 }
 
@@ -420,7 +491,11 @@ async fn dodgy_bob(bob_cell_id: &CellId, handle: &ConductorHandle, dna_file: &Dn
 
     // Produce and publish these commits
     let mut triggers = handle.get_cell_triggers(&bob_cell_id).await.unwrap();
+<<<<<<< HEAD
     triggers.produce_dgd_ops.trigger();
+=======
+    triggers.produce_dht_ops.trigger();
+>>>>>>> master
 }
 
 //////////////////////

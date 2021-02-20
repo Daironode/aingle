@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 
 /// Key refs are the same length as the keys themselves.
 /// The key ref is just a sha256 of the key. There are no benefits, only downsides, to having

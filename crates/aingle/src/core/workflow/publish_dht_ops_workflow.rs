@@ -1,25 +1,43 @@
+<<<<<<< HEAD
 //! # Publish Dgd Op Workflow
+=======
+//! # Publish Dht Op Workflow
+>>>>>>> master
 //!
 //! ## Open questions
 //! - [x] Publish add and remove links on private entries, what are the constraints on when to publish
 //! For now, Publish links on private entries
 // TODO: B-01827 Make story about: later consider adding a flag to make a link private and not publish it.
 //       Even for those private links, we may need to publish them to the author of the private entry
+<<<<<<< HEAD
 //       (and we'd have to reference its header  which actually exists on the DGD to make that work,
 //       rather than the entry which does not exist on the DGD).
+=======
+//       (and we'd have to reference its header  which actually exists on the DHT to make that work,
+//       rather than the entry which does not exist on the DHT).
+>>>>>>> master
 //!
 //!
 
 use super::error::WorkflowResult;
+<<<<<<< HEAD
 use super::produce_dgd_ops_workflow::dgd_op_light::error::DgdOpConvertError;
 use super::produce_dgd_ops_workflow::dgd_op_light::light_to_op;
+=======
+use super::produce_dht_ops_workflow::dht_op_light::error::DhtOpConvertError;
+use super::produce_dht_ops_workflow::dht_op_light::light_to_op;
+>>>>>>> master
 use crate::core::queue_consumer::OneshotWriter;
 use crate::core::queue_consumer::WorkComplete;
 use fallible_iterator::FallibleIterator;
 use aingle_hash::*;
 use aingle_lmdb::buffer::BufferedStore;
 use aingle_lmdb::buffer::KvBufFresh;
+<<<<<<< HEAD
 use aingle_lmdb::db::AUTHORED_DGD_OPS;
+=======
+use aingle_lmdb::db::AUTHORED_DHT_OPS;
+>>>>>>> master
 use aingle_lmdb::fresh_reader;
 use aingle_lmdb::prelude::*;
 use aingle_lmdb::transaction::Writer;
@@ -37,26 +55,46 @@ use tracing::*;
 // TODO: build zome_types/entry_def map to get the (AppEntryType map to entry def)
 pub const DEFAULT_RECEIPT_BUNDLE_SIZE: u32 = 5;
 
+<<<<<<< HEAD
 /// Don't publish a DgdOp more than once during this interval.
+=======
+/// Don't publish a DhtOp more than once during this interval.
+>>>>>>> master
 /// This allows us to trigger the publish workflow as often as we like, without
 /// flooding the network with spurious publishes.
 pub const MIN_PUBLISH_INTERVAL: time::Duration = time::Duration::from_secs(5);
 
+<<<<<<< HEAD
 /// Database buffers required for publishing [DgdOp]s
 pub struct PublishDgdOpsWorkspace {
     /// Database of authored DgdOps, with data about prior publishing
     authored_dgd_ops: AuthoredDgdOpsStore,
+=======
+/// Database buffers required for publishing [DhtOp]s
+pub struct PublishDhtOpsWorkspace {
+    /// Database of authored DhtOps, with data about prior publishing
+    authored_dht_ops: AuthoredDhtOpsStore,
+>>>>>>> master
     /// Element store for looking up data to construct ops
     elements: ElementBuf<AuthoredPrefix>,
 }
 
 #[instrument(skip(workspace, writer, network))]
+<<<<<<< HEAD
 pub async fn publish_dgd_ops_workflow(
     mut workspace: PublishDgdOpsWorkspace,
     writer: OneshotWriter,
     network: &mut AIngleP2pCell,
 ) -> WorkflowResult<WorkComplete> {
     let to_publish = publish_dgd_ops_workflow_inner(&mut workspace).await?;
+=======
+pub async fn publish_dht_ops_workflow(
+    mut workspace: PublishDhtOpsWorkspace,
+    writer: OneshotWriter,
+    network: &mut AIngleP2pCell,
+) -> WorkflowResult<WorkComplete> {
+    let to_publish = publish_dht_ops_workflow_inner(&mut workspace).await?;
+>>>>>>> master
 
     // Commit to the network
     for (basis, ops) in to_publish {
@@ -71,9 +109,15 @@ pub async fn publish_dgd_ops_workflow(
 }
 
 /// Read the authored for ops with receipt count < R
+<<<<<<< HEAD
 pub async fn publish_dgd_ops_workflow_inner(
     workspace: &mut PublishDgdOpsWorkspace,
 ) -> WorkflowResult<HashMap<AnyDgdHash, Vec<(DgdOpHash, DgdOp)>>> {
+=======
+pub async fn publish_dht_ops_workflow_inner(
+    workspace: &mut PublishDhtOpsWorkspace,
+) -> WorkflowResult<HashMap<AnyDhtHash, Vec<(DhtOpHash, DhtOp)>>> {
+>>>>>>> master
     // TODO: PERF: We need to check all ops every time this runs
     // instead we could have a queue of ops where count < R and a kv for count > R.
     // Then if the count for an ops reduces below R move it to the queue.
@@ -102,7 +146,11 @@ pub async fn publish_dgd_ops_workflow_inner(
                     // and relies on gossip for data integrity.
                     // This should be removed when receipts are implemented.
                     r.receipt_count += 1;
+<<<<<<< HEAD
                     Some((DgdOpHash::from_raw_39_panicky(k.to_vec()), r))
+=======
+                    Some((DhtOpHash::from_raw_39_panicky(k.to_vec()), r))
+>>>>>>> master
                 } else {
                     None
                 }
@@ -122,13 +170,21 @@ pub async fn publish_dgd_ops_workflow_inner(
 
         let op = match light_to_op(op, workspace.elements()) {
             // Ignore StoreEntry ops on private
+<<<<<<< HEAD
             Err(DgdOpConvertError::StoreEntryOnPrivate) => continue,
+=======
+            Err(DhtOpConvertError::StoreEntryOnPrivate) => continue,
+>>>>>>> master
             r => r?,
         };
         // For every op publish a request
         // Collect and sort ops by basis
         to_publish
+<<<<<<< HEAD
             .entry(op.dgd_basis())
+=======
+            .entry(op.dht_basis())
+>>>>>>> master
             .or_insert_with(Vec::new)
             .push((op_hash, op));
     }
@@ -136,13 +192,20 @@ pub async fn publish_dgd_ops_workflow_inner(
     Ok(to_publish)
 }
 
+<<<<<<< HEAD
 impl Workspace for PublishDgdOpsWorkspace {
     fn flush_to_txn_ref(&mut self, writer: &mut Writer) -> WorkspaceResult<()> {
         self.authored_dgd_ops.flush_to_txn_ref(writer)?;
+=======
+impl Workspace for PublishDhtOpsWorkspace {
+    fn flush_to_txn_ref(&mut self, writer: &mut Writer) -> WorkspaceResult<()> {
+        self.authored_dht_ops.flush_to_txn_ref(writer)?;
+>>>>>>> master
         Ok(())
     }
 }
 
+<<<<<<< HEAD
 impl PublishDgdOpsWorkspace {
     pub fn new(env: EnvironmentRead) -> WorkspaceResult<Self> {
         let db = env.get_db(&*AUTHORED_DGD_OPS)?;
@@ -151,12 +214,27 @@ impl PublishDgdOpsWorkspace {
         let elements = ElementBuf::authored(env, false)?;
         Ok(Self {
             authored_dgd_ops,
+=======
+impl PublishDhtOpsWorkspace {
+    pub fn new(env: EnvironmentRead) -> WorkspaceResult<Self> {
+        let db = env.get_db(&*AUTHORED_DHT_OPS)?;
+        let authored_dht_ops = KvBufFresh::new(env.clone(), db);
+        // Note that this must always be false as we don't want private entries being published
+        let elements = ElementBuf::authored(env, false)?;
+        Ok(Self {
+            authored_dht_ops,
+>>>>>>> master
             elements,
         })
     }
 
+<<<<<<< HEAD
     fn authored(&mut self) -> &mut AuthoredDgdOpsStore {
         &mut self.authored_dgd_ops
+=======
+    fn authored(&mut self) -> &mut AuthoredDhtOpsStore {
+        &mut self.authored_dht_ops
+>>>>>>> master
     }
 
     fn elements(&self) -> &ElementBuf<AuthoredPrefix> {
@@ -169,8 +247,13 @@ mod tests {
     use super::*;
     use crate::core::queue_consumer::TriggerSender;
     use crate::core::workflow::fake_genesis;
+<<<<<<< HEAD
     use crate::core::workflow::produce_dgd_ops_workflow::produce_dgd_ops_workflow;
     use crate::core::workflow::produce_dgd_ops_workflow::ProduceDgdOpsWorkspace;
+=======
+    use crate::core::workflow::produce_dht_ops_workflow::produce_dht_ops_workflow;
+    use crate::core::workflow::produce_dht_ops_workflow::ProduceDhtOpsWorkspace;
+>>>>>>> master
     use crate::core::SourceChainError;
     use crate::fixt::CreateLinkFixturator;
     use crate::fixt::EntryFixturator;
@@ -216,6 +299,7 @@ mod tests {
             // Create data for op
             let sig = sig_fixt.next().unwrap();
             let link_add = link_add_fixt.next().unwrap();
+<<<<<<< HEAD
             // Create DgdOp
             let op = DgdOp::RegisterAddLink(sig.clone(), link_add.clone());
             // Get the hash from the op
@@ -223,6 +307,15 @@ mod tests {
             // Convert op to DgdOpLight
             let header_hash = HeaderHashed::from_content_sync(link_add.clone().into());
             let op_light = DgdOpLight::RegisterAddLink(
+=======
+            // Create DhtOp
+            let op = DhtOp::RegisterAddLink(sig.clone(), link_add.clone());
+            // Get the hash from the op
+            let op_hashed = DhtOpHashed::from_content_sync(op.clone());
+            // Convert op to DhtOpLight
+            let header_hash = HeaderHashed::from_content_sync(link_add.clone().into());
+            let op_light = DhtOpLight::RegisterAddLink(
+>>>>>>> master
                 header_hash.as_hash().clone(),
                 link_add.base_address.into(),
             );
@@ -231,12 +324,21 @@ mod tests {
 
         // Create and fill authored ops db in the workspace
         {
+<<<<<<< HEAD
             let mut workspace = PublishDgdOpsWorkspace::new(env.clone().into()).unwrap();
             for (sig, op_hashed, op_light, header_hash) in data {
                 let op_hash = op_hashed.as_hash().clone();
                 let authored_value = AuthoredDgdOpsValue::from_light(op_light);
                 workspace
                     .authored_dgd_ops
+=======
+            let mut workspace = PublishDhtOpsWorkspace::new(env.clone().into()).unwrap();
+            for (sig, op_hashed, op_light, header_hash) in data {
+                let op_hash = op_hashed.as_hash().clone();
+                let authored_value = AuthoredDhtOpsValue::from_light(op_light);
+                workspace
+                    .authored_dht_ops
+>>>>>>> master
                     .put(op_hash.clone(), authored_value)
                     .unwrap();
                 // Put data into element store
@@ -246,7 +348,11 @@ mod tests {
             // Manually commit because this workspace doesn't commit to all dbs
             env_ref
                 .with_commit::<DatabaseError, _, _>(|writer| {
+<<<<<<< HEAD
                     workspace.authored_dgd_ops.flush_to_txn(writer)?;
+=======
+                    workspace.authored_dht_ops.flush_to_txn(writer)?;
+>>>>>>> master
                     workspace.elements.flush_to_txn(writer)?;
                     Ok(())
                 })
@@ -317,8 +423,13 @@ mod tests {
 
     /// Call the workflow
     async fn call_workflow(env: EnvironmentWrite, mut cell_network: AIngleP2pCell) {
+<<<<<<< HEAD
         let workspace = PublishDgdOpsWorkspace::new(env.clone().into()).unwrap();
         publish_dgd_ops_workflow(workspace, env.clone().into(), &mut cell_network)
+=======
+        let workspace = PublishDhtOpsWorkspace::new(env.clone().into()).unwrap();
+        publish_dht_ops_workflow(workspace, env.clone().into(), &mut cell_network)
+>>>>>>> master
             .await
             .unwrap();
     }
@@ -359,7 +470,11 @@ mod tests {
                 let env_ref = env.guard();
                 recv_task.await.unwrap();
                 let reader = env_ref.reader().unwrap();
+<<<<<<< HEAD
                 let mut workspace = PublishDgdOpsWorkspace::new(env.clone().into()).unwrap();
+=======
+                let mut workspace = PublishDhtOpsWorkspace::new(env.clone().into()).unwrap();
+>>>>>>> master
                 for i in workspace.authored().iter(&reader).unwrap().iterator() {
                     // Check that each item now has a publish time
                     assert!(i.expect("can iterate").1.last_publish_time.is_some())
@@ -374,7 +489,11 @@ mod tests {
     }
 
     /// There is a test that shows that if the validation_receipt_count > R
+<<<<<<< HEAD
     /// for a DGDOp we don't re-publish it
+=======
+    /// for a DHTOp we don't re-publish it
+>>>>>>> master
     #[test_case(1, 1)]
     #[test_case(1, 10)]
     #[test_case(1, 100)]
@@ -400,28 +519,48 @@ mod tests {
             // Update the authored to have > R counts
             {
                 let reader = env_ref.reader().unwrap();
+<<<<<<< HEAD
                 let mut workspace = PublishDgdOpsWorkspace::new(env.clone().into()).unwrap();
 
                 // Update authored to R
                 let values = workspace
                     .authored_dgd_ops
+=======
+                let mut workspace = PublishDhtOpsWorkspace::new(env.clone().into()).unwrap();
+
+                // Update authored to R
+                let values = workspace
+                    .authored_dht_ops
+>>>>>>> master
                     .iter(&reader)
                     .unwrap()
                     .map(|(k, mut v)| {
                         v.receipt_count = DEFAULT_RECEIPT_BUNDLE_SIZE;
+<<<<<<< HEAD
                         Ok((DgdOpHash::from_raw_39_panicky(k.to_vec()), v))
+=======
+                        Ok((DhtOpHash::from_raw_39_panicky(k.to_vec()), v))
+>>>>>>> master
                     })
                     .collect::<Vec<_>>()
                     .unwrap();
 
                 for (hash, v) in values.into_iter() {
+<<<<<<< HEAD
                     workspace.authored_dgd_ops.put(hash, v).unwrap();
+=======
+                    workspace.authored_dht_ops.put(hash, v).unwrap();
+>>>>>>> master
                 }
 
                 // Manually commit because this workspace doesn't commit to all dbs
                 env_ref
                     .with_commit::<DatabaseError, _, _>(|writer| {
+<<<<<<< HEAD
                         workspace.authored_dgd_ops.flush_to_txn(writer)?;
+=======
+                        workspace.authored_dht_ops.flush_to_txn(writer)?;
+>>>>>>> master
                         Ok(())
                     })
                     .unwrap();
@@ -443,7 +582,11 @@ mod tests {
         });
     }
 
+<<<<<<< HEAD
     /// There is a test to shows that DGDOps that were produced on private entries are not published.
+=======
+    /// There is a test to shows that DHTOps that were produced on private entries are not published.
+>>>>>>> master
     /// Some do get published
     /// Current private constraints:
     /// - No private Entry is ever published in any op
@@ -497,18 +640,31 @@ mod tests {
                         .unwrap();
                 }
                 {
+<<<<<<< HEAD
                     let workspace = ProduceDgdOpsWorkspace::new(env.clone().into()).unwrap();
                     let (mut qt, _rx) = TriggerSender::new();
                     let complete = produce_dgd_ops_workflow(workspace, env.clone().into(), &mut qt)
+=======
+                    let workspace = ProduceDhtOpsWorkspace::new(env.clone().into()).unwrap();
+                    let (mut qt, _rx) = TriggerSender::new();
+                    let complete = produce_dht_ops_workflow(workspace, env.clone().into(), &mut qt)
+>>>>>>> master
                         .await
                         .unwrap();
                     assert_matches!(complete, WorkComplete::Complete);
                 }
                 {
+<<<<<<< HEAD
                     let mut workspace = ProduceDgdOpsWorkspace::new(env.clone().into()).unwrap();
                     env_ref
                         .with_commit::<SourceChainError, _, _>(|writer| {
                             workspace.authored_dgd_ops.clear_all(writer)?;
+=======
+                    let mut workspace = ProduceDhtOpsWorkspace::new(env.clone().into()).unwrap();
+                    env_ref
+                        .with_commit::<SourceChainError, _, _>(|writer| {
+                            workspace.authored_dht_ops.clear_all(writer)?;
+>>>>>>> master
                             Ok(())
                         })
                         .unwrap();
@@ -574,22 +730,38 @@ mod tests {
                     // Op is expected to not contain the Entry even though the above contains the entry
                     let (entry_create_header, sig) =
                         entry_create_header.into_header_and_signature();
+<<<<<<< HEAD
                     let expected_op = DgdOp::RegisterAgentActivity(
                         sig.clone(),
                         entry_create_header.clone().into_content(),
                     );
                     let op_hash = DgdOpHashed::from_content_sync(expected_op.clone()).into_hash();
+=======
+                    let expected_op = DhtOp::RegisterAgentActivity(
+                        sig.clone(),
+                        entry_create_header.clone().into_content(),
+                    );
+                    let op_hash = DhtOpHashed::from_content_sync(expected_op.clone()).into_hash();
+>>>>>>> master
                     map.insert(
                         op_hash,
                         (expected_op, register_agent_activity_count.clone()),
                     );
 
+<<<<<<< HEAD
                     let expected_op = DgdOp::StoreElement(
+=======
+                    let expected_op = DhtOp::StoreElement(
+>>>>>>> master
                         sig,
                         entry_create_header.into_content().try_into().unwrap(),
                         None,
                     );
+<<<<<<< HEAD
                     let op_hash = DgdOpHashed::from_content_sync(expected_op.clone()).into_hash();
+=======
+                    let op_hash = DhtOpHashed::from_content_sync(expected_op.clone()).into_hash();
+>>>>>>> master
 
                     map.insert(op_hash, (expected_op, store_element_count.clone()));
 
@@ -600,32 +772,57 @@ mod tests {
                     let entry_update_header: Update =
                         entry_update_header.into_content().try_into().unwrap();
                     let expected_op =
+<<<<<<< HEAD
                         DgdOp::StoreElement(sig.clone(), entry_update_header.clone().into(), None);
                     let op_hash = DgdOpHashed::from_content_sync(expected_op.clone()).into_hash();
 
                     map.insert(op_hash, (expected_op, store_element_count.clone()));
 
                     let expected_op = DgdOp::RegisterUpdatedContent(
+=======
+                        DhtOp::StoreElement(sig.clone(), entry_update_header.clone().into(), None);
+                    let op_hash = DhtOpHashed::from_content_sync(expected_op.clone()).into_hash();
+
+                    map.insert(op_hash, (expected_op, store_element_count.clone()));
+
+                    let expected_op = DhtOp::RegisterUpdatedContent(
+>>>>>>> master
                         sig.clone(),
                         entry_update_header.clone(),
                         None,
                     );
+<<<<<<< HEAD
                     let op_hash = DgdOpHashed::from_content_sync(expected_op.clone()).into_hash();
 
                     map.insert(op_hash, (expected_op, register_replaced_by_count.clone()));
                     let expected_op = DgdOp::RegisterUpdatedElement(
+=======
+                    let op_hash = DhtOpHashed::from_content_sync(expected_op.clone()).into_hash();
+
+                    map.insert(op_hash, (expected_op, register_replaced_by_count.clone()));
+                    let expected_op = DhtOp::RegisterUpdatedElement(
+>>>>>>> master
                         sig.clone(),
                         entry_update_header.clone(),
                         None,
                     );
+<<<<<<< HEAD
                     let op_hash = DgdOpHashed::from_content_sync(expected_op.clone()).into_hash();
+=======
+                    let op_hash = DhtOpHashed::from_content_sync(expected_op.clone()).into_hash();
+>>>>>>> master
 
                     map.insert(
                         op_hash,
                         (expected_op, register_updated_element_count.clone()),
                     );
+<<<<<<< HEAD
                     let expected_op = DgdOp::RegisterAgentActivity(sig, entry_update_header.into());
                     let op_hash = DgdOpHashed::from_content_sync(expected_op.clone()).into_hash();
+=======
+                    let expected_op = DhtOp::RegisterAgentActivity(sig, entry_update_header.into());
+                    let op_hash = DhtOpHashed::from_content_sync(expected_op.clone()).into_hash();
+>>>>>>> master
                     map.insert(
                         op_hash,
                         (expected_op, register_agent_activity_count.clone()),
@@ -636,9 +833,15 @@ mod tests {
 
                 // Create and fill authored ops db in the workspace
                 {
+<<<<<<< HEAD
                     let workspace = ProduceDgdOpsWorkspace::new(env.clone().into()).unwrap();
                     let (mut qt, _rx) = TriggerSender::new();
                     let complete = produce_dgd_ops_workflow(workspace, env.clone().into(), &mut qt)
+=======
+                    let workspace = ProduceDhtOpsWorkspace::new(env.clone().into()).unwrap();
+                    let (mut qt, _rx) = TriggerSender::new();
+                    let complete = produce_dht_ops_workflow(workspace, env.clone().into(), &mut qt)
+>>>>>>> master
                         .await
                         .unwrap();
                     assert_matches!(complete, WorkComplete::Complete);
@@ -680,11 +883,19 @@ mod tests {
                             match evt {
                                 Publish {
                                     respond,
+<<<<<<< HEAD
                                     dgd_hash,
                                     ops,
                                     ..
                                 } => {
                                     tracing::debug!(?dgd_hash);
+=======
+                                    dht_hash,
+                                    ops,
+                                    ..
+                                } => {
+                                    tracing::debug!(?dht_hash);
+>>>>>>> master
                                     tracing::debug!(?ops);
 
                                     // Check the ops are correct
@@ -692,11 +903,19 @@ mod tests {
                                         match expected.get(&op_hash) {
                                             Some((expected_op, count)) => {
                                                 assert_eq!(&op, expected_op);
+<<<<<<< HEAD
                                                 assert_eq!(dgd_hash, expected_op.dgd_basis());
                                                 count.fetch_add(1, Ordering::SeqCst);
                                             }
                                             None => panic!(
                                                 "This DgdOpHash was not expected: {:?}",
+=======
+                                                assert_eq!(dht_hash, expected_op.dht_basis());
+                                                count.fetch_add(1, Ordering::SeqCst);
+                                            }
+                                            None => panic!(
+                                                "This DhtOpHash was not expected: {:?}",
+>>>>>>> master
                                                 op_hash
                                             ),
                                         }

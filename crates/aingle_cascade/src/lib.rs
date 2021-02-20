@@ -7,9 +7,15 @@
 use either::Either;
 use error::{AuthorityDataError, CascadeResult};
 use fallible_iterator::FallibleIterator;
+<<<<<<< HEAD
 use aingle_hash::hash_type::AnyDgd;
 use aingle_hash::AgentPubKey;
 use aingle_hash::AnyDgdHash;
+=======
+use aingle_hash::hash_type::AnyDht;
+use aingle_hash::AgentPubKey;
+use aingle_hash::AnyDhtHash;
+>>>>>>> master
 use aingle_hash::EntryHash;
 use aingle_hash::HasHash;
 use aingle_hash::HeaderHash;
@@ -390,7 +396,11 @@ where
     // that only makes sense for full sharding.
     fn update_cache_from_integrated(
         &mut self,
+<<<<<<< HEAD
         hash: AnyDgdHash,
+=======
+        hash: AnyDhtHash,
+>>>>>>> master
         options: NetworkGetOptions,
     ) -> CascadeResult<()> {
         if self.cache_data.is_none() {
@@ -398,12 +408,20 @@ where
         }
         let env = ok_or_return!(self.env.clone());
         match *hash.hash_type() {
+<<<<<<< HEAD
             AnyDgd::Entry => {
+=======
+            AnyDht::Entry => {
+>>>>>>> master
                 let response =
                     authority::handle_get_entry(env.into(), hash.into(), (&options).into())?;
                 self.put_entry_in_cache(response)?;
             }
+<<<<<<< HEAD
             AnyDgd::Header => {
+=======
+            AnyDht::Header => {
+>>>>>>> master
                 let response = authority::handle_get_element(env.into(), hash.into())?;
                 self.put_element_in_cache(response)?;
             }
@@ -644,7 +662,11 @@ where
     #[allow(dead_code)]
     async fn fetch_meta(
         &mut self,
+<<<<<<< HEAD
         basis: AnyDgdHash,
+=======
+        basis: AnyDhtHash,
+>>>>>>> master
         options: GetMetaOptions,
     ) -> CascadeResult<Vec<MetadataSet>> {
         let network = ok_or_return!(self.network.as_mut(), vec![]);
@@ -781,15 +803,26 @@ where
             .collect()
     }
 
+<<<<<<< HEAD
     /// Compute the [EntryDgdStatus] for these headers
     /// from the combined perspective of the cache and
     /// the authored store
     fn compute_entry_dgd_status(
+=======
+    /// Compute the [EntryDhtStatus] for these headers
+    /// from the combined perspective of the cache and
+    /// the authored store
+    fn compute_entry_dht_status(
+>>>>>>> master
         headers: &BTreeSet<TimedHeaderHash>,
         cache_data: &DbPairMut<'a, MetaCache>,
         authored_data: &DbPair<'a, MetaAuthored, AuthoredPrefix>,
         env: &EnvironmentRead,
+<<<<<<< HEAD
     ) -> CascadeResult<EntryDgdStatus> {
+=======
+    ) -> CascadeResult<EntryDhtStatus> {
+>>>>>>> master
         fresh_reader!(env, |r| {
             for thh in headers {
                 // If we can find any header that has no
@@ -805,11 +838,19 @@ where
                         .next()?
                         .is_none()
                 {
+<<<<<<< HEAD
                     return Ok(EntryDgdStatus::Live);
                 }
             }
 
             Ok(EntryDgdStatus::Dead)
+=======
+                    return Ok(EntryDhtStatus::Live);
+                }
+            }
+
+            Ok(EntryDhtStatus::Dead)
+>>>>>>> master
         })
     }
 
@@ -847,8 +888,13 @@ where
                     .chain(authored_data.meta.get_updates(&r, hash.into())?)
                     .collect::<BTreeSet<_>>()?;
 
+<<<<<<< HEAD
                 let entry_dgd_status =
                     Self::compute_entry_dgd_status(&headers, &cache_data, &authored_data, &env)?;
+=======
+                let entry_dht_status =
+                    Self::compute_entry_dht_status(&headers, &cache_data, &authored_data, &env)?;
+>>>>>>> master
 
                 // Render headers
                 let headers = self.render_headers(headers, |h| {
@@ -865,7 +911,11 @@ where
                     rejected_headers,
                     deletes,
                     updates,
+<<<<<<< HEAD
                     entry_dgd_status,
+=======
+                    entry_dht_status,
+>>>>>>> master
                 }))
             }),
             None => Ok(None),
@@ -1103,7 +1153,11 @@ where
     #[instrument(skip(self, options))]
     /// Returns the oldest live [Element] for this [EntryHash] by getting the
     /// latest available metadata from authorities combined with this agents authored data.
+<<<<<<< HEAD
     pub async fn dgd_get_entry(
+=======
+    pub async fn dht_get_entry(
+>>>>>>> master
         &mut self,
         entry_hash: EntryHash,
         options: GetOptions,
@@ -1142,7 +1196,11 @@ where
         match oldest_live_element {
             Search::Found(element) => Ok(Some(element)),
             Search::Continue(oldest_live_header) => {
+<<<<<<< HEAD
                 self.dgd_get_header(oldest_live_header, options).await
+=======
+                self.dht_get_header(oldest_live_header, options).await
+>>>>>>> master
             }
             Search::NotInCascade => Ok(None),
         }
@@ -1191,7 +1249,11 @@ where
     /// by getting the latest available metadata from authorities
     /// combined with this agents authored data.
     /// _Note: Deleted headers are a tombstone set_
+<<<<<<< HEAD
     pub async fn dgd_get_header(
+=======
+    pub async fn dht_get_header(
+>>>>>>> master
         &mut self,
         header_hash: HeaderHash,
         options: GetOptions,
@@ -1250,7 +1312,11 @@ where
             // content locally we can avoid the network call and return early.
             if let GetStrategy::Content = get_call {
                 // Found local data return early.
+<<<<<<< HEAD
                 if let Some(result) = self.dgd_get_header_inner(header_hash.clone())? {
+=======
+                if let Some(result) = self.dht_get_header_inner(header_hash.clone())? {
+>>>>>>> master
                     return Ok(Some(result));
                 }
             }
@@ -1259,10 +1325,17 @@ where
                 .await?;
         }
 
+<<<<<<< HEAD
         self.dgd_get_header_inner(header_hash)
     }
 
     fn dgd_get_header_inner(&self, header_hash: HeaderHash) -> CascadeResult<Option<Element>> {
+=======
+        self.dht_get_header_inner(header_hash)
+    }
+
+    fn dht_get_header_inner(&self, header_hash: HeaderHash) -> CascadeResult<Option<Element>> {
+>>>>>>> master
         let cache_data = ok_or_return!(self.cache_data.as_ref(), None);
         let env = ok_or_return!(self.env.as_ref(), None);
         fresh_reader!(env, |r| {
@@ -1417,7 +1490,11 @@ where
             .collect()
     }
 
+<<<<<<< HEAD
     /// Get the entry from the dgd regardless of metadata or validation status.
+=======
+    /// Get the entry from the dht regardless of metadata or validation status.
+>>>>>>> master
     /// This call has the opportunity to hit the local cache
     /// and avoid a network call.
     // TODO: This still fetches the full element and metadata.
@@ -1436,7 +1513,11 @@ where
         }
     }
 
+<<<<<<< HEAD
     /// Get only the header from the dgd regardless of metadata or validation status.
+=======
+    /// Get only the header from the dht regardless of metadata or validation status.
+>>>>>>> master
     /// Useful for avoiding getting the Entry if you don't need it.
     /// This call has the opportunity to hit the local cache
     /// and avoid a network call.
@@ -1456,7 +1537,11 @@ where
         }
     }
 
+<<<<<<< HEAD
     /// Get an element from the dgd regardless of metadata or validation status.
+=======
+    /// Get an element from the dht regardless of metadata or validation status.
+>>>>>>> master
     /// Useful for checking if data is held.
     /// This call has the opportunity to hit the local cache
     /// and avoid a network call.
@@ -1466,11 +1551,19 @@ where
     // Need to add a fetch_retrieve that only gets data.
     pub async fn retrieve(
         &mut self,
+<<<<<<< HEAD
         hash: AnyDgdHash,
         options: NetworkGetOptions,
     ) -> CascadeResult<Option<Element>> {
         match *hash.hash_type() {
             AnyDgd::Entry => {
+=======
+        hash: AnyDhtHash,
+        options: NetworkGetOptions,
+    ) -> CascadeResult<Option<Element>> {
+        match *hash.hash_type() {
+            AnyDht::Entry => {
+>>>>>>> master
                 let hash = hash.into();
                 match self.get_element_local_raw_via_entry(&hash)? {
                     Some(e) => Ok(Some(e)),
@@ -1480,7 +1573,11 @@ where
                     }
                 }
             }
+<<<<<<< HEAD
             AnyDgd::Header => {
+=======
+            AnyDht::Header => {
+>>>>>>> master
                 let hash = hash.into();
                 match self.get_element_local_raw(&hash)? {
                     Some(e) => Ok(Some(e)),
@@ -1496,6 +1593,7 @@ where
     #[instrument(skip(self))]
     /// Updates the cache with the latest network authority data
     /// and returns what is in the cache.
+<<<<<<< HEAD
     /// This gives you the latest possible picture of the current dgd state.
     /// Data from your zome call is also added to the cache.
     pub async fn dgd_get(
@@ -1506,12 +1604,25 @@ where
         match *hash.hash_type() {
             AnyDgd::Entry => self.dgd_get_entry(hash.into(), options).await,
             AnyDgd::Header => self.dgd_get_header(hash.into(), options).await,
+=======
+    /// This gives you the latest possible picture of the current dht state.
+    /// Data from your zome call is also added to the cache.
+    pub async fn dht_get(
+        &mut self,
+        hash: AnyDhtHash,
+        options: GetOptions,
+    ) -> CascadeResult<Option<Element>> {
+        match *hash.hash_type() {
+            AnyDht::Entry => self.dht_get_entry(hash.into(), options).await,
+            AnyDht::Header => self.dht_get_header(hash.into(), options).await,
+>>>>>>> master
         }
     }
 
     #[instrument(skip(self))]
     pub async fn get_details(
         &mut self,
+<<<<<<< HEAD
         hash: AnyDgdHash,
         options: GetOptions,
     ) -> CascadeResult<Option<Details>> {
@@ -1521,6 +1632,17 @@ where
                 .await?
                 .map(Details::Entry)),
             AnyDgd::Header => Ok(self
+=======
+        hash: AnyDhtHash,
+        options: GetOptions,
+    ) -> CascadeResult<Option<Details>> {
+        match *hash.hash_type() {
+            AnyDht::Entry => Ok(self
+                .get_entry_details(hash.into(), options)
+                .await?
+                .map(Details::Entry)),
+            AnyDht::Header => Ok(self
+>>>>>>> master
                 .get_header_details(hash.into(), options)
                 .await?
                 .map(Details::Element)),
@@ -1531,7 +1653,11 @@ where
     /// Gets an links from the cas or cache depending on it's metadata
     // The default behavior is to skip deleted or replaced entries.
     // TODO: Implement customization of this behavior with an options/builder struct
+<<<<<<< HEAD
     pub async fn dgd_get_links<'link>(
+=======
+    pub async fn dht_get_links<'link>(
+>>>>>>> master
         &mut self,
         key: &'link LinkMetaKey<'link>,
         options: GetLinksOptions,
@@ -2073,23 +2199,41 @@ where
         }
     }
 
+<<<<<<< HEAD
     async fn am_i_authoring(&mut self, hash: &AnyDgdHash) -> CascadeResult<bool> {
+=======
+    async fn am_i_authoring(&mut self, hash: &AnyDhtHash) -> CascadeResult<bool> {
+>>>>>>> master
         let authored_data = ok_or_return!(self.authored_data.as_ref(), false);
         Ok(authored_data.element.contains_in_scratch(&hash)?)
     }
 
+<<<<<<< HEAD
     async fn am_i_an_authority(&mut self, hash: AnyDgdHash) -> CascadeResult<bool> {
         // TODO: IMPORTANT: Implement this when we start sharding.
         // We are always the authority in full sync dgds
+=======
+    async fn am_i_an_authority(&mut self, hash: AnyDhtHash) -> CascadeResult<bool> {
+        // TODO: IMPORTANT: Implement this when we start sharding.
+        // We are always the authority in full sync dhts
+>>>>>>> master
 
         let integrated_data = ok_or_return!(self.integrated_data.as_ref(), false);
         let rejected_data = ok_or_return!(self.rejected_data.as_ref(), false);
         match *hash.hash_type() {
+<<<<<<< HEAD
             AnyDgd::Entry => Ok(integrated_data
                 .element
                 .contains_entry(&hash.clone().into())?
                 || rejected_data.element.contains_entry(&hash.clone().into())?),
             AnyDgd::Header => Ok(integrated_data
+=======
+            AnyDht::Entry => Ok(integrated_data
+                .element
+                .contains_entry(&hash.clone().into())?
+                || rejected_data.element.contains_entry(&hash.clone().into())?),
+            AnyDht::Header => Ok(integrated_data
+>>>>>>> master
                 .element
                 .contains_header(&hash.clone().into())?
                 || rejected_data
@@ -2109,7 +2253,11 @@ impl<'a, M: MetadataBufT> From<&'a DbPairMut<'a, M>> for DbPair<'a, M> {
 }
 
 pub fn integrate_single_metadata<C, P>(
+<<<<<<< HEAD
     op: DgdOpLight,
+=======
+    op: DhtOpLight,
+>>>>>>> master
     element_store: &ElementBuf<P>,
     meta_store: &mut C,
 ) -> CascadeResult<()>
@@ -2118,11 +2266,19 @@ where
     C: MetadataBufT<P>,
 {
     match op {
+<<<<<<< HEAD
         DgdOpLight::StoreElement(hash, _, _) => {
             let header = get_header(hash, element_store)?;
             meta_store.register_element_header(&header)?;
         }
         DgdOpLight::StoreEntry(hash, _, _) => {
+=======
+        DhtOpLight::StoreElement(hash, _, _) => {
+            let header = get_header(hash, element_store)?;
+            meta_store.register_element_header(&header)?;
+        }
+        DhtOpLight::StoreEntry(hash, _, _) => {
+>>>>>>> master
             let new_entry_header = get_header(hash, element_store)?.try_into()?;
             if let NewEntryHeader::Update(update) = &new_entry_header {
                 meta_store.register_update(update.clone())?;
@@ -2130,11 +2286,16 @@ where
             // Reference to headers
             meta_store.register_header(new_entry_header)?;
         }
+<<<<<<< HEAD
         DgdOpLight::RegisterAgentActivity(hash, _) => {
+=======
+        DhtOpLight::RegisterAgentActivity(hash, _) => {
+>>>>>>> master
             let header = get_header(hash, element_store)?;
             // register agent activity on this agents pub key
             meta_store.register_activity(&header, ValidationStatus::Valid)?;
         }
+<<<<<<< HEAD
         DgdOpLight::RegisterUpdatedContent(hash, _, _)
         | DgdOpLight::RegisterUpdatedElement(hash, _, _) => {
             let header = get_header(hash, element_store)?.try_into()?;
@@ -2150,6 +2311,23 @@ where
             meta_store.add_link(header)?;
         }
         DgdOpLight::RegisterRemoveLink(hash, _) => {
+=======
+        DhtOpLight::RegisterUpdatedContent(hash, _, _)
+        | DhtOpLight::RegisterUpdatedElement(hash, _, _) => {
+            let header = get_header(hash, element_store)?.try_into()?;
+            meta_store.register_update(header)?;
+        }
+        DhtOpLight::RegisterDeletedEntryHeader(hash, _)
+        | DhtOpLight::RegisterDeletedBy(hash, _) => {
+            let header = get_header(hash, element_store)?.try_into()?;
+            meta_store.register_delete(header)?
+        }
+        DhtOpLight::RegisterAddLink(hash, _) => {
+            let header = get_header(hash, element_store)?.try_into()?;
+            meta_store.add_link(header)?;
+        }
+        DhtOpLight::RegisterRemoveLink(hash, _) => {
+>>>>>>> master
             let header = get_header(hash, element_store)?.try_into()?;
             meta_store.delete_link(header)?;
         }

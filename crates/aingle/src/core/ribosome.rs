@@ -43,7 +43,11 @@ use guest_callback::validation_package::ValidationPackageHostAccess;
 use aingle_hash::AgentPubKey;
 use aingle_keystore::KeystoreSender;
 use aingle_p2p::AIngleP2pCell;
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 use aingle_types::prelude::*;
 use mockall::automock;
 use std::iter::Iterator;

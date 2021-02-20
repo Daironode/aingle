@@ -8,7 +8,11 @@ use error::SysValidationError;
 use aingle_keystore::AgentPubKeyExt;
 use aingle_lmdb::env::EnvironmentRead;
 use aingle_lmdb::test_utils::test_cell_env;
+<<<<<<< HEAD
 use aingle_middleware_bytes::SerializedBytes;
+=======
+use aingle_serialized_bytes::SerializedBytes;
+>>>>>>> master
 use aingle_wasm_test_utils::TestWasm;
 use aingle_zome_types::Header;
 use matches::assert_matches;

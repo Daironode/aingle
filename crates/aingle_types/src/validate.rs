@@ -1,7 +1,11 @@
 //! the _host_ types used to track the status/result of validating entries
 //! c.f. _guest_ types for validation callbacks and packages across the wasm boudary in zome_types
 
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 use aingle_zome_types::prelude::*;
 
 #[derive(

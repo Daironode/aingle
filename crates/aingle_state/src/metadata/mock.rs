@@ -69,7 +69,11 @@ mock! {
         fn deregister_raw_on_entry(&mut self, entry_hash: EntryHash, value: SysMetaVal) -> DatabaseResult<()>;
         fn deregister_add_link(&mut self, link_add: CreateLink) -> DatabaseResult<()>;
         fn deregister_delete_link(&mut self, link_remove: DeleteLink) -> DatabaseResult<()>;
+<<<<<<< HEAD
         fn get_dgd_status(&self, entry_hash: &EntryHash) -> DatabaseResult<EntryDgdStatus>;
+=======
+        fn get_dht_status(&self, entry_hash: &EntryHash) -> DatabaseResult<EntryDhtStatus>;
+>>>>>>> master
         fn get_canonical_entry_hash(&self, entry_hash: EntryHash) -> DatabaseResult<EntryHash>;
         fn get_canonical_header_hash(&self, header_hash: HeaderHash) -> DatabaseResult<HeaderHash>;
         fn get_headers(
@@ -103,7 +107,11 @@ mock! {
         -> DatabaseResult<Option<HighestObserved>>;
         fn get_updates(
             &self,
+<<<<<<< HEAD
             hash: AnyDgdHash,
+=======
+            hash: AnyDhtHash,
+>>>>>>> master
         ) -> DatabaseResult<Box<dyn FallibleIterator<Item = TimedHeaderHash, Error = DatabaseError>>>;
         fn get_deletes_on_header(
             &self,
@@ -153,12 +161,21 @@ impl MetadataBufT for MockMetadataBuf {
         self.get_canonical_entry_hash(entry_hash)
     }
 
+<<<<<<< HEAD
     fn get_dgd_status<'r, R: Readable>(
         &'r self,
         _r: &'r R,
         entry_hash: &EntryHash,
     ) -> DatabaseResult<EntryDgdStatus> {
         MockMetadataBuf::get_dgd_status(&self, entry_hash)
+=======
+    fn get_dht_status<'r, R: Readable>(
+        &'r self,
+        _r: &'r R,
+        entry_hash: &EntryHash,
+    ) -> DatabaseResult<EntryDhtStatus> {
+        MockMetadataBuf::get_dht_status(&self, entry_hash)
+>>>>>>> master
     }
 
     fn get_canonical_header_hash(&self, header_hash: HeaderHash) -> DatabaseResult<HeaderHash> {
@@ -233,7 +250,11 @@ impl MetadataBufT for MockMetadataBuf {
     fn get_updates<'r, R: Readable>(
         &'r self,
         _reader: &'r R,
+<<<<<<< HEAD
         hash: AnyDgdHash,
+=======
+        hash: AnyDhtHash,
+>>>>>>> master
     ) -> DatabaseResult<Box<dyn FallibleIterator<Item = TimedHeaderHash, Error = DatabaseError> + '_>>
     {
         self.get_updates(hash)

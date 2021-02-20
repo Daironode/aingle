@@ -17,7 +17,11 @@ use aingle_lmdb::test_utils::test_environments;
 use aingle_lmdb::test_utils::TestEnvironments;
 use aingle_p2p::actor::AIngleP2pRefToCell;
 use aingle_p2p::AIngleP2pCell;
+<<<<<<< HEAD
 use aingle_middleware_bytes::SerializedBytes;
+=======
+use aingle_serialized_bytes::SerializedBytes;
+>>>>>>> master
 use aingle_types::prelude::*;
 use aingle_wasm_test_utils::TestWasm;
 use kitsune_p2p::KitsuneP2pConfig;

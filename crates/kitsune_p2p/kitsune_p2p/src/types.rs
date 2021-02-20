@@ -103,7 +103,11 @@ pub trait KitsuneBinType:
     /// Fetch just the core 32 bytes (without the 4 location bytes).
     fn get_bytes(&self) -> &[u8];
 
+<<<<<<< HEAD
     /// Fetch the dgd "loc" / location for this hash.
+=======
+    /// Fetch the dht "loc" / location for this hash.
+>>>>>>> master
     fn get_loc(&self) -> u32;
 }
 
@@ -221,7 +225,11 @@ pub mod event;
 pub mod gossip;
 pub(crate) mod wire;
 
+<<<<<<< HEAD
 pub use kitsune_p2p_types::dgd_arc;
+=======
+pub use kitsune_p2p_types::dht_arc;
+>>>>>>> master
 
 #[allow(missing_docs)]
 pub mod metrics;

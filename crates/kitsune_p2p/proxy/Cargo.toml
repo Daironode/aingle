@@ -6,7 +6,11 @@ license = "Apache-2.0"
 homepage = "https://github.com/Daironode/aingle"
 documentation = "https://github.com/Daironode/aingle"
 authors = [ "AIngle Core Dev Team <devcore@aingle.ai>" ]
+<<<<<<< HEAD
 keywords = [ "aingle", "semantic", "p2p", "dgd", "networking" ]
+=======
+keywords = [ "aingle", "semantic", "p2p", "dht", "networking" ]
+>>>>>>> master
 categories = [ "network-programming" ]
 edition = "2018"
 

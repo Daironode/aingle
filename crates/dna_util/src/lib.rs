@@ -37,7 +37,11 @@
 //!     (`dna_util -e my-dna.dna.gz` creates dir `my-dna.dna_work_dir`)
 //! ```
 
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 use aingle_types::prelude::*;
 use aingle_zome_types::zome::ZomeName;
 use std::collections::BTreeMap;

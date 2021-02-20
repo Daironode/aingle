@@ -4,7 +4,11 @@ use crate::core::ribosome::guest_callback::entry_defs::EntryDefsResult;
 use crate::core::ribosome::CallContext;
 use crate::core::ribosome::RibosomeT;
 use crate::core::workflow::call_zome_workflow::CallZomeWorkspace;
+<<<<<<< HEAD
 use crate::core::workflow::integrate_dgd_ops_workflow::integrate_to_authored;
+=======
+use crate::core::workflow::integrate_dht_ops_workflow::integrate_to_authored;
+>>>>>>> master
 use aingle_wasmer_host::prelude::WasmError;
 
 use aingle_hash::HasHash;
@@ -57,7 +61,11 @@ pub fn create<'a>(
         let source_chain = &mut workspace.source_chain;
         // push the header and the entry into the source chain
         let header_hash = source_chain.put(header_builder, Some(entry)).await.map_err(|source_chain_error| WasmError::Host(source_chain_error.to_string()))?;
+<<<<<<< HEAD
         // fetch the element we just added so we can integrate its DgdOps
+=======
+        // fetch the element we just added so we can integrate its DhtOps
+>>>>>>> master
         let element = source_chain
             .get_element(&header_hash).map_err(|source_chain_error| WasmError::Host(source_chain_error.to_string()))?
             .expect("Element we just put in SourceChain must be gettable");
@@ -66,7 +74,11 @@ pub fn create<'a>(
             workspace.source_chain.elements(),
             &mut workspace.meta_authored,
         )
+<<<<<<< HEAD
         .map_err(|dgd_op_convert_error| WasmError::Host(dgd_op_convert_error.to_string()))?;
+=======
+        .map_err(|dht_op_convert_error| WasmError::Host(dht_op_convert_error.to_string()))?;
+>>>>>>> master
         Ok(header_hash)
     })
 }
@@ -117,7 +129,11 @@ pub mod wasm_test {
     use crate::{conductor::api::ZomeCall, core::ribosome::error::RibosomeError};
     use ::fixt::prelude::*;
     use hdk::prelude::*;
+<<<<<<< HEAD
     use aingle_hash::AnyDgdHash;
+=======
+    use aingle_hash::AnyDhtHash;
+>>>>>>> master
     use aingle_hash::EntryHash;
     use aingle_state::source_chain::ChainInvalidReason;
     use aingle_state::source_chain::SourceChainError;
@@ -407,8 +423,13 @@ pub mod wasm_test {
             &entry_hash.to_string()
         );
 
+<<<<<<< HEAD
         // Now I can convert to AnyDgdHash
         let any_hash: AnyDgdHash = entry_hash.clone().into();
+=======
+        // Now I can convert to AnyDhtHash
+        let any_hash: AnyDhtHash = entry_hash.clone().into();
+>>>>>>> master
         assert_eq!(
             "uhCEkPjYXxw4ztKx3wBsxzm-q3Rfoy1bXWbIQohifqC3_HNle3-SO",
             &entry_hash.to_string()
@@ -417,14 +438,22 @@ pub mod wasm_test {
         // The trip works as expected
         let sb: SerializedBytes = any_hash.try_into().unwrap();
         tracing::debug!(any_sb = ?sb);
+<<<<<<< HEAD
         let any_hash: AnyDgdHash = sb.try_into().unwrap();
+=======
+        let any_hash: AnyDhtHash = sb.try_into().unwrap();
+>>>>>>> master
         assert_eq!(
             "uhCEkPjYXxw4ztKx3wBsxzm-q3Rfoy1bXWbIQohifqC3_HNle3-SO",
             &any_hash.to_string()
         );
 
         // Converting directly works
+<<<<<<< HEAD
         let any_hash: AnyDgdHash = entry_hash.clone().try_into().unwrap();
+=======
+        let any_hash: AnyDhtHash = entry_hash.clone().try_into().unwrap();
+>>>>>>> master
         assert_eq!(
             "uhCEkPjYXxw4ztKx3wBsxzm-q3Rfoy1bXWbIQohifqC3_HNle3-SO",
             &any_hash.to_string()

@@ -2,7 +2,11 @@
 
 use fallible_iterator::FallibleIterator;
 use aingle_hash::AgentPubKey;
+<<<<<<< HEAD
 use aingle_hash::DgdOpHash;
+=======
+use aingle_hash::DhtOpHash;
+>>>>>>> master
 use aingle_keystore::AgentPubKeyExt;
 use aingle_keystore::KeystoreSender;
 use aingle_lmdb::buffer::BufferedStore;
@@ -12,10 +16,17 @@ use aingle_lmdb::error::DatabaseError;
 use aingle_lmdb::error::DatabaseResult;
 use aingle_lmdb::prelude::Readable;
 use aingle_lmdb::prelude::Writer;
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
 use aingle_zome_types::signature::Signature;
 
 /// The result of a DgdOp Validation.
+=======
+use aingle_serialized_bytes::prelude::*;
+use aingle_zome_types::signature::Signature;
+
+/// The result of a DhtOp Validation.
+>>>>>>> master
 #[derive(
     Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash, serde::Serialize, serde::Deserialize,
 )]
@@ -43,7 +54,11 @@ pub enum ValidationResult {
 )]
 pub struct ValidationReceipt {
     /// the op this validation receipt is for.
+<<<<<<< HEAD
     pub dgd_op_hash: DgdOpHash,
+=======
+    pub dht_op_hash: DhtOpHash,
+>>>>>>> master
 
     /// the result of this validation.
     pub validation_result: ValidationResult,
@@ -86,7 +101,11 @@ pub struct SignedValidationReceipt {
 
 /// The database/buffer for aggregating validation_receipts sent by remote
 /// nodes in charge of storage thereof.
+<<<<<<< HEAD
 pub struct ValidationReceiptsBuf(KvvBufUsed<DgdOpHash, SignedValidationReceipt>);
+=======
+pub struct ValidationReceiptsBuf(KvvBufUsed<DhtOpHash, SignedValidationReceipt>);
+>>>>>>> master
 
 impl ValidationReceiptsBuf {
     /// Constructor given read-only transaction and db ref.
@@ -101,25 +120,41 @@ impl ValidationReceiptsBuf {
     pub fn list_receipts<'r, R: Readable>(
         &'r self,
         r: &'r R,
+<<<<<<< HEAD
         dgd_op_hash: &DgdOpHash,
+=======
+        dht_op_hash: &DhtOpHash,
+>>>>>>> master
     ) -> DatabaseResult<
         impl fallible_iterator::FallibleIterator<
                 Item = SignedValidationReceipt,
                 Error = DatabaseError,
             > + '_,
     > {
+<<<<<<< HEAD
         Ok(fallible_iterator::convert(self.0.get(r, dgd_op_hash)?))
+=======
+        Ok(fallible_iterator::convert(self.0.get(r, dht_op_hash)?))
+>>>>>>> master
     }
 
     /// Get the current valid receipt count for a given hash.
     pub fn count_valid<'r, R: Readable>(
         &'r self,
         r: &'r R,
+<<<<<<< HEAD
         dgd_op_hash: &DgdOpHash,
     ) -> DatabaseResult<usize> {
         let mut count = 0;
 
         let mut iter = self.list_receipts(r, dgd_op_hash)?;
+=======
+        dht_op_hash: &DhtOpHash,
+    ) -> DatabaseResult<usize> {
+        let mut count = 0;
+
+        let mut iter = self.list_receipts(r, dht_op_hash)?;
+>>>>>>> master
         while let Some(v) = iter.next()? {
             if v.receipt.validation_result == ValidationResult::Valid {
                 count += 1;
@@ -131,7 +166,11 @@ impl ValidationReceiptsBuf {
     /// Add this receipt if it isn't already in the database.
     pub fn add_if_unique(&mut self, receipt: SignedValidationReceipt) -> DatabaseResult<()> {
         // The underlying KvvBufUsed manages the uniqueness
+<<<<<<< HEAD
         self.0.insert(receipt.receipt.dgd_op_hash.clone(), receipt);
+=======
+        self.0.insert(receipt.receipt.dht_op_hash.clone(), receipt);
+>>>>>>> master
 
         Ok(())
     }
@@ -155,10 +194,17 @@ mod tests {
     use aingle_keystore::KeystoreSenderExt;
     use aingle_lmdb::env::ReadManager;
     use aingle_lmdb::prelude::*;
+<<<<<<< HEAD
     use aingle_types::test_utils::fake_dgd_op_hash;
 
     async fn fake_vr(
         dgd_op_hash: &DgdOpHash,
+=======
+    use aingle_types::test_utils::fake_dht_op_hash;
+
+    async fn fake_vr(
+        dht_op_hash: &DhtOpHash,
+>>>>>>> master
         keystore: &KeystoreSender,
     ) -> SignedValidationReceipt {
         let agent = keystore
@@ -167,7 +213,11 @@ mod tests {
             .await
             .unwrap();
         let receipt = ValidationReceipt {
+<<<<<<< HEAD
             dgd_op_hash: dgd_op_hash.clone(),
+=======
+            dht_op_hash: dht_op_hash.clone(),
+>>>>>>> master
             validation_result: ValidationResult::Valid,
             validator: agent,
         };
@@ -182,7 +232,11 @@ mod tests {
         let env = test_env.env();
         let keystore = aingle_lmdb::test_utils::test_keystore();
 
+<<<<<<< HEAD
         let test_op_hash = fake_dgd_op_hash(1);
+=======
+        let test_op_hash = fake_dht_op_hash(1);
+>>>>>>> master
         let vr1 = fake_vr(&test_op_hash, &keystore).await;
         let vr2 = fake_vr(&test_op_hash, &keystore).await;
 

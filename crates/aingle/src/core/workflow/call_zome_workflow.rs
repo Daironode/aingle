@@ -54,7 +54,11 @@ pub struct CallZomeWorkflowArgs<Ribosome: RibosomeT + Send, C: CellConductorApiT
     keystore,
     writer,
     args,
+<<<<<<< HEAD
     trigger_produce_dgd_ops
+=======
+    trigger_produce_dht_ops
+>>>>>>> master
 ))]
 pub async fn call_zome_workflow<
     'env,
@@ -66,7 +70,11 @@ pub async fn call_zome_workflow<
     keystore: KeystoreSender,
     writer: OneshotWriter,
     args: CallZomeWorkflowArgs<Ribosome, C>,
+<<<<<<< HEAD
     mut trigger_produce_dgd_ops: TriggerSender,
+=======
+    mut trigger_produce_dht_ops: TriggerSender,
+>>>>>>> master
 ) -> WorkflowResult<ZomeCallResult> {
     let should_write = args.is_root_zome_call;
     let result = call_zome_workflow_inner(workspace_lock.clone(), network, keystore, args).await?;
@@ -80,7 +88,11 @@ pub async fn call_zome_workflow<
         writer.with_writer(|writer| Ok(workspace.flush_to_txn_ref(writer)?))?;
     }
 
+<<<<<<< HEAD
     trigger_produce_dgd_ops.trigger();
+=======
+    trigger_produce_dht_ops.trigger();
+>>>>>>> master
 
     Ok(result)
 }
@@ -443,7 +455,11 @@ pub mod tests {
     // - Check header timestamp is later than previous timestamp
     // - Check entry content matches entry schema
     //   Depending on the type of the commit, validate all possible validations for the
+<<<<<<< HEAD
     //   DGD Op that would be produced by it
+=======
+    //   DHT Op that would be produced by it
+>>>>>>> master
     #[ignore = "TODO: B-01100 Make sure this test is in the right place when SysValidation
     complete so we aren't duplicating the unit test inside sys val."]
     #[tokio::test]

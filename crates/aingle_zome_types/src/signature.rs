@@ -1,6 +1,10 @@
 //! Signature for authenticity of data
 use aingle_hash::AgentPubKey;
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 
 /// Input structure for creating a signature.
 #[derive(Debug, PartialEq, Serialize, Deserialize, SerializedBytes, Clone)]
@@ -22,7 +26,11 @@ impl Sign {
     {
         Ok(Self {
             key,
+<<<<<<< HEAD
             data: aingle_middleware_bytes::encode(&input)?,
+=======
+            data: aingle_serialized_bytes::encode(&input)?,
+>>>>>>> master
         })
     }
 
@@ -124,7 +132,11 @@ impl VerifySignature {
         Ok(Self {
             key,
             signature,
+<<<<<<< HEAD
             data: aingle_middleware_bytes::encode(&data)?,
+=======
+            data: aingle_serialized_bytes::encode(&data)?,
+>>>>>>> master
         })
     }
 

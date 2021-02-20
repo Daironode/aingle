@@ -1,6 +1,10 @@
 use super::CapSecret;
 use aingle_hash::*;
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 
 /// System entry to hold a capability token claim for use as a caller.
 /// Stored by a claimant so they can remember what's necessary to exercise

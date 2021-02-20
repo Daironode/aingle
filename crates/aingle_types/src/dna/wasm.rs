@@ -3,7 +3,11 @@
 //!  - and serialized to json
 use backtrace::Backtrace;
 use aingle_hash::*;
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 use serde::Deserialize;
 use serde::Serialize;
 use std::fmt;

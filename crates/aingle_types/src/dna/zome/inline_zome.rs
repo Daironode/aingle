@@ -5,7 +5,11 @@
 //! having to go through the heavy machinery of wasm compilation
 
 use self::error::InlineZomeResult;
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 use aingle_zome_types::prelude::*;
 use serde::de::DeserializeOwned;
 use std::collections::HashMap;
@@ -118,14 +122,22 @@ impl std::hash::Hash for InlineZome {
 #[cfg(test)]
 mod tests {
     use super::*;
+<<<<<<< HEAD
     use aingle_hash::AnyDgdHash;
+=======
+    use aingle_hash::AnyDhtHash;
+>>>>>>> master
     use aingle_zome_types::prelude::GetOptions;
 
     #[test]
     #[allow(unused_variables, unreachable_code)]
     fn can_create_inline_dna() {
         let zome = InlineZome::new("", vec![]).callback("zome_fn_1", |api, a: ()| {
+<<<<<<< HEAD
             let hash: AnyDgdHash = todo!();
+=======
+            let hash: AnyDhtHash = todo!();
+>>>>>>> master
             Ok(api
                 .get(GetInput::new(hash, GetOptions::default()))
                 .expect("TODO after crate re-org"))

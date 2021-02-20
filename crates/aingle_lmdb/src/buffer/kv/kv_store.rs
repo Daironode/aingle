@@ -40,14 +40,22 @@ where
     fn get<R: Readable>(&self, reader: &R, k: &K) -> DatabaseResult<Option<V>> {
         check_empty_key(k)?;
         match self.get_bytes(reader, k)? {
+<<<<<<< HEAD
             Some(bytes) => Ok(Some(aingle_middleware_bytes::decode(bytes)?)),
+=======
+            Some(bytes) => Ok(Some(aingle_serialized_bytes::decode(bytes)?)),
+>>>>>>> master
             None => Ok(None),
         }
     }
 
     /// Put V into DB as serialized data
     fn put(&self, writer: &mut Writer, k: &K, v: &V) -> DatabaseResult<()> {
+<<<<<<< HEAD
         let buf = aingle_middleware_bytes::encode(v)?;
+=======
+        let buf = aingle_serialized_bytes::encode(v)?;
+>>>>>>> master
         let encoded = rkv::Value::Blob(&buf);
         self.db.put(writer, k, &encoded)?;
         Ok(())

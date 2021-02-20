@@ -7,7 +7,11 @@ pub enum MetaGetStatus<T> {
 
 #[cfg(test)]
 mod tests {
+<<<<<<< HEAD
     use crate::metadata::EntryDgdStatus;
+=======
+    use crate::metadata::EntryDhtStatus;
+>>>>>>> master
     use crate::metadata::MetadataBuf;
     use crate::metadata::MetadataBufT;
     use crate::metadata::TimedHeaderHash;
@@ -548,7 +552,11 @@ mod tests {
     }
 
     #[tokio::test(threaded_scheduler)]
+<<<<<<< HEAD
     async fn test_entry_dgd_status() {
+=======
+    async fn test_entry_dht_status() {
+>>>>>>> master
         let test_env = test_cell_env();
         let arc = test_env.env();
         let env = arc.guard();
@@ -581,9 +589,15 @@ mod tests {
         )
         .await;
         let status = meta_buf
+<<<<<<< HEAD
             .get_dgd_status(&reader, &entry_hash.clone().into())
             .unwrap();
         assert_eq!(status, EntryDgdStatus::Live);
+=======
+            .get_dht_status(&reader, &entry_hash.clone().into())
+            .unwrap();
+        assert_eq!(status, EntryDhtStatus::Live);
+>>>>>>> master
         update_dbs(
             &entry_creates[..0],
             &entry_deletes[..],
@@ -594,9 +608,15 @@ mod tests {
         )
         .await;
         let status = meta_buf
+<<<<<<< HEAD
             .get_dgd_status(&reader, &entry_hash.clone().into())
             .unwrap();
         assert_eq!(status, EntryDgdStatus::Dead);
+=======
+            .get_dht_status(&reader, &entry_hash.clone().into())
+            .unwrap();
+        assert_eq!(status, EntryDhtStatus::Dead);
+>>>>>>> master
 
         // Same headers don't reanimate entry
         update_dbs(
@@ -609,9 +629,15 @@ mod tests {
         )
         .await;
         let status = meta_buf
+<<<<<<< HEAD
             .get_dgd_status(&reader, &entry_hash.clone().into())
             .unwrap();
         assert_eq!(status, EntryDgdStatus::Dead);
+=======
+            .get_dht_status(&reader, &entry_hash.clone().into())
+            .unwrap();
+        assert_eq!(status, EntryDhtStatus::Dead);
+>>>>>>> master
 
         // Check create bring entry back to life
         create_data(
@@ -635,9 +661,15 @@ mod tests {
         )
         .await;
         let status = meta_buf
+<<<<<<< HEAD
             .get_dgd_status(&reader, &entry_hash.clone().into())
             .unwrap();
         assert_eq!(status, EntryDgdStatus::Live);
+=======
+            .get_dht_status(&reader, &entry_hash.clone().into())
+            .unwrap();
+        assert_eq!(status, EntryDhtStatus::Live);
+>>>>>>> master
 
         // New deletes should be dead
         update_dbs(
@@ -650,9 +682,15 @@ mod tests {
         )
         .await;
         let status = meta_buf
+<<<<<<< HEAD
             .get_dgd_status(&reader, &entry_hash.clone().into())
             .unwrap();
         assert_eq!(status, EntryDgdStatus::Dead);
+=======
+            .get_dht_status(&reader, &entry_hash.clone().into())
+            .unwrap();
+        assert_eq!(status, EntryDhtStatus::Dead);
+>>>>>>> master
 
         // Check update bring entry back to life
         update_dbs(
@@ -665,9 +703,15 @@ mod tests {
         )
         .await;
         let status = meta_buf
+<<<<<<< HEAD
             .get_dgd_status(&reader, &entry_hash.clone().into())
             .unwrap();
         assert_eq!(status, EntryDgdStatus::Live);
+=======
+            .get_dht_status(&reader, &entry_hash.clone().into())
+            .unwrap();
+        assert_eq!(status, EntryDhtStatus::Live);
+>>>>>>> master
 
         // Check deleting update kills entry
         update_dbs(
@@ -680,6 +724,7 @@ mod tests {
         )
         .await;
         let status = meta_buf
+<<<<<<< HEAD
             .get_dgd_status(&reader, &entry_hash.clone().into())
             .unwrap();
         assert_eq!(status, EntryDgdStatus::Dead);
@@ -687,6 +732,15 @@ mod tests {
 
     #[tokio::test(threaded_scheduler)]
     async fn test_entry_dgd_status_one_less() {
+=======
+            .get_dht_status(&reader, &entry_hash.clone().into())
+            .unwrap();
+        assert_eq!(status, EntryDhtStatus::Dead);
+    }
+
+    #[tokio::test(threaded_scheduler)]
+    async fn test_entry_dht_status_one_less() {
+>>>>>>> master
         let test_env = test_cell_env();
         let arc = test_env.env();
         let env = arc.guard();
@@ -719,9 +773,15 @@ mod tests {
         )
         .await;
         let status = meta_buf
+<<<<<<< HEAD
             .get_dgd_status(&reader, &entry_hash.clone().into())
             .unwrap();
         assert_eq!(status, EntryDgdStatus::Live);
+=======
+            .get_dht_status(&reader, &entry_hash.clone().into())
+            .unwrap();
+        assert_eq!(status, EntryDhtStatus::Live);
+>>>>>>> master
         update_dbs(
             &entry_creates[..0],
             &entry_deletes[..9],
@@ -732,9 +792,15 @@ mod tests {
         )
         .await;
         let status = meta_buf
+<<<<<<< HEAD
             .get_dgd_status(&reader, &entry_hash.clone().into())
             .unwrap();
         assert_eq!(status, EntryDgdStatus::Live);
+=======
+            .get_dht_status(&reader, &entry_hash.clone().into())
+            .unwrap();
+        assert_eq!(status, EntryDhtStatus::Live);
+>>>>>>> master
         update_dbs(
             &entry_creates[..0],
             &entry_deletes[9..10],
@@ -745,8 +811,14 @@ mod tests {
         )
         .await;
         let status = meta_buf
+<<<<<<< HEAD
             .get_dgd_status(&reader, &entry_hash.clone().into())
             .unwrap();
         assert_eq!(status, EntryDgdStatus::Dead);
+=======
+            .get_dht_status(&reader, &entry_hash.clone().into())
+            .unwrap();
+        assert_eq!(status, EntryDhtStatus::Dead);
+>>>>>>> master
     }
 }

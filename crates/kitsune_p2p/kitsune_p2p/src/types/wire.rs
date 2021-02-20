@@ -4,7 +4,11 @@ use crate::agent_store::AgentInfoSigned;
 use crate::types::gossip::{OpConsistency, OpCount};
 use crate::types::*;
 use derive_more::*;
+<<<<<<< HEAD
 use kitsune_p2p_types::dgd_arc::DgdArc;
+=======
+use kitsune_p2p_types::dht_arc::DhtArc;
+>>>>>>> master
 use std::sync::Arc;
 
 /// Type used for content data of wire messages.
@@ -46,12 +50,20 @@ kitsune_p2p_types::write_codec_enum! {
         NotifyResp(0x21) {
         },
 
+<<<<<<< HEAD
         /// Fetch DgdOp and Agent Hashes with Constraints
+=======
+        /// Fetch DhtOp and Agent Hashes with Constraints
+>>>>>>> master
         FetchOpHashes(0x31) {
             space.0: Arc<KitsuneSpace>,
             from_agent.1: Arc<KitsuneAgent>,
             to_agent.2: Arc<KitsuneAgent>,
+<<<<<<< HEAD
             dgd_arc.3: DgdArc,
+=======
+            dht_arc.3: DhtArc,
+>>>>>>> master
             since_utc_epoch_s.4: i64,
             until_utc_epoch_s.5: i64,
             last_count.6: OpCount,
@@ -63,7 +75,11 @@ kitsune_p2p_types::write_codec_enum! {
             peer_hashes.1: Vec<(Arc<KitsuneAgent>, u64)>,
         },
 
+<<<<<<< HEAD
         /// Fetch DgdOp data and AgentInfo for hashes lists
+=======
+        /// Fetch DhtOp data and AgentInfo for hashes lists
+>>>>>>> master
         FetchOpData(0x33) {
             space.0: Arc<KitsuneSpace>,
             from_agent.1: Arc<KitsuneAgent>,
@@ -83,7 +99,11 @@ kitsune_p2p_types::write_codec_enum! {
             space.0: Arc<KitsuneSpace>,
             to_agent.1: Arc<KitsuneAgent>,
             by_agent.2: Option<Arc<KitsuneAgent>>,
+<<<<<<< HEAD
             by_basis_arc.3: Option<(Arc<KitsuneBasis>, DgdArc)>,
+=======
+            by_basis_arc.3: Option<(Arc<KitsuneBasis>, DhtArc)>,
+>>>>>>> master
         },
 
         /// Response type for agent info query
@@ -91,7 +111,11 @@ kitsune_p2p_types::write_codec_enum! {
             agent_infos.0: Vec<AgentInfoSigned>,
         },
 
+<<<<<<< HEAD
         /// Fetch DgdOp data and AgentInfo for hashes lists
+=======
+        /// Fetch DhtOp data and AgentInfo for hashes lists
+>>>>>>> master
         Gossip(0x50) {
             space.0: Arc<KitsuneSpace>,
             from_agent.1: Arc<KitsuneAgent>,

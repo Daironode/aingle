@@ -3,10 +3,17 @@
 
 use crate::conductor::api::error::ConductorApiError;
 use crate::conductor::interface::error::InterfaceError;
+<<<<<<< HEAD
 use crate::core::workflow::produce_Dgd_ops_workflow::Dgd_op_light::error::DgdOpConvertError;
 use aingle_hash::AnyDgdHash;
 use aingle_cascade::error::CascadeError;
 use aingle_middleware_bytes::prelude::SerializedBytesError;
+=======
+use crate::core::workflow::produce_dht_ops_workflow::dht_op_light::error::DhtOpConvertError;
+use aingle_hash::AnyDhtHash;
+use aingle_cascade::error::CascadeError;
+use aingle_serialized_bytes::prelude::SerializedBytesError;
+>>>>>>> master
 use aingle_state::source_chain::SourceChainError;
 use aingle_types::prelude::*;
 use aingle_wasmer_host::prelude::WasmError;
@@ -45,8 +52,13 @@ pub enum RibosomeError {
     /// for example a remove link ribosome call needs to find the add link in order to infer the
     /// correct base and this dependent relationship exists before even subconscious validation
     /// kicks in
+<<<<<<< HEAD
     #[error("A mandatory element is missing, Dgd hash: {0}")]
     ElementDeps(AnyDgdHash),
+=======
+    #[error("A mandatory element is missing, dht hash: {0}")]
+    ElementDeps(AnyDhtHash),
+>>>>>>> master
 
     /// ident
     #[error("Unspecified ring error")]
@@ -94,7 +106,11 @@ pub enum RibosomeError {
 
     /// ident
     #[error(transparent)]
+<<<<<<< HEAD
     DgdOpConvertError(#[from] Box<DgdOpConvertError>),
+=======
+    DhtOpConvertError(#[from] Box<DhtOpConvertError>),
+>>>>>>> master
 
     /// ident
     #[error("xsalsa20poly1305 error {0}")]

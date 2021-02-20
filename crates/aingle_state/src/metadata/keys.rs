@@ -55,7 +55,11 @@ pub enum LinkMetaKey<'a> {
     Full(&'a EntryHash, ZomeId, &'a LinkTag, &'a HeaderHash),
 }
 
+<<<<<<< HEAD
 pub(super) type SysMetaKey = AnyDgdHash;
+=======
+pub(super) type SysMetaKey = AnyDhtHash;
+>>>>>>> master
 
 /// Values of [Header]s stored by the sys meta db
 #[derive(Debug, Hash, PartialEq, Eq, Ord, PartialOrd, Clone, Serialize, Deserialize)]

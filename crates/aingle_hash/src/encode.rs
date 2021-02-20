@@ -61,7 +61,11 @@ pub fn aingle_hash_decode(prefix: &[u8], s: &str) -> Result<Vec<u8>, AIngleHashE
             actual_prefix,
         ));
     }
+<<<<<<< HEAD
     let loc_bytes = aingle_dgd_location_bytes(
+=======
+    let loc_bytes = aingle_dht_location_bytes(
+>>>>>>> master
         &s[AINGLE_HASH_PREFIX_LEN..AINGLE_HASH_PREFIX_LEN + AINGLE_HASH_CORE_LEN],
     );
     let loc_bytes: &[u8] = &loc_bytes;
@@ -72,8 +76,13 @@ pub fn aingle_hash_decode(prefix: &[u8], s: &str) -> Result<Vec<u8>, AIngleHashE
     Ok(s.to_vec())
 }
 
+<<<<<<< HEAD
 /// internal compute the aingle dgd location u32
 pub fn aingle_dgd_location_bytes(data: &[u8]) -> Vec<u8> {
+=======
+/// internal compute the aingle dht location u32
+pub fn aingle_dht_location_bytes(data: &[u8]) -> Vec<u8> {
+>>>>>>> master
     // Assert the data size is relatively small so we are
     // comfortable executing this synchronously / blocking tokio thread.
     assert_eq!(32, data.len(), "only 32 byte hashes supported");

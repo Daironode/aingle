@@ -1,5 +1,9 @@
 use super::*;
+<<<<<<< HEAD
 use aingle_hash::AnyDgdHash;
+=======
+use aingle_hash::AnyDhtHash;
+>>>>>>> master
 use std::marker::PhantomData;
 /// Prefix for integrated database
 const INTEGRATED_PREFIX: u8 = 0x0;
@@ -187,8 +191,13 @@ impl<P: PrefixType> PrefixBytesKey<P> {
     }
 }
 
+<<<<<<< HEAD
 impl<T: PrefixType> From<AnyDgdHash> for PrefixBytesKey<T> {
     fn from(h: AnyDgdHash) -> Self {
+=======
+impl<T: PrefixType> From<AnyDhtHash> for PrefixBytesKey<T> {
+    fn from(h: AnyDhtHash) -> Self {
+>>>>>>> master
         Self::new(h.into_iter())
     }
 }

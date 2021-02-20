@@ -6,7 +6,11 @@ use crate::conductor::entry_def_store::error::EntryDefStoreError;
 use crate::core::validation::OutcomeOrError;
 use crate::core::workflow::error::WorkflowError;
 use crate::from_sub_error;
+<<<<<<< HEAD
 use aingle_hash::AnyDgdHash;
+=======
+use aingle_hash::AnyDhtHash;
+>>>>>>> master
 use aingle_hash::HeaderHash;
 use aingle_cascade::error::CascadeError;
 use aingle_keystore::KeystoreError;
@@ -88,8 +92,13 @@ impl<E> TryFrom<OutcomeOrError<ValidationOutcome, E>> for ValidationOutcome {
 pub enum ValidationOutcome {
     #[error("The element with signature {0:?} and header {1:?} was found to be counterfeit")]
     Counterfeit(Signature, Header),
+<<<<<<< HEAD
     #[error("The dependency {0:?} was not found on the DGD")]
     DepMissingFromDgd(AnyDgdHash),
+=======
+    #[error("The dependency {0:?} was not found on the DHT")]
+    DepMissingFromDht(AnyDhtHash),
+>>>>>>> master
     #[error("The app entry type {0:?} entry def id was out of range")]
     EntryDefId(AppEntryType),
     #[error("The entry has a different hash to the header's entry hash")]
@@ -107,7 +116,11 @@ pub enum ValidationOutcome {
     #[error("The header was expected to be a new entry header but was a {0:?}")]
     NotNewEntry(Header),
     #[error("The dependency {0:?} is not held")]
+<<<<<<< HEAD
     NotHoldingDep(AnyDgdHash),
+=======
+    NotHoldingDep(AnyDhtHash),
+>>>>>>> master
     #[error(transparent)]
     PrevHeaderError(#[from] PrevHeaderError),
     #[error("StoreEntry should not be gossiped for private entries")]
@@ -121,11 +134,19 @@ pub enum ValidationOutcome {
 }
 
 impl ValidationOutcome {
+<<<<<<< HEAD
     pub fn not_holding<I: Into<AnyDgdHash> + Clone>(h: &I) -> Self {
         Self::NotHoldingDep(h.clone().into())
     }
     pub fn not_found<I: Into<AnyDgdHash> + Clone>(h: &I) -> Self {
         Self::DepMissingFromDgd(h.clone().into())
+=======
+    pub fn not_holding<I: Into<AnyDhtHash> + Clone>(h: &I) -> Self {
+        Self::NotHoldingDep(h.clone().into())
+    }
+    pub fn not_found<I: Into<AnyDhtHash> + Clone>(h: &I) -> Self {
+        Self::DepMissingFromDht(h.clone().into())
+>>>>>>> master
     }
 
     /// Convert into a OutcomeOrError<ValidationOutcome, SysValidationError>

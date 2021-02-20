@@ -7,7 +7,11 @@
 //! for tests.
 
 use derive_more::Constructor;
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 use aingle_zome_types::zome::ZomeName;
 use std::sync::Arc;
 

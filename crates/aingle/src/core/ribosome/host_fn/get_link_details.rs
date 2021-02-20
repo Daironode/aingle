@@ -27,7 +27,11 @@ pub fn get_link_details<'a>(
             None => LinkMetaKey::BaseZome(&base_address, zome_id),
         };
 
+<<<<<<< HEAD
         // Get the links from the dgd
+=======
+        // Get the links from the dht
+>>>>>>> master
         let link_details = LinkDetails::from(
             call_context
                 .host_access

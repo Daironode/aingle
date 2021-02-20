@@ -33,7 +33,11 @@ use crate::prelude::*;
 ///
 /// Generally links and CRUDs _do not interact_ beyond the fact that links need entry hashes to
 /// reference for the base and target to already exist due to a prior create or update.
+<<<<<<< HEAD
 /// The entry value only needs to exist on the DGD for the link to validate, it doesn't need to be
+=======
+/// The entry value only needs to exist on the DHT for the link to validate, it doesn't need to be
+>>>>>>> master
 /// live and can have any combination of valid/invalid crud headers.
 /// i.e. if you use link_entries! to create relationships between two entries, then update_entry
 /// on the base, the links will still only be visible to get_link(s_details)! against the original

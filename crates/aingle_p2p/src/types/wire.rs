@@ -2,6 +2,7 @@ use crate::*;
 use aingle_zome_types::zome::FunctionName;
 
 #[derive(Debug, serde::Serialize, serde::Deserialize, SerializedBytes)]
+<<<<<<< HEAD
 pub(crate) struct WireDgdOpData {
     pub from_agent: aingle_hash::AgentPubKey,
     pub dgd_hash: aingle_hash::AnyDgdHash,
@@ -9,6 +10,15 @@ pub(crate) struct WireDgdOpData {
 }
 
 impl WireDgdOpData {
+=======
+pub(crate) struct WireDhtOpData {
+    pub from_agent: aingle_hash::AgentPubKey,
+    pub dht_hash: aingle_hash::AnyDhtHash,
+    pub op_data: aingle_types::dht_op::DhtOp,
+}
+
+impl WireDhtOpData {
+>>>>>>> master
     pub fn encode(self) -> Result<Vec<u8>, SerializedBytesError> {
         Ok(UnsafeBytes::from(SerializedBytes::try_from(self)?).into())
     }
@@ -31,19 +41,32 @@ pub(crate) enum WireMessage {
     },
     Publish {
         request_validation_receipt: bool,
+<<<<<<< HEAD
         dgd_hash: aingle_hash::AnyDgdHash,
         ops: Vec<(aingle_hash::DgdOpHash, aingle_types::dgd_op::DgdOp)>,
+=======
+        dht_hash: aingle_hash::AnyDhtHash,
+        ops: Vec<(aingle_hash::DhtOpHash, aingle_types::dht_op::DhtOp)>,
+>>>>>>> master
     },
     ValidationReceipt {
         #[serde(with = "serde_bytes")]
         receipt: Vec<u8>,
     },
     Get {
+<<<<<<< HEAD
         dgd_hash: aingle_hash::AnyDgdHash,
         options: event::GetOptions,
     },
     GetMeta {
         dgd_hash: aingle_hash::AnyDgdHash,
+=======
+        dht_hash: aingle_hash::AnyDhtHash,
+        options: event::GetOptions,
+    },
+    GetMeta {
+        dht_hash: aingle_hash::AnyDhtHash,
+>>>>>>> master
         options: event::GetMetaOptions,
     },
     GetLinks {
@@ -62,11 +85,19 @@ pub(crate) enum WireMessage {
 
 impl WireMessage {
     pub fn encode(&self) -> Result<Vec<u8>, SerializedBytesError> {
+<<<<<<< HEAD
         aingle_middleware_bytes::encode(&self)
     }
 
     pub fn decode(data: &[u8]) -> Result<Self, SerializedBytesError> {
         aingle_middleware_bytes::decode(&data)
+=======
+        aingle_serialized_bytes::encode(&self)
+    }
+
+    pub fn decode(data: &[u8]) -> Result<Self, SerializedBytesError> {
+        aingle_serialized_bytes::decode(&data)
+>>>>>>> master
     }
 
     pub fn call_remote(
@@ -85,12 +116,21 @@ impl WireMessage {
 
     pub fn publish(
         request_validation_receipt: bool,
+<<<<<<< HEAD
         dgd_hash: aingle_hash::AnyDgdHash,
         ops: Vec<(aingle_hash::DgdOpHash, aingle_types::dgd_op::DgdOp)>,
     ) -> WireMessage {
         Self::Publish {
             request_validation_receipt,
             dgd_hash,
+=======
+        dht_hash: aingle_hash::AnyDhtHash,
+        ops: Vec<(aingle_hash::DhtOpHash, aingle_types::dht_op::DhtOp)>,
+    ) -> WireMessage {
+        Self::Publish {
+            request_validation_receipt,
+            dht_hash,
+>>>>>>> master
             ops,
         }
     }
@@ -101,6 +141,7 @@ impl WireMessage {
         }
     }
 
+<<<<<<< HEAD
     pub fn get(dgd_hash: aingle_hash::AnyDgdHash, options: event::GetOptions) -> WireMessage {
         Self::Get { dgd_hash, options }
     }
@@ -110,6 +151,17 @@ impl WireMessage {
         options: event::GetMetaOptions,
     ) -> WireMessage {
         Self::GetMeta { dgd_hash, options }
+=======
+    pub fn get(dht_hash: aingle_hash::AnyDhtHash, options: event::GetOptions) -> WireMessage {
+        Self::Get { dht_hash, options }
+    }
+
+    pub fn get_meta(
+        dht_hash: aingle_hash::AnyDhtHash,
+        options: event::GetMetaOptions,
+    ) -> WireMessage {
+        Self::GetMeta { dht_hash, options }
+>>>>>>> master
     }
 
     pub fn get_links(link_key: WireLinkMetaKey, options: event::GetLinksOptions) -> WireMessage {

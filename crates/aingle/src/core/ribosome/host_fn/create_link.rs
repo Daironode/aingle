@@ -1,6 +1,10 @@
 use crate::core::ribosome::CallContext;
 use crate::core::ribosome::RibosomeT;
+<<<<<<< HEAD
 use crate::core::workflow::integrate_dgd_ops_workflow::integrate_to_authored;
+=======
+use crate::core::workflow::integrate_dht_ops_workflow::integrate_to_authored;
+>>>>>>> master
 use crate::core::workflow::CallZomeWorkspace;
 use aingle_wasmer_host::prelude::WasmError;
 use crate::core::ribosome::RibosomeError;

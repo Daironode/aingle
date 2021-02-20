@@ -10,7 +10,11 @@ use aingle_hash::EntryHash;
 use aingle_hash::HashableContent;
 use aingle_hash::HeaderHash;
 use aingle_hash::AIngleHashed;
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 
 pub mod builder;
 pub mod conversions;
@@ -295,7 +299,11 @@ pub struct DeleteLink {
     pub header_seq: u32,
     pub prev_header: HeaderHash,
 
+<<<<<<< HEAD
     /// this is redundant with the `CreateLink` header but needs to be included to facilitate DGD ops
+=======
+    /// this is redundant with the `CreateLink` header but needs to be included to facilitate DHT ops
+>>>>>>> master
     /// this is NOT exposed to wasm developers and is validated by the subconscious to ensure that
     /// it always matches the `base_address` of the `CreateLink`
     pub base_address: EntryHash,
@@ -369,7 +377,11 @@ pub struct Update {
 /// Declare that a previously published Header should be nullified and
 /// considered deleted.
 ///
+<<<<<<< HEAD
 /// Via the associated [DgdOp], this also has an effect on Entries: namely,
+=======
+/// Via the associated [DhtOp], this also has an effect on Entries: namely,
+>>>>>>> master
 /// that a previously published Entry will become inaccessible if all of its
 /// Headers are marked deleted.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, SerializedBytes)]

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 //! Definitions related to the KitsuneP2p peer-to-peer / dgd communications actor.
+=======
+//! Definitions related to the KitsuneP2p peer-to-peer / dht communications actor.
+>>>>>>> master
 
 use std::sync::Arc;
 use url2::Url2;

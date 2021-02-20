@@ -34,7 +34,11 @@ pub enum DbName {
     MetaVaultSys,
     /// Vault database: Kv store of links
     MetaVaultLinks,
+<<<<<<< HEAD
     /// Vault database: Kv store of entry dgd status
+=======
+    /// Vault database: Kv store of entry dht status
+>>>>>>> master
     MetaVaultMisc,
     /// int KV store storing the sequence of committed headers,
     /// most notably allowing access to the chain head
@@ -47,7 +51,11 @@ pub enum DbName {
     MetaCacheSys,
     /// Cache database: Kv store of links
     MetaCacheLinks,
+<<<<<<< HEAD
     /// Vault database: Kv store of entry dgd status
+=======
+    /// Vault database: Kv store of entry dht status
+>>>>>>> master
     MetaCacheStatus,
     /// database which stores a single key-value pair, encoding the
     /// mutable state for the entire Conductor
@@ -58,6 +66,7 @@ pub enum DbName {
     DnaDef,
     /// database to store the [EntryDef] Kvv store
     EntryDef,
+<<<<<<< HEAD
     /// Authored [DgdOp]s KV store
     AuthoredDgdOps,
     /// Integrated [DgdOp]s KV store
@@ -65,6 +74,15 @@ pub enum DbName {
     /// Integration Queue of [DgdOp]s KV store where key is [DgdOpHash]
     IntegrationLimbo,
     /// Place for [DgdOp]s waiting to be validated to hang out. KV store where key is a [DgdOpHash]
+=======
+    /// Authored [DhtOp]s KV store
+    AuthoredDhtOps,
+    /// Integrated [DhtOp]s KV store
+    IntegratedDhtOps,
+    /// Integration Queue of [DhtOp]s KV store where key is [DhtOpHash]
+    IntegrationLimbo,
+    /// Place for [DhtOp]s waiting to be validated to hang out. KV store where key is a [DhtOpHash]
+>>>>>>> master
     ValidationLimbo,
     /// KVV store to accumulate validation receipts for a published EntryHash
     ValidationReceipts,
@@ -94,8 +112,13 @@ impl DbName {
             Wasm => Single,
             DnaDef => Single,
             EntryDef => Single,
+<<<<<<< HEAD
             AuthoredDgdOps => Single,
             IntegratedDgdOps => Single,
+=======
+            AuthoredDhtOps => Single,
+            IntegratedDhtOps => Single,
+>>>>>>> master
             IntegrationLimbo => Single,
             ValidationLimbo => Single,
             ValidationReceipts => Multi,
@@ -160,10 +183,17 @@ lazy_static! {
     pub static ref DNA_DEF: DbKey<SingleStore> = DbKey::new(DbName::DnaDef);
     /// The key to access the EntryDef database
     pub static ref ENTRY_DEF: DbKey<SingleStore> = DbKey::new(DbName::EntryDef);
+<<<<<<< HEAD
     /// The key to access the AuthoredDgdOps database
     pub static ref AUTHORED_DGD_OPS: DbKey<SingleStore> = DbKey::new(DbName::AuthoredDgdOps);
     /// The key to access the IntegratedDgdOps database
     pub static ref INTEGRATED_DGD_OPS: DbKey<SingleStore> = DbKey::new(DbName::IntegratedDgdOps);
+=======
+    /// The key to access the AuthoredDhtOps database
+    pub static ref AUTHORED_DHT_OPS: DbKey<SingleStore> = DbKey::new(DbName::AuthoredDhtOps);
+    /// The key to access the IntegratedDhtOps database
+    pub static ref INTEGRATED_DHT_OPS: DbKey<SingleStore> = DbKey::new(DbName::IntegratedDhtOps);
+>>>>>>> master
     /// The key to access the IntegrationLimbo database
     pub static ref INTEGRATION_LIMBO: DbKey<SingleStore> = DbKey::new(DbName::IntegrationLimbo);
     /// The key to access the IntegrationLimbo database
@@ -225,8 +255,13 @@ fn register_databases(env: &Rkv, kind: &EnvironmentKind, um: &mut DbMap) -> Data
             register_db(env, um, &*CACHE_SYSTEM_META)?;
             register_db(env, um, &*CACHE_LINKS_META)?;
             register_db(env, um, &*CACHE_STATUS_META)?;
+<<<<<<< HEAD
             register_db(env, um, &*AUTHORED_DGD_OPS)?;
             register_db(env, um, &*INTEGRATED_DGD_OPS)?;
+=======
+            register_db(env, um, &*AUTHORED_DHT_OPS)?;
+            register_db(env, um, &*INTEGRATED_DHT_OPS)?;
+>>>>>>> master
             register_db(env, um, &*INTEGRATION_LIMBO)?;
             register_db(env, um, &*VALIDATION_LIMBO)?;
             register_db(env, um, &*VALIDATION_RECEIPTS)?;

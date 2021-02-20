@@ -10,7 +10,11 @@ use std::convert::TryInto;
 // hCEk 4228 <Buffer 84 21 24> * ENTRY
 // hCIk 4356 <Buffer 84 22 24> * NET_ID
 // hCMk 4484 <Buffer 84 23 24>
+<<<<<<< HEAD
 // hCQk 4612 <Buffer 84 24 24> * DGDOP
+=======
+// hCQk 4612 <Buffer 84 24 24> * DHTOP
+>>>>>>> master
 // hCUk 4740 <Buffer 84 25 24>
 // hCYk 4868 <Buffer 84 26 24>
 // hCck 4996 <Buffer 84 27 24>
@@ -24,7 +28,11 @@ use std::convert::TryInto;
 // hC8k 6020 <Buffer 84 2f 24>
 pub(crate) const AGENT_PREFIX: &[u8] = &[0x84, 0x20, 0x24]; // uhCAk [132, 32, 36]
 pub(crate) const ENTRY_PREFIX: &[u8] = &[0x84, 0x21, 0x24]; // uhCEk [132, 33, 36]
+<<<<<<< HEAD
 pub(crate) const DGDOP_PREFIX: &[u8] = &[0x84, 0x24, 0x24]; // uhCQk [132, 36, 36]
+=======
+pub(crate) const DHTOP_PREFIX: &[u8] = &[0x84, 0x24, 0x24]; // uhCQk [132, 36, 36]
+>>>>>>> master
 pub(crate) const DNA_PREFIX: &[u8] = &[0x84, 0x2d, 0x24]; // uhC0k [132, 45, 36]
 pub(crate) const NET_ID_PREFIX: &[u8] = &[0x84, 0x22, 0x24]; // uhCIk [132, 34, 36]
 pub(crate) const HEADER_PREFIX: &[u8] = &[0x84, 0x29, 0x24]; // uhCkk [132, 41, 36]
@@ -32,7 +40,11 @@ pub(crate) const WASM_PREFIX: &[u8] = &[0x84, 0x2a, 0x24]; // uhCok [132, 42, 36
 
 /// A PrimitiveHashType is one with a multihash prefix.
 /// In contrast, a non-primitive hash type could be one of several primitive
+<<<<<<< HEAD
 /// types, e.g. an `AnyDgdHash` can represent one of three primitive types.
+=======
+/// types, e.g. an `AnyDhtHash` can represent one of three primitive types.
+>>>>>>> master
 pub trait PrimitiveHashType: HashType {
     /// Constructor
     fn new() -> Self;
@@ -139,12 +151,20 @@ macro_rules! primitive_hash_type {
 primitive_hash_type!(Agent, AgentPubKey, AgentVisitor, AGENT_PREFIX);
 primitive_hash_type!(Entry, EntryHash, EntryVisitor, ENTRY_PREFIX);
 primitive_hash_type!(Dna, DnaHash, DnaVisitor, DNA_PREFIX);
+<<<<<<< HEAD
 primitive_hash_type!(DgdOp, DgdOpHash, DgdOpVisitor, DgdOP_PREFIX);
+=======
+primitive_hash_type!(DhtOp, DhtOpHash, DhtOpVisitor, DHTOP_PREFIX);
+>>>>>>> master
 primitive_hash_type!(Header, HeaderHash, HeaderVisitor, HEADER_PREFIX);
 primitive_hash_type!(NetId, NetIdHash, NetIdVisitor, NET_ID_PREFIX);
 primitive_hash_type!(Wasm, WasmHash, WasmVisitor, WASM_PREFIX);
 
+<<<<<<< HEAD
 impl HashTypeSync for DgdOp {}
+=======
+impl HashTypeSync for DhtOp {}
+>>>>>>> master
 impl HashTypeSync for Entry {}
 impl HashTypeSync for Header {}
 

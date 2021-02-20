@@ -87,8 +87,13 @@
 
 use futures::future::BoxFuture;
 use futures::future::FutureExt;
+<<<<<<< HEAD
 use aingle_middleware_bytes::SerializedBytes;
 use aingle_middleware_bytes::UnsafeBytes;
+=======
+use aingle_serialized_bytes::SerializedBytes;
+use aingle_serialized_bytes::UnsafeBytes;
+>>>>>>> master
 use std::convert::TryInto;
 use std::io::Error;
 use std::io::ErrorKind;

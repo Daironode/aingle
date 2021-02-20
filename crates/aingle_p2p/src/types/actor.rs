@@ -77,7 +77,11 @@ impl From<aingle_zome_types::entry::GetOptions> for GetOptions {
     }
 }
 
+<<<<<<< HEAD
 /// Get metadata from the DGD.
+=======
+/// Get metadata from the DHT.
+>>>>>>> master
 /// Fields tagged with `[Network]` are network-level controls.
 /// Fields tagged with `[Remote]` are controls that will be forwarded to the
 /// remote agent processing this `GetLinks` request.
@@ -125,7 +129,11 @@ impl Default for GetMetaOptions {
 }
 
 #[derive(Debug, Clone)]
+<<<<<<< HEAD
 /// Get links from the DGD.
+=======
+/// Get links from the DHT.
+>>>>>>> master
 /// Fields tagged with `[Network]` are network-level controls.
 /// Fields tagged with `[Remote]` are controls that will be forwarded to the
 /// remote agent processing this `GetLinks` request.
@@ -145,7 +153,11 @@ impl Default for GetLinksOptions {
 }
 
 #[derive(Debug, Clone)]
+<<<<<<< HEAD
 /// Get agent activity from the DGD.
+=======
+/// Get agent activity from the DHT.
+>>>>>>> master
 /// Fields tagged with `[Network]` are network-level controls.
 /// Fields tagged with `[Remote]` are controls that will be forwarded to the
 /// remote agent processing this `GetLinks` request.
@@ -157,7 +169,11 @@ pub struct GetActivityOptions {
     /// not a timeout error.
     pub timeout_ms: Option<u64>,
     /// Number of times to retry getting elements in parallel.
+<<<<<<< HEAD
     /// For a small dgd a large parallel get can overwhelm a single
+=======
+    /// For a small dht a large parallel get can overwhelm a single
+>>>>>>> master
     /// agent and it can be worth retrying the elements that didn't
     /// get found.
     pub retry_gets: u8,
@@ -213,14 +229,20 @@ ghost_actor::ghost_chan! {
             dna_hash: DnaHash,
             from_agent: AgentPubKey,
             request_validation_receipt: bool,
+<<<<<<< HEAD
             dgd_hash: aingle_hash::AnyDgdHash,
             ops: Vec<(aingle_hash::DgdOpHash, aingle_types::dgd_op::DgdOp)>,
+=======
+            dht_hash: aingle_hash::AnyDhtHash,
+            ops: Vec<(aingle_hash::DhtOpHash, aingle_types::dht_op::DhtOp)>,
+>>>>>>> master
             timeout_ms: Option<u64>,
         ) -> ();
 
         /// Request a validation package.
         fn get_validation_package(input: GetValidationPackage) -> ValidationPackageResponse;
 
+<<<<<<< HEAD
         /// Get an entry from the DGD.
         fn get(
             dna_hash: DnaHash,
@@ -238,6 +260,25 @@ ghost_actor::ghost_chan! {
         ) -> Vec<MetadataSet>;
 
         /// Get links from the DGD.
+=======
+        /// Get an entry from the DHT.
+        fn get(
+            dna_hash: DnaHash,
+            from_agent: AgentPubKey,
+            dht_hash: aingle_hash::AnyDhtHash,
+            options: GetOptions,
+        ) -> Vec<GetElementResponse>;
+
+        /// Get metadata from the DHT.
+        fn get_meta(
+            dna_hash: DnaHash,
+            from_agent: AgentPubKey,
+            dht_hash: aingle_hash::AnyDhtHash,
+            options: GetMetaOptions,
+        ) -> Vec<MetadataSet>;
+
+        /// Get links from the DHT.
+>>>>>>> master
         fn get_links(
             dna_hash: DnaHash,
             from_agent: AgentPubKey,
@@ -245,7 +286,11 @@ ghost_actor::ghost_chan! {
             options: GetLinksOptions,
         ) -> Vec<GetLinksResponse>;
 
+<<<<<<< HEAD
         /// Get agent activity from the DGD.
+=======
+        /// Get agent activity from the DHT.
+>>>>>>> master
         fn get_agent_activity(
             dna_hash: DnaHash,
             from_agent: AgentPubKey,

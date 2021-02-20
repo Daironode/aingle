@@ -1,7 +1,11 @@
 use crate::HasHash;
 use crate::HashableContent;
 use crate::AIngleHashOf;
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 
 /// Represents some piece of content along with its hash representation, so that
 /// hashes need not be calculated multiple times.

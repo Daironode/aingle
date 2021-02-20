@@ -2,7 +2,11 @@ use super::create::extract_entry_def;
 use super::delete::get_original_address;
 use crate::core::ribosome::CallContext;
 use crate::core::ribosome::RibosomeT;
+<<<<<<< HEAD
 use crate::core::workflow::integrate_dgd_ops_workflow::integrate_to_authored;
+=======
+use crate::core::workflow::integrate_dht_ops_workflow::integrate_to_authored;
+>>>>>>> master
 use crate::core::workflow::CallZomeWorkspace;
 use aingle_wasmer_host::prelude::WasmError;
 
@@ -64,7 +68,11 @@ pub fn update<'a>(
         let source_chain = &mut workspace.source_chain;
         // push the header and the entry into the source chain
         let header_hash = source_chain.put(header_builder, Some(entry)).await.map_err(|source_chain_error| WasmError::Host(source_chain_error.to_string()))?;
+<<<<<<< HEAD
         // fetch the element we just added so we can integrate its DgdOps
+=======
+        // fetch the element we just added so we can integrate its DhtOps
+>>>>>>> master
         let element = source_chain
             .get_element(&header_hash).map_err(|source_chain_error| WasmError::Host(source_chain_error.to_string()))?
             .expect("Element we just put in SourceChain must be gettable");
@@ -73,7 +81,11 @@ pub fn update<'a>(
             workspace.source_chain.elements(),
             &mut workspace.meta_authored,
         )
+<<<<<<< HEAD
         .map_err(|dgd_op_convert_error| WasmError::Host(dgd_op_convert_error.to_string()))?;
+=======
+        .map_err(|dht_op_convert_error| WasmError::Host(dht_op_convert_error.to_string()))?;
+>>>>>>> master
         Ok(header_hash)
     })
 }

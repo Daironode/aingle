@@ -5,7 +5,11 @@ use aingle::test_utils::consistency_10s;
 use aingle::test_utils::sweetest::SweetAgents;
 use aingle::test_utils::sweetest::SweetConductor;
 use aingle::test_utils::sweetest::SweetDnaFile;
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 use aingle_types::prelude::*;
 use aingle_wasm_test_utils::TestWasm;
 

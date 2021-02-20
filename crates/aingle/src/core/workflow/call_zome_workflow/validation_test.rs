@@ -5,7 +5,11 @@ use crate::core::workflow::error::WorkflowError;
 use crate::core::SourceChainError;
 use crate::test_utils::new_zome_call;
 use crate::test_utils::setup_app;
+<<<<<<< HEAD
 use aingle_middleware_bytes::SerializedBytes;
+=======
+use aingle_serialized_bytes::SerializedBytes;
+>>>>>>> master
 use aingle_types::prelude::*;
 use aingle_wasm_test_utils::TestWasm;
 use aingle_zome_types::cell::CellId;

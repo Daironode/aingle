@@ -29,7 +29,11 @@ pub enum DnaError {
 
     /// SerializedBytesError
     #[error("SerializedBytesError: {0}")]
+<<<<<<< HEAD
     SerializedBytesError(#[from] aingle_middleware_bytes::SerializedBytesError),
+=======
+    SerializedBytesError(#[from] aingle_serialized_bytes::SerializedBytesError),
+>>>>>>> master
 
     /// std::io::Error
     /// we don't #[from] the std::io::Error directly because it doesn't implement Clone

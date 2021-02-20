@@ -1,6 +1,10 @@
 [package]
 name = "aingle"
+<<<<<<< HEAD
 version = "0.0.1"
+=======
+version = "0.0.100"
+>>>>>>> master
 description = "AIngle, a framework for distributed applications"
 license = "CAL-1.0"
 homepage = "https://github.com/Daironode/aingle"
@@ -29,11 +33,19 @@ aingle_conductor_api = { version = "0.0.1", path = "../aingle_conductor_api" }
 aingle_keystore = { version = "0.0.1", path = "../aingle_keystore" }
 aingle_p2p = { version = "0.0.1", path = "../aingle_p2p" }
 aingle_lmdb = { version = "0.0.1", path = "../aingle_lmdb" }
+<<<<<<< HEAD
 aingle_middleware_bytes = "=0.0.3"
 aingle_state = { version = "0.0.1", path = "../aingle_state" }
 aingle_types = { version = "0.0.1", path = "../aingle_types" }
 aingle_wasm_test_utils = { version = "0.0.1", path = "../test_utils/wasm" }
 aingle_wasmer_host = "=0.0.1"
+=======
+aingle_serialized_bytes = "=0.0.48"
+aingle_state = { version = "0.0.1", path = "../aingle_state" }
+aingle_types = { version = "0.0.1", path = "../aingle_types" }
+aingle_wasm_test_utils = { version = "0.0.1", path = "../test_utils/wasm" }
+aingle_wasmer_host = "=0.0.66"
+>>>>>>> master
 aingle_websocket = { version = "0.0.1", path = "../aingle_websocket" }
 aingle_zome_types = { version = "0.0.1", path = "../aingle_zome_types" }
 human-panic = "1.0.3"
@@ -47,7 +59,11 @@ parking_lot = "0.10"
 predicates = "1.0.4"
 rand = "0.7"
 ring = "0.16"
+<<<<<<< HEAD
 serde = { version = "1.0.123", features = [ "derive" ] }
+=======
+serde = { version = "1.0.104", features = [ "derive" ] }
+>>>>>>> master
 serde_json = { version = "1.0.51", features = [ "preserve_order" ] }
 serde_yaml = "0.8"
 shrinkwraprs = "0.3.0"

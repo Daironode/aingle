@@ -20,7 +20,11 @@ hdk_derive = { version = "0.0.1", path = "../hdk_derive" }
 aingle_hash = { version = "0.0.1", path = "../aingle_hash", features = ["full"] }
 aingle_lmdb = { version = "0.0.1", path = "../aingle_lmdb" }
 aingle_p2p = { version = "0.0.1", path = "../aingle_p2p" }
+<<<<<<< HEAD
 aingle_middleware_bytes = "=0.0.3"
+=======
+aingle_serialized_bytes = "=0.0.48"
+>>>>>>> master
 aingle_state = { version = "0.0.1", path = "../aingle_state" }
 aingle_types = { version = "0.0.1", path = "../aingle_types" }
 aingle_zome_types = { version = "0.0.1", path = "../aingle_zome_types" }

@@ -2,7 +2,11 @@
 //! aingle specific wrapper around more generic p2p module
 
 use aingle_hash::*;
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::*;
+=======
+use aingle_serialized_bytes::prelude::*;
+>>>>>>> master
 use aingle_types::prelude::*;
 use std::sync::Arc;
 
@@ -52,8 +56,13 @@ pub trait AIngleP2pCellT {
     async fn publish(
         &mut self,
         request_validation_receipt: bool,
+<<<<<<< HEAD
         dgd_hash: aingle_hash::AnyDgdHash,
         ops: Vec<(aingle_hash::DgdOpHash, aingle_types::dgd_op::DgdOp)>,
+=======
+        dht_hash: aingle_hash::AnyDhtHash,
+        ops: Vec<(aingle_hash::DhtOpHash, aingle_types::dht_op::DhtOp)>,
+>>>>>>> master
         timeout_ms: Option<u64>,
     ) -> actor::AIngleP2pResult<()>;
 
@@ -64,6 +73,7 @@ pub trait AIngleP2pCellT {
         header_hash: HeaderHash,
     ) -> actor::AIngleP2pResult<ValidationPackageResponse>;
 
+<<<<<<< HEAD
     /// Get an entry from the DGD.
     async fn get(
         &mut self,
@@ -79,13 +89,34 @@ pub trait AIngleP2pCellT {
     ) -> actor::AIngleP2pResult<Vec<MetadataSet>>;
 
     /// Get links from the DGD.
+=======
+    /// Get an entry from the DHT.
+    async fn get(
+        &mut self,
+        dht_hash: aingle_hash::AnyDhtHash,
+        options: actor::GetOptions,
+    ) -> actor::AIngleP2pResult<Vec<GetElementResponse>>;
+
+    /// Get metadata from the DHT.
+    async fn get_meta(
+        &mut self,
+        dht_hash: aingle_hash::AnyDhtHash,
+        options: actor::GetMetaOptions,
+    ) -> actor::AIngleP2pResult<Vec<MetadataSet>>;
+
+    /// Get links from the DHT.
+>>>>>>> master
     async fn get_links(
         &mut self,
         link_key: WireLinkMetaKey,
         options: actor::GetLinksOptions,
     ) -> actor::AIngleP2pResult<Vec<GetLinksResponse>>;
 
+<<<<<<< HEAD
     /// Get agent activity from the DGD.
+=======
+    /// Get agent activity from the DHT.
+>>>>>>> master
     async fn get_agent_activity(
         &mut self,
         agent: AgentPubKey,
@@ -162,8 +193,13 @@ impl AIngleP2pCellT for AIngleP2pCell {
     async fn publish(
         &mut self,
         request_validation_receipt: bool,
+<<<<<<< HEAD
         dgd_hash: aingle_hash::AnyDgdHash,
         ops: Vec<(aingle_hash::DgdOpHash, aingle_types::dgd_op::DgdOp)>,
+=======
+        dht_hash: aingle_hash::AnyDhtHash,
+        ops: Vec<(aingle_hash::DhtOpHash, aingle_types::dht_op::DhtOp)>,
+>>>>>>> master
         timeout_ms: Option<u64>,
     ) -> actor::AIngleP2pResult<()> {
         self.sender
@@ -171,7 +207,11 @@ impl AIngleP2pCellT for AIngleP2pCell {
                 (*self.dna_hash).clone(),
                 (*self.from_agent).clone(),
                 request_validation_receipt,
+<<<<<<< HEAD
                 dgd_hash,
+=======
+                dht_hash,
+>>>>>>> master
                 ops,
                 timeout_ms,
             )
@@ -194,40 +234,66 @@ impl AIngleP2pCellT for AIngleP2pCell {
             .await
     }
 
+<<<<<<< HEAD
     /// Get an entry from the DGD.
     async fn get(
         &mut self,
         dgd_hash: aingle_hash::AnyDgdHash,
+=======
+    /// Get an entry from the DHT.
+    async fn get(
+        &mut self,
+        dht_hash: aingle_hash::AnyDhtHash,
+>>>>>>> master
         options: actor::GetOptions,
     ) -> actor::AIngleP2pResult<Vec<GetElementResponse>> {
         self.sender
             .get(
                 (*self.dna_hash).clone(),
                 (*self.from_agent).clone(),
+<<<<<<< HEAD
                 dgd_hash,
+=======
+                dht_hash,
+>>>>>>> master
                 options,
             )
             .instrument(tracing::debug_span!("AIngleP2p::get"))
             .await
     }
 
+<<<<<<< HEAD
     /// Get metadata from the DGD.
     async fn get_meta(
         &mut self,
         dgd_hash: aingle_hash::AnyDgdHash,
+=======
+    /// Get metadata from the DHT.
+    async fn get_meta(
+        &mut self,
+        dht_hash: aingle_hash::AnyDhtHash,
+>>>>>>> master
         options: actor::GetMetaOptions,
     ) -> actor::AIngleP2pResult<Vec<MetadataSet>> {
         self.sender
             .get_meta(
                 (*self.dna_hash).clone(),
                 (*self.from_agent).clone(),
+<<<<<<< HEAD
                 dgd_hash,
+=======
+                dht_hash,
+>>>>>>> master
                 options,
             )
             .await
     }
 
+<<<<<<< HEAD
     /// Get links from the DGD.
+=======
+    /// Get links from the DHT.
+>>>>>>> master
     async fn get_links(
         &mut self,
         link_key: WireLinkMetaKey,
@@ -243,7 +309,11 @@ impl AIngleP2pCellT for AIngleP2pCell {
             .await
     }
 
+<<<<<<< HEAD
     /// Get agent activity from the DGD.
+=======
+    /// Get agent activity from the DHT.
+>>>>>>> master
     async fn get_agent_activity(
         &mut self,
         agent: AgentPubKey,
@@ -278,6 +348,10 @@ impl AIngleP2pCellT for AIngleP2pCell {
     }
 }
 
+<<<<<<< HEAD
 pub use kitsune_p2p::dgd_arc;
+=======
+pub use kitsune_p2p::dht_arc;
+>>>>>>> master
 
 mod test;

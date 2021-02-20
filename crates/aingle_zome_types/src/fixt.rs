@@ -19,7 +19,11 @@ use crate::Entry;
 use ::fixt::prelude::*;
 use aingle_hash::EntryHash;
 use aingle_hash::*;
+<<<<<<< HEAD
 use aingle_middleware_bytes::prelude::SerializedBytes;
+=======
+use aingle_serialized_bytes::prelude::SerializedBytes;
+>>>>>>> master
 use std::collections::BTreeMap;
 use std::collections::HashSet;
 

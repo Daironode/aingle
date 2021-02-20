@@ -1,5 +1,9 @@
 pub use crate::chain_sequence::*;
+<<<<<<< HEAD
 pub use crate::dgd_op_integration::*;
+=======
+pub use crate::dht_op_integration::*;
+>>>>>>> master
 pub use crate::element_buf::*;
 pub use crate::metadata::*;
 pub use crate::source_chain::*;

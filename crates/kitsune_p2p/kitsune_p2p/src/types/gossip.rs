@@ -1,13 +1,21 @@
 //! # Gossip Event Types
 
+<<<<<<< HEAD
 use kitsune_p2p_types::dgd_arc::DgdArc;
+=======
+use kitsune_p2p_types::dht_arc::DhtArc;
+>>>>>>> master
 
 use crate::agent_store::AgentInfoSigned;
 
 use super::*;
 
 #[derive(Debug, derive_more::Constructor)]
+<<<<<<< HEAD
 /// Request dgd op hashes and
+=======
+/// Request dht op hashes and
+>>>>>>> master
 /// agent store information from an agent.
 /// This is the lightweight hashes only call.
 pub struct ReqOpHashesEvt {
@@ -15,8 +23,13 @@ pub struct ReqOpHashesEvt {
     pub from_agent: Arc<KitsuneAgent>,
     /// The agent you are requesting ops from.
     pub to_agent: Arc<KitsuneAgent>,
+<<<<<<< HEAD
     /// The arc on the dgd that you want ops from.
     pub dgd_arc: DgdArc,
+=======
+    /// The arc on the dht that you want ops from.
+    pub dht_arc: DhtArc,
+>>>>>>> master
     /// Get ops from this time.
     pub since_utc_epoch_s: i64,
     /// Get ops till this time.
@@ -26,7 +39,11 @@ pub struct ReqOpHashesEvt {
 }
 
 #[derive(Debug, derive_more::Constructor)]
+<<<<<<< HEAD
 /// Request dgd ops from an agent.
+=======
+/// Request dht ops from an agent.
+>>>>>>> master
 pub struct ReqOpDataEvt {
     /// Agent Requesting the ops.
     pub from_agent: Arc<KitsuneAgent>,
@@ -39,7 +56,11 @@ pub struct ReqOpDataEvt {
 }
 
 #[derive(Debug, derive_more::Constructor)]
+<<<<<<< HEAD
 /// Request dgd ops from an agent.
+=======
+/// Request dht ops from an agent.
+>>>>>>> master
 pub struct GossipEvt {
     /// Agent sending gossip.
     pub from_agent: Arc<KitsuneAgent>,
@@ -52,7 +73,11 @@ pub struct GossipEvt {
 }
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+<<<<<<< HEAD
 /// Type for responding to a request for dgd op hashes.
+=======
+/// Type for responding to a request for dht op hashes.
+>>>>>>> master
 /// If the count hasn't changed then the hashes are consistent
 /// otherwise there is a change in the data and new hashes are sent.
 pub enum OpConsistency {
@@ -76,6 +101,7 @@ pub enum OpCount {
     Consistent(u64),
 }
 
+<<<<<<< HEAD
 /// Dgd Op hashes that an agent holds
 pub type OpHashes = Vec<Arc<KitsuneOpHash>>;
 
@@ -86,6 +112,18 @@ pub type OpHashesAgentHashes = (OpConsistency, Vec<(Arc<KitsuneAgent>, u64)>);
 /// Same as [OpHashesAgentHashes] but without consistency information.
 pub type LocalOpHashesAgentHashes = (OpHashes, Vec<(Arc<KitsuneAgent>, u64)>);
 /// The Dgd op data and agent store information
+=======
+/// Dht Op hashes that an agent holds
+pub type OpHashes = Vec<Arc<KitsuneOpHash>>;
+
+/// Dht op and agent hashes that the agent has information on.
+pub type OpHashesAgentHashes = (OpConsistency, Vec<(Arc<KitsuneAgent>, u64)>);
+
+/// Dht op and agent hashes that the agent has information on.
+/// Same as [OpHashesAgentHashes] but without consistency information.
+pub type LocalOpHashesAgentHashes = (OpHashes, Vec<(Arc<KitsuneAgent>, u64)>);
+/// The Dht op data and agent store information
+>>>>>>> master
 pub type OpDataAgentInfo = (Vec<(Arc<KitsuneOpHash>, Vec<u8>)>, Vec<AgentInfoSigned>);
 /// Local and remote neighbors.
 pub type ListNeighborAgents = (Vec<Arc<KitsuneAgent>>, Vec<Arc<KitsuneAgent>>);
