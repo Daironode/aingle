@@ -1,0 +1,13 @@
+[package]
+name = "test_wasm_validation_package_fail"
+version = "0.0.1"
+authors = [ "Carlos Tovar", "carlos.tovar@blockinnovation.center" ]
+edition = "2018"
+
+[lib]
+name = "test_wasm_validation_package_fail"
+crate-type = [ "cdylib", "rlib" ]
+
+[dependencies]
+serde = "=1.0.104"
+hdk = { path = "../../../../hdk" }

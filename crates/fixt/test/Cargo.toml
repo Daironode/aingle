@@ -1,0 +1,15 @@
+[package]
+name = "fixt_test"
+version = "0.0.1"
+description = "tests the fixturator macros in an external crate"
+license = "Apache-2.0"
+homepage = "https://github.com/Daironode/aingle"
+documentation = "https://github.com/Daironode/aingle"
+authors = [ "AIngle Core Dev Team <devcore@aingle.ai>" ]
+keywords = [ "aingle", "semantic", "test", "fixture" ]
+categories = [ "fixtures" ]
+edition = "2018"
+
+[dependencies]
+fixt = { path = ".." }
+paste = "1.0.3"

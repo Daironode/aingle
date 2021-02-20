@@ -1,0 +1,25 @@
+[package]
+name = "fixt"
+version = "0.0.1"
+description = "minimum viable fixtures"
+license = "Apache-2.0"
+homepage = "https://github.com/Daironode/aingle"
+documentation = "https://github.com/Daironode/aingle"
+authors = [ "AIngle Core Dev Team <devcore@aingle.ai>" ]
+keywords = [ "aingle", "semantic", "test", "fixture" ]
+categories = [ "fixtures" ]
+edition = "2018"
+
+[dependencies]
+aingle_middleware_bytes = "=0.0.3"
+lazy_static = "1.4"
+parking_lot = "0.10"
+paste = "=1.0.3"
+rand = "0.7"
+rand_core = "0.5"
+serde = { version = "1.0.104", features = [ "derive" ] }
+strum = "0.18.0"
+strum_macros = "0.18.0"
+
+[features]
+fixt = [ ]
