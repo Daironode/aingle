@@ -1,0 +1,14 @@
+FROM aingle/ainglenix:latest
+
+WORKDIR /aingle/build
+ENV NIX_ENV_PREFIX /aingle/build
+ENV NIXPKGS_ALLOW_UNFREE 1
+
+ARG DOCKER_BRANCH=develop
+
+ADD https://github.com/AIngleLab/aingle/archive/$DOCKER_BRANCH.tar.gz /aingle/build/$DOCKER_BRANCH.tar.gz
+RUN tar --strip-components=1 -zxvf $DOCKER_BRANCH.tar.gz
+
+# warm things
+RUN `nix-build . --no-link -A pkgs.ci.ciSetupNixConf`/bin/ai-ci-setup-nix-conf.sh
+RUN nix-shell --run echo

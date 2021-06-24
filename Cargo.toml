@@ -1,0 +1,68 @@
+[workspace]
+members = [
+  "crates/fixt",
+  "crates/fixt/test",
+  "crates/adk",
+  "crates/adk_derive",
+  "crates/ai_hash",
+  "crates/mr_bundle",
+
+  "crates/ai",
+  "crates/ai_bundle",
+  "crates/ai_sandbox",
+
+  "crates/aingle",
+  "crates/aingle_cascade",
+  "crates/aingle_conductor_api",
+  "crates/aingle_p2p",
+  "crates/aingle_keystore",
+  "crates/aingle_sqlite",
+  "crates/aingle_state",
+  "crates/aingle_sqlite",
+  "crates/aingle_types",
+  "crates/aingle_websocket",
+  "crates/aingle_util",
+  "crates/aingle_zome_types",
+
+  "crates/kitsune_p2p/bootstrap",
+  "crates/kitsune_p2p/direct",
+  "crates/kitsune_p2p/direct_api",
+  "crates/kitsune_p2p/direct_test",
+  "crates/kitsune_p2p/kitsune_p2p",
+  "crates/kitsune_p2p/mdns",
+  "crates/kitsune_p2p/proxy",
+  "crates/kitsune_p2p/transport_quic",
+  "crates/kitsune_p2p/types",
+
+  "crates/test_utils/wasm",
+  "crates/test_utils/wasm_common",
+]
+
+exclude = [
+  "crates/diagnostics",
+  "crates/release-automation"
+]
+
+# These are the default params for RELEASE target
+# Setting these for all dependencies... we'll only debug our own code
+[profile.dev.package."*"]
+opt-level = 3
+debug = false
+debug-assertions = false
+overflow-checks = false
+incremental = false
+codegen-units = 16
+
+[patch.crates-io]
+# aingle_wasmer_guest = { git = "https://github.com/AIngleLab/aingle-wasmer.git", branch = "wasmer-patch" }
+# aingle_wasmer_host = { git = "https://github.com/AIngleLab/aingle-wasmer.git", branch = "wasmer-patch" }
+# aingle_middleware_bytes = { git = "https://github.com/AIngleLab/aingle-serialization.git", branch = "bump-serde" }
+# aingle_middleware_bytes_derive = { git = "https://github.com/AIngleLab/aingle-serialization.git", branch = "bump-serde" }
+# observability = { git = "https://github.com/freesig/observability.git", branch = "main" }
+# ghost_actor = { path = "../ghost_actor/crates/ghost_actor" }
+# ghost_actor = { git = "https://github.com/AIngleLab/ghost_actor.git", branch = "add_observability" }
+# lair_keystore_api = { git = "https://github.com/AIngleLab/lair.git", branch = "pr/tokio-1" }
+# lair_keystore_client = { git = "https://github.com/AIngleLab/lair.git", branch = "pr/tokio-1" }
+# lair_keystore_api = { path = "../lair/crates/lair_keystore_api" }
+# lair_keystore_client = { path = "../lair/crates/lair_keystore_client" }
+# observability = { path = "../../rust/observability" }

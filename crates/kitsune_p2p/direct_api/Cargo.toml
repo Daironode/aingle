@@ -1,0 +1,17 @@
+[package]
+name = "kitsune_p2p_direct_api"
+version = "0.0.1"
+description = "Kitsune P2p Direct Application Framework Test Harness Common API Types"
+license = "Apache-2.0"
+homepage = "https://github.com/AIngleLab/aingle"
+documentation = "https://github.com/AIngleLab/aingle"
+authors = [ "AIngle Core Dev Team <devcore@aingle.ai>" ]
+keywords = [ "aingle", "ai", "p2p", "sgd", "networking" ]
+categories = [ "network-programming" ]
+edition = "2018"
+
+[dependencies]
+arrayref = "0.3.6"
+base64 = "0.13"
+serde = { version = "1", features = ["derive", "rc"] }
+serde_json = { version = "1", features = ["preserve_order"] }

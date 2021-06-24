@@ -1,0 +1,60 @@
+[package]
+name = "aingle_state"
+version = "0.0.1"
+description = "TODO minimize deps"
+license-file = "LICENSE_CAL-1.0"
+homepage = "https://github.com/AIngleLab/aingle"
+documentation = "https://github.com/AIngleLab/aingle"
+authors = [ "AIngle Core Dev Team <devcore@aingle.ai>" ]
+edition = "2018"
+
+[dependencies]
+byteorder = "1.3.4"
+chrono = "0.4.6"
+derive_more = "0.99.3"
+either = "1.5"
+aingle_sqlite = { version = "0.0.1", path = "../aingle_sqlite" }
+ai_hash = { version = "^0.0.1", path = "../ai_hash", features = ["full"] }
+fallible-iterator = "0.2.0"
+aingle_keystore = { version = "0.0.1", path = "../aingle_keystore" }
+aingle_middleware_bytes = "=0.0.3"
+aingle_p2p = { version = "0.0.1", path = "../aingle_p2p" }
+aingle_types = { version = "0.0.1", path = "../aingle_types" }
+aingle_util = { version = "0.0.1", path = "../aingle_util" }
+aingle_wasm_test_utils = { path = "../test_utils/wasm", optional = true, version = "0.0.1" }
+aingle_zome_types = { version = "^0.0.1", path = "../aingle_zome_types", features = [ "full" ] }
+kitsune_p2p = { version = "0.0.1", path = "../kitsune_p2p/kitsune_p2p" }
+mockall = "0.8"
+parking_lot = "0.10"
+shrinkwraprs = "0.3.0"
+serde = { version = "1.0", features = [ "derive" ] }
+serde_json = { version = "1.0.51", features = [ "preserve_order" ] }
+thiserror = "1.0.22"
+tokio = { version = "1.3", features = [ "full" ] }
+tracing = "=0.1.21"
+tracing-futures = "0.2.4"
+
+tempdir = { version = "0.3", optional = true }
+base64 = {version = "0.13", optional = true}
+
+[dev-dependencies]
+anyhow = "1.0.26"
+fixt = { version = "^0.0.1", path = "../fixt" }
+adk = { version = "^0.0.1", path = "../adk" }
+aingle_wasm_test_utils = { path = "../test_utils/wasm", version = "0.0.1" }
+matches = "0.1.8"
+observability = "0.1.3"
+pretty_assertions = "0.6.1"
+
+tempdir = "0.3"
+
+[features]
+default = ["test_utils"]
+
+test_utils = [
+    "aingle_types/test_utils",
+    "aingle_zome_types/test_utils",
+    "aingle_wasm_test_utils",
+    "tempdir",
+    "base64",
+]

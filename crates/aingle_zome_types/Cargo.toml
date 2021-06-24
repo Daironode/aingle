@@ -1,0 +1,50 @@
+[package]
+name = "aingle_zome_types"
+version = "0.0.1"
+description = "AIngle zome types"
+license = "Apache-2.0"
+homepage = "https://github.com/AIngleLab/aingle"
+documentation = "https://github.com/AIngleLab/aingle"
+readme = "README.md"
+authors = [ "AIngle Core Dev Team <devcore@aingle.ai>" ]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+chrono = "0.4.6"
+ai_hash = { version = "0.0.1", path = "../ai_hash" }
+aingle_middleware_bytes = "=0.0.3"
+paste = "=1.0.5"
+serde = { version = "1.0", features = [ "derive" ] }
+serde_bytes = "0.11"
+subtle = "2"
+thiserror = "1.0.22"
+tracing = "0.1"
+
+# fixturator dependencies
+fixt = { version = "^0.0.1", path = "../fixt", optional = true }
+strum = { version = "0.18.0", optional = true }
+rand = {version = "0.7", optional = true}
+
+# sqlite dependencies
+rusqlite = { version = "0.25", optional = true }
+num_enum = { version = "0.5", optional = true }
+
+# full-saf-def dependencies
+derive_builder = { version = "0.9", optional = true }
+nanoid = { version = "0.3", optional = true }
+shrinkwraprs = { version = "0.3", optional = true }
+
+[features]
+default = ["full-saf-def", "fixturators", "test_utils"]
+
+# Extra impls for SafDef, including InlineZome, which are not used in Wasm
+# but used in AIngle
+full-saf-def = ["derive_builder", "nanoid", "shrinkwraprs"]
+
+full = ["default", "rusqlite", "num_enum"]
+
+fixturators = ["fixt", "rand", "strum", "ai_hash/fixturators", ]
+
+test_utils = ["ai_hash/hashing", "ai_hash/test_utils", "full-saf-def"]

@@ -1,0 +1,38 @@
+[package]
+name = "aingle_cli_sandbox"
+version = "0.0.1-dev.0"
+homepage = "https://github.com/AIngleLab/aingle"
+documentation = "https://github.com/AIngleLab/aingle"
+authors = [ "AIngle Core Dev Team <devcore@aingle.ai>" ]
+keywords = [ "aingle", "ai" ]
+categories = [ "command-line-utilities", "development-tools::build-utils", "filesystem" ]
+edition = "2018"
+
+[[bin]]
+name = "ai-sandbox"
+path = "src/bin/ai-sandbox.rs"
+
+[dependencies]
+anyhow = "1.0"
+ansi_term = "0.12"
+chrono = "0.4.6"
+futures = "0.3"
+lazy_static = "1.4.0"
+aingle_cli_bundle = { path = "../ai_bundle", version = "0.0.1" }
+aingle_conductor_api = { path = "../aingle_conductor_api", version = "0.0.1" }
+aingle_types = { path = "../aingle_types", version = "0.0.1" }
+aingle_websocket = { path = "../aingle_websocket", version = "0.0.1" }
+aingle_p2p = { path = "../aingle_p2p", version = "0.0.1" }
+nanoid = "0.3"
+observability = "0.1.3"
+serde_yaml = "0.8"
+tokio = { version = "1.3", features = [ "full" ] }
+structopt = "0.3"
+tracing = "0.1"
+url2 = "0.0.6"
+walkdir = "2"
+
+[dev-dependencies]
+assert_cmd = "1.0.1"
+matches = "0.1"
+portpicker = "0.1.0"
